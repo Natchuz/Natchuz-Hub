@@ -1,0 +1,67 @@
+version: '3.3'
+services:
+
+  # bungeecord
+  bungeecord:
+    image: bungeecord
+    ports:
+      - "25565:25565/tcp"
+    networks:
+      - main
+    depends_on:
+      - redis
+      - rabbit
+      - service
+
+  # lobby
+  lobby:
+    image: lobby
+    environment:
+      - SERVERID=lobby
+    networks:
+      - main
+
+  # kitpvp
+  kitpvp:
+    image: kitpvp
+    environment:
+      - SERVERID=kitpvp
+    networks:
+      - main
+
+  # service
+  service:
+    image: service
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - main
+    depends_on:
+      - redis
+      - rabbit
+
+  # redis database
+  redis:
+    image: redis
+    ports:
+      - "1000:6379"
+    networks:
+      - main
+
+  # rabbitmq message broker
+  rabbit:
+    image: rabbitmq
+    networks:
+      - main
+
+  # mongo database
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017/tcp"
+    networks:
+      - main
+
+networks:
+  main:
+    driver: bridge

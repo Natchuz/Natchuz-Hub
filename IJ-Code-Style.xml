@@ -1,0 +1,19 @@
+<code_scheme name="Natchuz Hub Scheme" version="173">
+    <JavaCodeStyleSettings>
+        <option name="IMPORT_LAYOUT_TABLE">
+            <value>
+                <package name="" withSubpackages="true" static="false"/>
+                <emptyLine/>
+                <package name="java" withSubpackages="true" static="false"/>
+                <emptyLine/>
+                <package name="com.natchuz.hub" withSubpackages="true" static="false"/>
+                <emptyLine/>
+                <package name="" withSubpackages="true" static="true"/>
+            </value>
+        </option>
+    </JavaCodeStyleSettings>
+    <codeStyleSettings language="JAVA">
+        <option name="KEEP_SIMPLE_LAMBDAS_IN_ONE_LINE" value="true"/>
+        <option name="KEEP_SIMPLE_CLASSES_IN_ONE_LINE" value="true"/>
+    </codeStyleSettings>
+</code_scheme>

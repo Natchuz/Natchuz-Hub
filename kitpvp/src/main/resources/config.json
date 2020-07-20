@@ -1,0 +1,45 @@
+{
+  "defaultKits": [
+    {
+      "name": "Swordsman",
+      "icon": "STONE_SWORD",
+      "content": {
+        "helmet": "LEATHER_HELMET",
+        "chestplate": "IRON_CHESTPLATE",
+        "leggings": "LEATHER_LEGGINGS",
+        "boots": "LEATHER_BOOTS",
+        "offHand": "SHIELD",
+        "bar": [
+          "IRON_SWORD"
+        ]
+      }
+    },
+    {
+      "name": "Berserker",
+      "icon": "IRON_AXE",
+      "content": {
+        "helmet": "LEATHER_HELMET",
+        "chestplate": "LEATHER_CHESTPLATE",
+        "offHand": "SHIELD",
+        "bar": [
+          "IRON_AXE"
+        ]
+      }
+    },
+    {
+      "name": "Archer",
+      "icon": "BOW",
+      "content": {
+        "helmet": "LEATHER_HELMET",
+        "chestplate": "LEATHER_CHESTPLATE",
+        "leggings": "LEATHER_LEGGINGS",
+        "boots": "LEATHER_BOOTS",
+        "bar": [
+          "WOODEN_SWORD",
+          "BOW",
+          "ARROW:10"
+        ]
+      }
+    }
+  ]
+}

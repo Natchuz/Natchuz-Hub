@@ -1,0 +1,4 @@
+build.gradle.kts
+src
+build
+!build/libs/bungeecord-all.jar
