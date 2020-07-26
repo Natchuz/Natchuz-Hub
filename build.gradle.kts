@@ -10,6 +10,7 @@ plugins {
     id("com.palantir.docker") version "0.22.1" apply false
     id("com.github.johnrengelman.shadow") version "5.2.0" apply false
     idea
+    kotlin("jvm") version "1.3.72" apply false
 }
 
 //region java projects configuration

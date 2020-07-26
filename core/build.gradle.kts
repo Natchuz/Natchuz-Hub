@@ -2,7 +2,7 @@ import Vars.LOCAL_SERVER_CONFIGURATION
 import de.undercouch.gradle.tasks.download.Download
 
 plugins {
-    id("de.undercouch.download") version "4.0.4"
+    id("de.undercouch.download")
 }
 
 configurations {

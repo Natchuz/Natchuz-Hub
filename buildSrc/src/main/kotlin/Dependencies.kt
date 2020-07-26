@@ -29,4 +29,6 @@ object Deps {
     const val JEDIS = "redis.clients:jedis:3.1.0"
     const val MONGO_SYNC = "org.mongodb:mongodb-driver-sync:4.0.2"
     const val RABBITMQ = "com.rabbitmq:amqp-client:5.8.0"
+
+    const val MOCKITO_KOTLIN = "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
 }
