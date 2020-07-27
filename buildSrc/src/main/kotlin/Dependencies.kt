@@ -31,4 +31,6 @@ object Deps {
     const val RABBITMQ = "com.rabbitmq:amqp-client:5.8.0"
 
     const val MOCKITO_KOTLIN = "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+
+    const val SPONGE_API = "org.spongepowered:spongeapi:7.2.0"
 }

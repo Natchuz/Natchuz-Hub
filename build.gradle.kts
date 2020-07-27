@@ -5,15 +5,26 @@ import net.nemerosa.versioning.VersioningPlugin
 import net.nemerosa.versioning.tasks.VersionFileTask
 
 plugins {
-    `java-library`
     id("net.nemerosa.versioning") version "2.8.2" apply false
     id("com.palantir.docker") version "0.22.1" apply false
     id("com.github.johnrengelman.shadow") version "5.2.0" apply false
-    idea
+    id("org.spongepowered.plugin") version "0.9.0"
     kotlin("jvm") version "1.3.72" apply false
+    idea
+    `java-library`
 }
 
 //region java projects configuration
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots")
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
+    maven("https://repo.dmulloy2.net/nexus/repository/public/")
+    maven("https://jitpack.io")
+    maven("https://papermc.io/repo/repository/maven-public/")
+}
 
 val javaProjects = allprojects
 
@@ -21,16 +32,6 @@ javaProjects.forEach { p ->
     p.apply(plugin = "com.github.johnrengelman.shadow")
     p.apply(plugin = "org.gradle.java-library")
     p.apply<VersioningPlugin>()
-
-    p.repositories {
-        mavenCentral()
-        jcenter()
-        maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots")
-        maven("https://oss.sonatype.org/content/repositories/snapshots")
-        maven("https://repo.dmulloy2.net/nexus/repository/public/")
-        maven("https://jitpack.io")
-        maven("https://papermc.io/repo/repository/maven-public/")
-    }
 
     p.dependencies {
         compileOnly(Deps.LOMBOK)

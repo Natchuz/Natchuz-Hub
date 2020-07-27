@@ -1,9 +1,11 @@
 package com.natchuz.hub.core.map;
 
 import org.apache.commons.io.FileUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
+import org.slf4j.Logger;
+import org.spongepowered.api.Sponge;
+import org.spongepowered.api.world.World;
+import org.spongepowered.api.world.WorldArchetypes;
+import org.spongepowered.api.world.storage.WorldProperties;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,7 +16,6 @@ import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import com.natchuz.hub.paper.utils.EmptyChunkGenerator;
 import com.natchuz.hub.utils.UUIDConverter;
 
 /**
@@ -23,36 +24,35 @@ import com.natchuz.hub.utils.UUIDConverter;
 public class AnvilZipMapLoader implements MapLoader {
 
     private final MapRepository mapRepository;
+    private Logger logger;
 
     /**
      * Map repository to load files from
      *
-     * @param mapRepository
+     * @param mapRepository repo to load map from
      */
     public AnvilZipMapLoader(MapRepository mapRepository) {
         this.mapRepository = mapRepository;
+        Sponge.getPluginManager().getPlugin("core-plugin").get().getLogger();
     }
 
     @Override
     public LoadedMap load(String id) throws IOException {
-        File worldContainer = Bukkit.getWorldContainer();
         UUID loadingUUID = UUID.randomUUID();
 
-        Bukkit.getLogger().info("[AnvilZipMapLoader] Initializing map loading with UUID: "
+        logger.info("[AnvilZipMapLoader] Initializing map loading with UUID: "
                 + loadingUUID.toString());
 
         InputStream mapStream = mapRepository.requestMap(id).orElseThrow(
                 () -> new IllegalArgumentException("Map with this id (" + id + ") does not exist in repo!"));
 
         // create a directory for map
-        File creatingWorldContainer = new File(worldContainer + "/" + UUIDConverter.toCondensed(loadingUUID));
+        File creatingWorldContainer = new File(Sponge.getGame().getGameDirectory() + "/"
+                + UUIDConverter.toCondensed(loadingUUID));
         creatingWorldContainer.mkdirs();
-
         ZipInputStream zipStream = new ZipInputStream(mapStream);
 
-        /*
-            Unpack map archive
-         */
+        // Unpack map archive
         ZipEntry entry = zipStream.getNextEntry();
         while (entry != null) {
             File outputFile = new File(creatingWorldContainer + "/" + entry.getName());
@@ -81,10 +81,11 @@ public class AnvilZipMapLoader implements MapLoader {
                         StandardCharsets.UTF_8));
 
         // init world
-        World world = Bukkit.createWorld(new WorldCreator(UUIDConverter.toCondensed(loadingUUID))
-                .generator(new EmptyChunkGenerator()).generateStructures(false).seed(0));
-
-        Bukkit.getLogger().info("[AnvilZipMapLoader] Successfully loaded a map! ");
+        String worldName = UUIDConverter.toCondensed(loadingUUID);
+        WorldProperties properties = Sponge.getServer().createWorldProperties(worldName, WorldArchetypes.THE_VOID);
+        World world = Sponge.getServer().loadWorld(properties)
+                .orElseThrow(() -> new RuntimeException("Map not found in folder"));
+        logger.info("[AnvilZipMapLoader] Successfully loaded a map! ");
 
         return new LoadedMap(world, config, mapManifest);
     }

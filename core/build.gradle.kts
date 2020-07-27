@@ -3,6 +3,7 @@ import de.undercouch.gradle.tasks.download.Download
 
 plugins {
     id("de.undercouch.download")
+    id("org.spongepowered.plugin")
 }
 
 configurations {
@@ -58,6 +59,8 @@ dependencies {
 
     api(Deps.PAPER)
     api(Deps.PROTOCOL_LIB)
+
+    implementation(Deps.SPONGE_API)
 
     compileOnly(Deps.PLUGIN_ANNOTATIONS)
     annotationProcessor(Deps.PLUGIN_ANNOTATIONS)

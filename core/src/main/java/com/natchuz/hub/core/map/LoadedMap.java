@@ -1,6 +1,6 @@
 package com.natchuz.hub.core.map;
 
-import org.bukkit.World;
+import org.spongepowered.api.world.World;
 
 /**
  * Represents the loaded map, the world, its config and manifest

@@ -2,17 +2,19 @@ package com.natchuz.hub.core;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
+import com.google.inject.Inject;
 import lombok.SneakyThrows;
 import lombok.experimental.Delegate;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.annotation.command.Command;
-import org.bukkit.plugin.java.annotation.command.Commands;
-import org.bukkit.plugin.java.annotation.dependency.Dependency;
-import org.bukkit.plugin.java.annotation.plugin.ApiVersion;
-import org.bukkit.plugin.java.annotation.plugin.Plugin;
-import org.bukkit.plugin.java.annotation.plugin.author.Author;
+import org.slf4j.Logger;
+import org.spongepowered.api.Game;
+import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.game.state.GameInitializationEvent;
+import org.spongepowered.api.event.game.state.GamePostInitializationEvent;
+import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
+import org.spongepowered.api.event.game.state.GameStoppedEvent;
+import org.spongepowered.api.plugin.Plugin;
 
 import java.util.List;
 
@@ -39,100 +41,95 @@ import com.natchuz.hub.core.user.User;
 /**
  * This is entry class of Network plugin for Paper
  */
-@Plugin(name = "NatchuzHub", version = "1.0")
-@Author("Natchuz")
-@Dependency("ProtocolLib")
-@ApiVersion(ApiVersion.Target.v1_13)
-@Commands({
-        @Command(name = "menu"),
-        @Command(name = "hub", aliases = {"l", "h", "lobby"}),
-        @Command(name = "friends", aliases = "f"),
-        @Command(name = "v")
-})
-public class NetworkMain extends JavaPlugin implements PrivilegedFacade {
-    private ProtocolManager protocolManager;
+@Plugin(id = "core-plugin", name = "Core Plugin", version = "1.0")
+public class NetworkMain implements PrivilegedFacade {
+
     private HologramManager hologramManager;
     private SidebarManager sidebarManager;
     private DialogManager dialogManager;
     private FriendUtils friendUtils;
     private String serverID;
 
-    @Delegate
     private ProxyBackend networkUtils;
-    @Delegate
     private ProfileRepo<User> userProfileProvider;
-    @Delegate
     private StateDatabase stateDatabase;
 
     private LoadedMap loadedMap;
     private ServerContext context;
 
-    @SneakyThrows
-    @Override
-    public void onLoad() {
-        client = this;
+    @Inject
+    private Game game;
 
+    @Inject
+    private Logger logger;
+
+    @Listener
+    public void onServerLoad(GamePreInitializationEvent event) {
+
+        // load context
         ContextLoader loader = new PropertiesContextLoader(this);
         context = loader.loadContext();
-        getLogger().info("Using context: " + context.getClass().getCanonicalName());
+        logger.info("Using context: " + context.getClass().getCanonicalName());
 
-        protocolManager = ProtocolLibrary.getProtocolManager();
+        // obtain server ID
         serverID = System.getenv("SERVERID");
     }
 
     @SneakyThrows
-    @Override
-    public void onEnable() {
+    @Listener
+    public void onEnable(GameInitializationEvent event) {
+
+        // construct basic services
         userProfileProvider = context.createProfileRepo(User.class);
         stateDatabase = context.createStateDatabase();
         networkUtils = context.createProxyBackend();
 
+        // load test map
         MapRepository repository = context.createMapRepository();
         MapLoader loader = new AnvilZipMapLoader(repository);
         loadedMap = loader.load("testMap");
 
-        hologramManager = new HologramManager(this);
+        // TODO: get rid of it to external plugin
+        // construct and register all paper utils
+        hologramManager = new HologramManager((org.bukkit.plugin.Plugin) this);
         sidebarManager = new SidebarManager("Natchuz Hub", getServerId());
         dialogManager = new DialogManager();
-        getServer().getPluginManager().registerEvents(hologramManager, this);
-        getServer().getPluginManager().registerEvents(dialogManager, this);
+        game.getEventManager().registerListeners(this, hologramManager);
+        game.getEventManager().registerListeners(this, dialogManager);
 
+        // construct fixed listeners
         friendUtils = new FriendUtils();
         CosmeticsListener cosmeticsListener = new CosmeticsListener();
         NetworkCommands networkCommands = new NetworkCommands();
 
-        getServer().getPluginManager().registerEvents(cosmeticsListener, this);
-        getServer().getPluginManager().registerEvents(friendUtils, this);
-        getServer().getPluginManager().registerEvents(networkCommands, this);
+        // load fixed listeners
+        game.getEventManager().registerListeners(this, cosmeticsListener);
+        game.getEventManager().registerListeners(this, friendUtils);
+        game.getEventManager().registerListeners(this, networkCommands);
 
+        // load all context-depended listeners
         List<Module> modules = context.createModules();
-        modules.forEach(module -> getServer().getPluginManager().registerEvents(module, this));
+        modules.forEach(module -> game.getEventManager().registerListeners(module, this));
 
+        // register server in state database
         stateDatabase.registerServer(ServerID.fromString(System.getenv("SERVERTYPE") + "/" + getServerId())).get();
     }
 
-    @SneakyThrows
-    @Override
-    public void onDisable() {
-        unregisterServer(ServerID.fromString(System.getenv("SERVERTYPE") + "/" + serverID)).get();
+    @Listener
+    public void onPost(GamePostInitializationEvent event) {
+        // register all services
+        game.getServiceManager().setProvider(this, StateDatabase.class, stateDatabase);
+        game.getServiceManager().setProvider(this, ProxyBackend.class, networkUtils);
+        game.getServiceManager().setProvider(this, FriendUtils.class, friendUtils);
+    }
+
+    @Listener
+    public void onStop(GameStoppedEvent event) {
+        // unregister server from state database
+        stateDatabase.unregisterServer(ServerID.fromString(System.getenv("SERVERTYPE") + "/" + serverID)).get();
     }
 
     //region facade implementation
-
-    @Override
-    public JavaPlugin getPlugin() {
-        return this;
-    }
-
-    @Override
-    public ProtocolManager getProtocolManager() {
-        return protocolManager;
-    }
-
-    @Override
-    public FriendUtils getFriendUtils() {
-        return friendUtils;
-    }
 
     @Override
     public HologramManager getHologramManager() {
@@ -177,18 +174,6 @@ public class NetworkMain extends JavaPlugin implements PrivilegedFacade {
     @Override
     public <T extends UserProfile> ProfileRepo<T> createProfileRepo(Class<T> clazz) {
         return context.createProfileRepo(clazz);
-    }
-
-    //endregion
-    //region singleton
-
-    private static PrivilegedFacade client;
-
-    /**
-     * @deprecated Singletons bad
-     */
-    public static PrivilegedFacade getInstance() {
-        return client;
     }
 
     //endregion

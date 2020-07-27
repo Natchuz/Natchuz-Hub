@@ -12,25 +12,10 @@ import com.natchuz.hub.core.user.User;
 /**
  * Ships all utilities for use inside core library and privileged servers like lobby
  */
-public interface PrivilegedFacade extends CoreFacade, StateDatabase, ProxyBackend, ProfileRepo<User> {
+public interface PrivilegedFacade extends CoreFacade {
 
     /**
      * Server id
      */
     String getServerId();
-
-    /**
-     * @deprecated until new api will be developed
-     */
-    FriendUtils getFriendUtils();
-
-    /**
-     * @deprecated until new api will be developed
-     */
-    JavaPlugin getPlugin();
-
-    /**
-     * @deprecated until new api will be developed
-     */
-    ProtocolManager getProtocolManager();
 }

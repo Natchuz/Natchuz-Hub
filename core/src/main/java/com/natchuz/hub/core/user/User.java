@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bukkit.Bukkit;
+import org.spongepowered.api.Sponge;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -14,7 +15,6 @@ import java.util.stream.Collectors;
 import com.natchuz.hub.paper.Color;
 import com.natchuz.hub.utils.mojang.ElectroidMojangAPI;
 import com.natchuz.hub.utils.mojang.MojangAPI;
-import com.natchuz.hub.core.NetworkMain;
 import com.natchuz.hub.core.content.cosmetics.Cosmetics;
 import com.natchuz.hub.core.profile.UserProfile;
 
@@ -67,7 +67,7 @@ public class User extends UserProfile {
     }
 
     public void updateDB() {
-        NetworkMain.getInstance().updateProfile(this);
+        Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().updateProfile(this);
     }
 
     //endregion
@@ -98,7 +98,7 @@ public class User extends UserProfile {
 
     public InvitingResult inviteFriend(UUID invUUID) {
         if (getUUID().equals(invUUID)) return SELF_INVITE;
-        User target = NetworkMain.getInstance().getProfile(invUUID);
+        User target = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(invUUID);
 
         if (friends.contains(invUUID)) {
             if (target.friends.contains(getUUID()))
@@ -118,7 +118,7 @@ public class User extends UserProfile {
 
     public InvitingResult cancelFriendInvite(UUID invUUID) {
         if (getUUID().equals(invUUID)) return SELF_INVITE;
-        User target = NetworkMain.getInstance().getProfile(invUUID);
+        User target = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(invUUID);
 
         if (friends.contains(invUUID)) {
             if (target.friends.contains(getUUID()))
@@ -145,7 +145,7 @@ public class User extends UserProfile {
 
     public InvitingResult acceptFriend(UUID acceptUUID) {
         if (getUUID().equals(acceptUUID)) return SELF_INVITE;
-        User target = NetworkMain.getInstance().getProfile(acceptUUID);
+        User target = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(acceptUUID);
 
         if (friends.contains(acceptUUID)) {
             if (target.friends.contains(getUUID()))
@@ -174,7 +174,7 @@ public class User extends UserProfile {
 
     public InvitingResult declineFriend(UUID declineUUID) {
         if (getUUID().equals(declineUUID)) return SELF_INVITE;
-        User target = NetworkMain.getInstance().getProfile(declineUUID);
+        User target = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(declineUUID);
 
         if (friends.contains(declineUUID)) {
             if (target.friends.contains(getUUID()))
@@ -201,7 +201,7 @@ public class User extends UserProfile {
 
     public InvitingResult removeFriend(UUID removeUUID) {
         if (getUUID().equals(removeUUID)) return SELF_INVITE;
-        User target = NetworkMain.getInstance().getProfile(removeUUID);
+        User target = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(removeUUID);
 
         if (!friends.contains(removeUUID)) {
             if (!target.friends.contains(getUUID()))
@@ -261,7 +261,7 @@ public class User extends UserProfile {
 
     @BsonIgnore
     public List<User> getFriendsUser() {
-        return friends.stream().map(NetworkMain.getInstance()::getProfile).collect(Collectors.toList());
+        return friends.stream().map(Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo()::getProfile).collect(Collectors.toList());
     }
 
     public List<UUID> getFriendsSentInvites() {
@@ -270,7 +270,7 @@ public class User extends UserProfile {
 
     @BsonIgnore
     public List<User> getFriendsSentInvitesUser() {
-        return friendsInvitesSent.stream().map(NetworkMain.getInstance()::getProfile).collect(Collectors.toList());
+        return friendsInvitesSent.stream().map(Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo()::getProfile).collect(Collectors.toList());
     }
 
     public List<UUID> getFriendsPendingInvites() {
@@ -279,7 +279,7 @@ public class User extends UserProfile {
 
     @BsonIgnore
     public List<User> getFriendsPendingInvitesUser() {
-        return friendsPendingInvites.stream().map(NetworkMain.getInstance()::getProfile).collect(Collectors.toList());
+        return friendsPendingInvites.stream().map(Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo()::getProfile).collect(Collectors.toList());
     }
 
     public int getCoins() {

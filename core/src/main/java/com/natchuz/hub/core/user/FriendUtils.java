@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.server.PluginEnableEvent;
+import org.spongepowered.api.Sponge;
 
 import java.util.UUID;
 
@@ -37,9 +38,9 @@ public class FriendUtils implements Listener {
      * @param target target player
      */
     public void invite(UUID sender, UUID target) {
-        User senderU = NetworkMain.getInstance().getProfile(sender);
+        User senderU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(sender);
         Player senderP = Bukkit.getPlayer(sender);
-        User targetU = NetworkMain.getInstance().getProfile(target);
+        User targetU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(target);
         Player targetP = Bukkit.getPlayer(target);
 
         assert senderP != null;
@@ -67,9 +68,9 @@ public class FriendUtils implements Listener {
      * @param target player to remove
      */
     public void removeFriend(UUID sender, UUID target) {
-        User senderU = NetworkMain.getInstance().getProfile(sender);
+        User senderU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(sender);
         Player senderP = Bukkit.getPlayer(sender);
-        User targetU = NetworkMain.getInstance().getProfile(target);
+        User targetU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(target);
 
         assert senderP != null;
 
@@ -95,9 +96,9 @@ public class FriendUtils implements Listener {
      * @param target a player to accept
      */
     public void acceptFriend(UUID sender, UUID target) {
-        User senderU = NetworkMain.getInstance().getProfile(sender);
+        User senderU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(sender);
         Player senderP = Bukkit.getPlayer(sender);
-        User targetU = NetworkMain.getInstance().getProfile(target);
+        User targetU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(target);
         Player targetP = Bukkit.getPlayer(target);
 
         assert senderP != null;
@@ -126,9 +127,9 @@ public class FriendUtils implements Listener {
      * @param target a player to decline
      */
     public void declineFriend(UUID sender, UUID target) {
-        User senderU = NetworkMain.getInstance().getProfile(sender);
+        User senderU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(sender);
         Player senderP = Bukkit.getPlayer(sender);
-        User targetU = NetworkMain.getInstance().getProfile(target);
+        User targetU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(target);
 
         assert senderP != null;
 
@@ -154,12 +155,12 @@ public class FriendUtils implements Listener {
     @EventHandler
     private void onEnable(PluginEnableEvent event) {
         // methods can be used as single-method interface
-        NetworkMain.getInstance().getPlugin().getCommand("f").setExecutor(this::friendCommand);
+        //Sponge.getCommandManager().register().setExecutor(this::friendCommand);
     }
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {
-        User user = NetworkMain.getInstance().getProfile(event.getPlayer());
+        User user = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(event.getPlayer());
 
         int pending = user.getFriendsPendingInvites().size();
 
