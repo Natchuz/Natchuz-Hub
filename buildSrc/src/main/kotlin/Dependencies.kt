@@ -34,3 +34,21 @@ object Deps {
 
     const val SPONGE_API = "org.spongepowered:spongeapi:7.2.0"
 }
+
+/**
+ * Common variables
+ */
+object Vars {
+    //const val LOCAL_SERVER_CONFIGURATION = "localServer"
+}
+
+/**
+ * List of plugin identifiers
+ */
+object Plugins {
+    const val VERSIONING = "net.nemerosa.versioning"
+    const val DOCKER = "com.palantir.docker"
+    const val SHADOW = "com.github.johnrengelman.shadow"
+    const val SPONGE = "org.spongepowered.plugin"
+    const val NMS = "net.minecrell.vanillagradle.server"
+}

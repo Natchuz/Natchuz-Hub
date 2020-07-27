@@ -1,7 +1,5 @@
 package com.natchuz.hub.build.gamemode
 
-import Deps
-import Vars
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.Copy
@@ -9,13 +7,15 @@ import org.gradle.api.tasks.Delete
 import org.gradle.api.tasks.JavaExec
 import java.io.File
 
+const val LOCAL_SERVER_CONFIGURATION = "localServer"
+
 open class GamemodePlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         val extension = project.extensions.create("gamemode", GamemodeExtension::class.java, project)
 
         project.tasks.register("prepareEnvironment", Copy::class.java) { task ->
-            task.from(extension.baseProject.configurations.getByName(Vars.LOCAL_SERVER_CONFIGURATION))
+            task.from(extension.baseProject.configurations.getByName(LOCAL_SERVER_CONFIGURATION))
             task.from(extension.testMapFile) { scope ->
                 scope.into("plugins/NatchuzHub")
             }
@@ -43,8 +43,6 @@ open class GamemodePlugin : Plugin<Project> {
         }
 
         project.dependencies.add("implementation", extension.baseProject)
-        project.dependencies.add("annotationProcessor", Deps.PLUGIN_ANNOTATIONS)
-        project.dependencies.add("compileOnly", Deps.PLUGIN_ANNOTATIONS)
     }
 
     companion object {

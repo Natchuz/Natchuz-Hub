@@ -5,7 +5,6 @@ import org.bukkit.Material;
 
 import java.util.Comparator;
 
-import com.natchuz.hub.paper.items.StackBuilder;
 import com.natchuz.hub.paper.managers.Dialog;
 import com.natchuz.hub.core.NetworkMain;
 

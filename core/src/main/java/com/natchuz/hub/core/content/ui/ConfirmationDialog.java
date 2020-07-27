@@ -3,7 +3,6 @@ package com.natchuz.hub.core.content.ui;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import com.natchuz.hub.paper.items.StackBuilder;
 import com.natchuz.hub.paper.managers.Dialog;
 
 import static com.natchuz.hub.paper.Color.*;

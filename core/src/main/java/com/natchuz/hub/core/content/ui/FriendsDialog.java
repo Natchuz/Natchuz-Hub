@@ -7,7 +7,6 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.List;
 
-import com.natchuz.hub.paper.items.StackBuilder;
 import com.natchuz.hub.paper.managers.Dialog;
 import com.natchuz.hub.core.NetworkMain;
 import com.natchuz.hub.core.content.Items;

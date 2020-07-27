@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.natchuz.hub.paper.Color;
 import com.natchuz.hub.utils.mojang.ElectroidMojangAPI;
 import com.natchuz.hub.utils.mojang.MojangAPI;
 import com.natchuz.hub.core.content.cosmetics.Cosmetics;

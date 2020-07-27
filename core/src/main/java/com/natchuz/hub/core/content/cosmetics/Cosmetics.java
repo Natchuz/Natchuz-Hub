@@ -15,7 +15,6 @@ import org.bukkit.inventory.meta.BlockStateMeta;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
-import com.natchuz.hub.paper.items.StackBuilder;
 import com.natchuz.hub.core.NetworkMain;
 import com.natchuz.hub.core.user.Purchasable;
 

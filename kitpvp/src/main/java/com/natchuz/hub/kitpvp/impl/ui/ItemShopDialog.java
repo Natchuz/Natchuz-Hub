@@ -7,7 +7,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.function.BiConsumer;
 
-import com.natchuz.hub.paper.items.StackBuilder;
 import com.natchuz.hub.paper.managers.Dialog;
 import com.natchuz.hub.core.content.Items;
 import com.natchuz.hub.core.profile.ProfileRepo;

@@ -26,8 +26,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import com.natchuz.hub.paper.items.ItemUtils;
-import com.natchuz.hub.paper.items.StackBuilder;
 import com.natchuz.hub.paper.managers.DialogManager;
 import com.natchuz.hub.paper.regions.BlockVectors;
 import com.natchuz.hub.protocol.state.JoinFlags;

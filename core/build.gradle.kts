@@ -1,4 +1,3 @@
-import Vars.LOCAL_SERVER_CONFIGURATION
 import de.undercouch.gradle.tasks.download.Download
 
 plugins {
@@ -7,7 +6,7 @@ plugins {
 }
 
 configurations {
-    create(LOCAL_SERVER_CONFIGURATION)
+    create("localServer")
 }
 
 docker {
@@ -68,7 +67,7 @@ dependencies {
     implementation(Deps.COMMONS_IO)
     implementation(Deps.JAVA_MOJANG_API)
 
-    LOCAL_SERVER_CONFIGURATION(files(localServerDir) {
+    "localServer"(files(localServerDir) {
         builtBy("prepareLocalServer")
     })
 }

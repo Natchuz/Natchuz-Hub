@@ -7,8 +7,6 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.UUID;
 
-import com.natchuz.hub.paper.items.StackBuilder;
-
 import static com.natchuz.hub.paper.Color.*;
 import static org.bukkit.Material.*;
 

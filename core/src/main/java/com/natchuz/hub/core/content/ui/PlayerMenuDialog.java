@@ -5,7 +5,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import com.natchuz.hub.paper.items.StackBuilder;
 import com.natchuz.hub.paper.managers.Dialog;
 import com.natchuz.hub.core.NetworkMain;
 import com.natchuz.hub.core.user.User;

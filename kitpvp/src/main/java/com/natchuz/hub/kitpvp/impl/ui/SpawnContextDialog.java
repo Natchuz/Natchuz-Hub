@@ -9,7 +9,6 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
-import com.natchuz.hub.paper.items.StackBuilder;
 import com.natchuz.hub.paper.managers.Dialog;
 import com.natchuz.hub.kitpvp.ConcreteKitGamemode;
 import com.natchuz.hub.kitpvp.impl.Arena;
