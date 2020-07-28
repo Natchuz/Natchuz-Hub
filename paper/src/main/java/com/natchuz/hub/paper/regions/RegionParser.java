@@ -1,8 +1,8 @@
 package com.natchuz.hub.paper.regions;
 
+import com.flowpowered.math.vector.Vector3d;
 import lombok.SneakyThrows;
 import org.apache.commons.lang.Validate;
-import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -63,7 +63,7 @@ public class RegionParser {
                     throw new RegionParserException(input, "Sphere region parameters does not match " +
                             "<base x> <base y> <base z> <radius>, " +
                             "found " + params.length + " parameters: " + rawParams);
-                regionList.add(new SphereRegion(new Vector(params[0], params[1], params[2]), params[3]));
+                regionList.add(new SphereRegion(new Vector3d(params[0], params[1], params[2]), params[3]));
                 continue;
             }
 
@@ -72,7 +72,7 @@ public class RegionParser {
                     throw new RegionParserException(input, "Cylinder region parameters does not match " +
                             "<base x> <base y> <base z> <radius> <height>, " +
                             "found " + params.length + " parameters: " + rawParams);
-                regionList.add(new CylinderRegion(new Vector(params[0], params[1], params[2]), params[3], params[4]));
+                regionList.add(new CylinderRegion(new Vector3d(params[0], params[1], params[2]), params[3], params[4]));
                 continue;
             }
 

@@ -1,46 +1,39 @@
 package com.natchuz.hub.paper.regions;
 
+import com.flowpowered.math.vector.Vector3d;
+import com.flowpowered.math.vector.Vector3i;
 import org.apache.commons.lang.Validate;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.util.BlockVector;
-import org.bukkit.util.Vector;
+import org.spongepowered.api.world.Location;
 
 public class BlockVectors {
 
-    public static BlockVector center(Vector blockPos) {
+    public static Vector3d center(Vector3i blockPos) {
         Validate.notNull(blockPos);
-        return new BlockVector(
-                blockPos.getBlockX() + 0.5, blockPos.getBlockY() + 0.5, blockPos.getBlockZ() + 0.5);
+        return new Vector3d(blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5);
     }
 
-    public static Location center(Location location) {
+    public static Vector3d center(Vector3d pos) {
+        Validate.notNull(pos);
+        return center(pos.toInt());
+    }
+
+    public static Location<?> center(Location<?> location) {
         Validate.notNull(location);
-        Location center = location.clone();
-        center.setX(center.getBlockX() + 0.5);
-        center.setY(center.getBlockY() + 0.5);
-        center.setZ(center.getBlockZ() + 0.5);
-        return center;
-    }
-
-    public static Location center(Block block) {
-        Validate.notNull(block);
-        return center(block.getLocation());
+        return location.copy().setPosition(center(location.getPosition()));
     }
 
     /**
      * Center location only in x and z axis
      */
-    public static Location centerFlat(Location location) {
+    public static Location<?> centerFlat(Location<?> location) {
         Validate.notNull(location);
-        Location center = location.clone();
-        center.setX(center.getBlockX() + 0.5);
-        center.setY(center.getY());
-        center.setZ(center.getBlockZ() + 0.5);
-        return center;
+        Vector3i blockPosition = location.getBlockPosition();
+        Vector3d position = location.getPosition();
+        return location.copy().setPosition(
+                new Vector3d(blockPosition.getX() + 0.5, position.getY(), blockPosition.getZ() + 0.5));
     }
 
-    public static boolean isInside(Vector point, Location blockLocation) {
+    public static boolean isInside(Vector3d point, Location<?> blockLocation) {
         Validate.notNull(point);
         Validate.notNull(blockLocation);
         return blockLocation.getX() <= point.getX()

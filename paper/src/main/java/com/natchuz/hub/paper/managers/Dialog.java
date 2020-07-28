@@ -1,6 +1,6 @@
 package com.natchuz.hub.paper.managers;
 
-import org.bukkit.Bukkit;
+/*import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -9,13 +9,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.LinkedList;
-import java.util.function.Consumer;
+import java.util.function.Consumer;*/
 
 /**
  * Spaghetti here
  */
 public abstract class Dialog {
-
+/*
     Inventory inv;
     LinkedList<DialogField> fields = new LinkedList<>();
     Player viewer;
@@ -137,5 +137,5 @@ public abstract class Dialog {
     protected void init() {
     }
 
-    //endregion
+    //endregion*/
 }

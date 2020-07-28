@@ -1,7 +1,7 @@
 package com.natchuz.hub.paper.regions;
 
+import com.flowpowered.math.vector.Vector3d;
 import org.apache.commons.lang.Validate;
-import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -24,7 +24,7 @@ public class Union extends Region implements Iterable<Region> {
     }
 
     @Override
-    public boolean contains(Vector loc) {
+    public boolean contains(Vector3d loc) {
         for (Region region : regions) {
             if (region.contains(loc)) {
                 return true;

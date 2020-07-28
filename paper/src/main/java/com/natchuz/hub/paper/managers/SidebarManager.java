@@ -1,12 +1,6 @@
 package com.natchuz.hub.paper.managers;
 
-import org.apache.commons.lang.ArrayUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.RenderType;
-import org.bukkit.scoreboard.Scoreboard;
+import org.spongepowered.api.entity.living.player.Player;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +12,7 @@ import java.util.function.Function;
 public class SidebarManager {
 
     private final Map<Player, Function<Player, String[]>> entries;
-    private final String scoreboardTitle;
+    private final String scoreboardTitle = "";
     private final String serverID;
 
     /**
@@ -27,7 +21,7 @@ public class SidebarManager {
      * @param scoreboardTitle title of scoreboard
      */
     public SidebarManager(String scoreboardTitle, String serverID) {
-        this.scoreboardTitle = Color.YELLOW + Color.BOLD + scoreboardTitle;
+        //this.scoreboardTitle = Color.YELLOW + Color.BOLD + scoreboardTitle;
         this.entries = new HashMap<>();
         this.serverID = serverID;
     }
@@ -50,7 +44,7 @@ public class SidebarManager {
      */
     public void unset(Player player) {
         entries.remove(player);
-        player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+        //player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
     }
 
     /**
@@ -59,7 +53,7 @@ public class SidebarManager {
      * @param player the player who refreshes scoreboard
      */
     public void refresh(Player player) {
-        Function<Player, String[]> fun = entries.get(player);
+        /*Function<Player, String[]> fun = entries.get(player);
         String[] ret = fun.apply(player);
 
         ret = (String[]) ArrayUtils.add(ret, 0, Color.GREY + "Server: " + Color.DARK_GREY + serverID);
@@ -86,6 +80,6 @@ public class SidebarManager {
                 element = separator;
             }
             objective.getScore(element).setScore(i + 1);
-        }
+        }*/
     }
 }

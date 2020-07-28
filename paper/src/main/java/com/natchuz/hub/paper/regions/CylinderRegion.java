@@ -1,7 +1,7 @@
 package com.natchuz.hub.paper.regions;
 
+import com.flowpowered.math.vector.Vector3d;
 import org.apache.commons.lang.Validate;
-import org.bukkit.util.Vector;
 
 import java.util.Objects;
 
@@ -10,7 +10,7 @@ import java.util.Objects;
  */
 public class CylinderRegion extends Region {
 
-    private final Vector base;
+    private final Vector3d base;
     private final double height;
     private final double radius;
     private final double radiusSq;
@@ -18,12 +18,12 @@ public class CylinderRegion extends Region {
     /**
      * Creates cylinder region
      *
-     * @param base   vector as base of cylinder (center of lower base)
+     * @param base   Vector3d as base of cylinder (center of lower base)
      * @param height height
      * @param radius radius
      * @throws IllegalArgumentException when radius isn't greater that 0
      */
-    public CylinderRegion(Vector base, double height, double radius) {
+    public CylinderRegion(Vector3d base, double height, double radius) {
         Validate.notNull(base);
         Validate.isTrue(radius > 0);
 
@@ -46,7 +46,7 @@ public class CylinderRegion extends Region {
     }
 
     @Override
-    public boolean contains(Vector loc) {
+    public boolean contains(Vector3d loc) {
         return loc.getY() >= this.base.getY()
                 && loc.getY() <= (this.base.getY() + this.height)
                 && Math.pow(loc.getX() - this.base.getX(), 2)
@@ -54,7 +54,7 @@ public class CylinderRegion extends Region {
                 <= this.radiusSq;
     }
 
-    public Vector getBase() {
+    public Vector3d getBase() {
         return base;
     }
 

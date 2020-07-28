@@ -4,7 +4,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import com.natchuz.hub.paper.managers.DialogManager;
-import com.natchuz.hub.paper.managers.HologramManager;
 import com.natchuz.hub.paper.managers.SidebarManager;
 import com.natchuz.hub.core.map.MapManifest;
 import com.natchuz.hub.core.profile.ProfileRepo;

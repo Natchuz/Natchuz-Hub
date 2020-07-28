@@ -1,7 +1,7 @@
 package com.natchuz.hub.paper.regions;
 
+import com.flowpowered.math.vector.Vector3d;
 import org.apache.commons.lang.Validate;
-import org.bukkit.util.Vector;
 
 import java.util.Objects;
 
@@ -10,7 +10,7 @@ import java.util.Objects;
  */
 public class SphereRegion extends Region {
 
-    private final Vector center;
+    private final Vector3d center;
     private final double radius;
     private final double radiusSquared;
 
@@ -21,7 +21,7 @@ public class SphereRegion extends Region {
      * @param radius radius
      * @throws IllegalArgumentException when radius isn't greater than 0
      */
-    public SphereRegion(Vector center, double radius) {
+    public SphereRegion(Vector3d center, double radius) {
         Validate.notNull(center, "Sphere center cannot be null!");
         Validate.isTrue(radius > 0, "Radius must be bigger than 0!");
 
@@ -42,11 +42,11 @@ public class SphereRegion extends Region {
     }
 
     @Override
-    public boolean contains(Vector loc) {
+    public boolean contains(Vector3d loc) {
         return center.distanceSquared(loc) <= radius * radius;
     }
 
-    public Vector getCenter() {
+    public Vector3d getCenter() {
         return center;
     }
 

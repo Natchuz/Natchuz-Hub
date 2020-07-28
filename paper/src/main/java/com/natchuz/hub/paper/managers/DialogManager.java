@@ -1,5 +1,5 @@
 package com.natchuz.hub.paper.managers;
-
+/*
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,11 +10,11 @@ import org.bukkit.event.inventory.InventoryType;
 
 import java.util.HashMap;
 import java.util.Stack;
-
+*/
 /**
  * Don't even ask me what is it
  */
-public class DialogManager implements Listener {
+public class DialogManager {/* implements Listener {
 
     static HashMap<Player, Stack<Dialog>> parenting = new HashMap<>();
 
@@ -71,5 +71,5 @@ public class DialogManager implements Listener {
         dialog.viewer = player;
         dialog.init();
         parenting.get(player).push(dialog).construct();
-    }
+    }*/
 }

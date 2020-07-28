@@ -1,7 +1,7 @@
 package com.natchuz.hub.paper.regions;
 
+import com.flowpowered.math.vector.Vector3d;
 import org.apache.commons.lang.Validate;
-import org.bukkit.util.Vector;
 
 import java.util.Objects;
 
@@ -10,13 +10,13 @@ import java.util.Objects;
  */
 public class CuboidRegion extends Region {
 
-    private final Vector min;
-    private final Vector max;
+    private final Vector3d min;
+    private final Vector3d max;
 
     /**
      * Create cuboid based on 2 vertices
      */
-    public CuboidRegion(Vector min, Vector max) {
+    public CuboidRegion(Vector3d min, Vector3d max) {
         Validate.notNull(min);
         Validate.notNull(max);
         this.min = min.clone();
@@ -36,20 +36,22 @@ public class CuboidRegion extends Region {
      * Create cuboid based on 2 vertices
      */
     public CuboidRegion(double minx, double miny, double minz, double maxx, double maxy, double maxz) {
-        this(new Vector(minx, miny, minz), new Vector(maxx, maxy, maxz));
+        this(new Vector3d(minx, miny, minz), new Vector3d(maxx, maxy, maxz));
     }
 
     @Override
-    public boolean contains(Vector loc) {
+    public boolean contains(Vector3d loc) {
         Validate.notNull(loc);
-        return loc.isInAABB(min, max);
+        return loc.getX() >= min.getX() && loc.getX() <= max.getX() &&
+                loc.getY() >= min.getY() && loc.getY() <= max.getY() &&
+                loc.getZ() >= min.getZ() && loc.getZ() <= max.getZ();
     }
 
-    public Vector getMin() {
+    public Vector3d getMin() {
         return min;
     }
 
-    public Vector getMax() {
+    public Vector3d getMax() {
         return max;
     }
 

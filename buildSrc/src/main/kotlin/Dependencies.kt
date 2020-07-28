@@ -33,13 +33,7 @@ object Deps {
     const val MOCKITO_KOTLIN = "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
 
     const val SPONGE_API = "org.spongepowered:spongeapi:7.2.0"
-}
-
-/**
- * Common variables
- */
-object Vars {
-    //const val LOCAL_SERVER_CONFIGURATION = "localServer"
+    const val PACKET_GATE = "com.github.CrushedPixel:PacketGate:0.1.1"
 }
 
 /**

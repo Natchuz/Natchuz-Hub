@@ -1,42 +1,42 @@
 package com.natchuz.hub.paper.regions;
 
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.util.Vector;
+import com.flowpowered.math.vector.Vector3d;
+import com.flowpowered.math.vector.Vector3i;
+import org.spongepowered.api.entity.Entity;
+import org.spongepowered.api.world.Location;
 
 public abstract class Region {
 
-    public boolean contains(Location point) {
-        return this.contains(point.toVector());
-    }
-
-    public boolean contains(Block block) {
-        return this.contains(BlockVectors.center(block));
-    }
-
     public boolean contains(Entity entity) {
-        return this.contains(entity.getLocation().toVector());
+        return contains(entity.getLocation().getPosition());
     }
 
-    public boolean enters(Location from, Location to) {
-        return !this.contains(from) && this.contains(to);
+    public boolean contains(Location<?> point) {
+        return contains(point.getPosition());
     }
 
-    public boolean enters(Vector from, Vector to) {
-        return !this.contains(from) && this.contains(to);
+    public boolean containsBlock(Location<?> blockPos) {
+        return contains(blockPos.getBlockPosition().toDouble());
     }
 
-    public boolean exits(Location from, Location to) {
-        return this.contains(from) && !this.contains(to);
+    public boolean enters(Location<?> from, Location<?> to) {
+        return !contains(from) && contains(to);
     }
 
-    public boolean exits(Vector from, Vector to) {
-        return this.contains(from) && !this.contains(to);
+    public boolean enters(Vector3d from, Vector3d to) {
+        return !contains(from) && contains(to);
+    }
+
+    public boolean exits(Location<?> from, Location<?> to) {
+        return contains(from) && !contains(to);
+    }
+
+    public boolean exits(Vector3d from, Vector3d to) {
+        return contains(from) && !contains(to);
     }
 
     /**
      * Checks if Vector is in region
      */
-    public abstract boolean contains(Vector loc);
+    public abstract boolean contains(Vector3d loc);
 }

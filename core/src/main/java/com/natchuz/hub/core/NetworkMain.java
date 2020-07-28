@@ -1,10 +1,7 @@
 package com.natchuz.hub.core;
 
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
 import com.google.inject.Inject;
 import lombok.SneakyThrows;
-import lombok.experimental.Delegate;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.slf4j.Logger;
@@ -19,7 +16,6 @@ import org.spongepowered.api.plugin.Plugin;
 import java.util.List;
 
 import com.natchuz.hub.paper.managers.DialogManager;
-import com.natchuz.hub.paper.managers.HologramManager;
 import com.natchuz.hub.paper.managers.SidebarManager;
 import com.natchuz.hub.protocol.state.JoinFlags;
 import com.natchuz.hub.protocol.state.ServerID;

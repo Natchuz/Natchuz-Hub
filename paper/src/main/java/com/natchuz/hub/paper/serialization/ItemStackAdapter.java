@@ -1,23 +1,27 @@
 package com.natchuz.hub.paper.serialization;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
+import com.google.gson.*;
+import lombok.SneakyThrows;
+import org.spongepowered.api.Sponge;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.persistence.DataFormats;
+import org.spongepowered.api.item.ItemType;
+import org.spongepowered.api.item.ItemTypes;
+import org.spongepowered.api.item.inventory.ItemStack;
+import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 
 import java.lang.reflect.Type;
+import java.util.Optional;
 
 public class ItemStackAdapter implements JsonDeserializer<ItemStack> {
 
+    @SneakyThrows
     @Override
     public ItemStack deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        if (json.isJsonPrimitive() && json.getAsJsonPrimitive().isString()) {
+        /*if (json.isJsonPrimitive() && json.getAsJsonPrimitive().isString()) {
             String value = json.getAsString();
             String[] parts = value.split(":");
 
-            Material material = Material.getMaterial(parts[0]);
             if (material == null) {
                 throw new JsonParseException("Invalid Material type: " + value);
             }
@@ -32,6 +36,11 @@ public class ItemStackAdapter implements JsonDeserializer<ItemStack> {
                 throw new JsonParseException("Wrong format of material with specified amount!");
             }
             return new ItemStack(material, amount);
+        }*/
+        if (json.isJsonObject()) {
+            DataContainer container = DataFormats.JSON.read(json.toString());
+            Optional<ItemStackSnapshot> snapshot = Sponge.getDataManager().deserialize(ItemStackSnapshot.class, container);
+            return snapshot.map(ItemStackSnapshot::createStack).orElse(null);
         }
         return null;
     }
