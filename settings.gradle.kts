@@ -15,4 +15,4 @@ include("core")
 
 // servers
 include("lobby")
-include("kitpvp")
+//include("kitpvp") currently not in use

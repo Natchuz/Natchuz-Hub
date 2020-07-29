@@ -1,47 +1,8 @@
 package com.natchuz.hub.lobby;
 
-import org.bukkit.*;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.BossBar;
-import org.bukkit.entity.*;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityCombustEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.inventory.InventoryInteractEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.raid.RaidTriggerEvent;
-import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.event.weather.WeatherChangeEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.SkullMeta;
+public class LobbyListener {
 
-import com.natchuz.hub.paper.managers.DialogManager;
-import com.natchuz.hub.paper.regions.BlockVectors;
-import com.natchuz.hub.protocol.state.JoinFlags;
-import com.natchuz.hub.utils.VersionInfo;
-import com.natchuz.hub.core.content.Items;
-import com.natchuz.hub.core.content.ui.CosmeticDialog;
-import com.natchuz.hub.core.content.ui.MenuDialog;
-import com.natchuz.hub.core.content.ui.RewardsDialog;
-import com.natchuz.hub.core.user.User;
-
-import static com.natchuz.hub.paper.Color.*;
-
-public class LobbyListener implements Listener {
-
-    private final PrivilegedFacade client;
-    private final VersionInfo versionInfo;
+    /*private final VersionInfo versionInfo;
 
     private LivingEntity rewardsDealer;
     private LivingEntity kitpvpNPC;
@@ -65,8 +26,8 @@ public class LobbyListener implements Listener {
 
     //region event handlers
 
-    @EventHandler
-    public void onEnable(PluginEnableEvent event) {
+    @Listener
+    public void onEnable(GameStartingServerEvent event) {
 
         // add rewards dealer
         Location rewardsDealerLocation = BlockVectors.centerFlat(mapConfig.getRewards());
@@ -204,12 +165,7 @@ public class LobbyListener implements Listener {
     @EventHandler
     public void onSpawn(CreatureSpawnEvent event) {
         event.setCancelled(!event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.CUSTOM));
-    }
-
-    @EventHandler
-    public void onRaid(RaidTriggerEvent event) {
-        event.setCancelled(true);
-    }
+    }*/
 
     //endregion
 

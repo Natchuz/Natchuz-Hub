@@ -1,17 +1,18 @@
 package com.natchuz.hub.lobby;
 
-import org.bukkit.Location;
+import org.spongepowered.api.world.Location;
+import org.spongepowered.api.world.World;
 
 /**
  * Lobby map configuration
  */
 public class MapConfig {
 
-    private final Location rewards;
-    private final Location kitpvp;
-    private final Location spawn;
+    private final Location<World> rewards;
+    private final Location<World> kitpvp;
+    private final Location<World> spawn;
 
-    public MapConfig(Location rewards, Location kitpvp, Location spawn) {
+    public MapConfig(Location<World> rewards, Location<World> kitpvp, Location<World> spawn) {
         this.rewards = rewards;
         this.kitpvp = kitpvp;
         this.spawn = spawn;
@@ -20,21 +21,21 @@ public class MapConfig {
     /**
      * Get location of rewards npc
      */
-    public Location getRewards() {
+    public Location<World> getRewards() {
         return rewards;
     }
 
     /**
      * Get location of kitpvp npc
      */
-    public Location getKitpvp() {
+    public Location<World> getKitpvp() {
         return kitpvp;
     }
 
     /**
      * Get spawn location
      */
-    public Location getSpawn() {
+    public Location<World> getSpawn() {
         return spawn;
     }
 

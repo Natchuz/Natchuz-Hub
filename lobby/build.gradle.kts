@@ -11,6 +11,10 @@ docker {
     name = "lobby"
 }
 
+dependencies {
+    implementation(Deps.SPONGE_API)
+}
+
 tasks.named("docker") {
     dependsOn(":core:docker")
 }

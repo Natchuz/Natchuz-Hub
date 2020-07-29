@@ -124,7 +124,7 @@ projects("bungeecord") {
 /**
  * Sponge projects
  */
-projects("paper", "core", "lobby", "kitpvp") {
+projects("paper", "core", "lobby"/*, "kitpvp"*/) {
     apply(plugin = Plugins.SPONGE)
 
     dependencies {
@@ -135,7 +135,7 @@ projects("paper", "core", "lobby", "kitpvp") {
 /**
  * NMS Projects
  */
-projects("paper", "core", "lobby", "kitpvp") {
+projects("paper", "core", "lobby"/*, "kitpvp"*/) {
     apply(plugin = Plugins.NMS)
 
     configure<UserBaseExtension> {
@@ -148,7 +148,7 @@ projects("paper", "core", "lobby", "kitpvp") {
 /**
  * Docker configuration
  */
-projects("bungeecord", "service", "core", "kitpvp", "lobby") {
+projects("bungeecord", "service", "core"/*, "kitpvp"*/, "lobby") {
     apply(plugin = Plugins.DOCKER)
 
     configure<DockerExtension> {
