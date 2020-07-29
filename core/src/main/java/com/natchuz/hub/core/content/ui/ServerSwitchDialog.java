@@ -1,19 +1,13 @@
 package com.natchuz.hub.core.content.ui;
 
-import lombok.SneakyThrows;
-import org.bukkit.Material;
-
-import java.util.Comparator;
-
 import com.natchuz.hub.paper.managers.Dialog;
-import com.natchuz.hub.core.NetworkMain;
 
 /**
  * Dialog used to switch between subservers
  */
 public class ServerSwitchDialog extends Dialog {
 
-    @Override
+    /*@Override
     protected void init() {
         setWidth(3);
         setHeight(1);
@@ -39,5 +33,5 @@ public class ServerSwitchDialog extends Dialog {
                 NetworkMain.getInstance().sendToLobby(viewer());
             });
         }
-    }
+    }*/
 }

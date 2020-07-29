@@ -3,7 +3,7 @@ package com.natchuz.hub.kitpvp;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import com.natchuz.hub.core.api.CoreFacade;
+import com.natchuz.hub.core.api.MainFacade;
 import com.natchuz.hub.core.profile.ProfileRepo;
 import com.natchuz.hub.kitpvp.impl.PlayerState;
 import com.natchuz.hub.kitpvp.model.KitConfig;

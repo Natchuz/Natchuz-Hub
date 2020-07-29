@@ -1,20 +1,12 @@
 package com.natchuz.hub.core.content.ui;
 
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.inventory.ItemStack;
-
 import com.natchuz.hub.paper.managers.Dialog;
-import com.natchuz.hub.core.content.Items;
-import com.natchuz.hub.core.content.cosmetics.Cosmetics;
-
-import static com.natchuz.hub.paper.Color.*;
 
 /**
  * Dialog that manages cosmetics
  */
 public class CosmeticDialog extends Dialog {
-    private Class<? extends Enum> context;
+    /*private Class<? extends Enum> context;
     private final int page = 0;
 
     @Override
@@ -57,5 +49,5 @@ public class CosmeticDialog extends Dialog {
 
             setField(Items.Gui.BACK, 3, 5, (c) -> context = null);
         }
-    }
+    }*/
 }

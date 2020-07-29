@@ -3,17 +3,16 @@ package com.natchuz.hub.core.user;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
-import org.bukkit.Bukkit;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.text.Text;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-import com.natchuz.hub.utils.mojang.ElectroidMojangAPI;
-import com.natchuz.hub.utils.mojang.MojangAPI;
 import com.natchuz.hub.core.content.cosmetics.Cosmetics;
 import com.natchuz.hub.core.profile.UserProfile;
 
@@ -40,13 +39,6 @@ public class User extends UserProfile {
 
     private int coins;
 
-    @EqualsAndHashCode.Exclude
-    private final MojangAPI mojangAPI;
-
-    public User() {
-        this.mojangAPI = new ElectroidMojangAPI();
-    }
-
     //region constructors
 
     @Override
@@ -54,9 +46,9 @@ public class User extends UserProfile {
         rank = Rank.REGULAR;
         transactions = new ArrayList<>();
 
-        selectedTrait = Cosmetics.Traits.NONE;
+        /*selectedTrait = Cosmetics.Traits.NONE;
         selectedShield = Cosmetics.Shields.NONE;
-        selectedBloodEffect = Cosmetics.BloodEffects.NORMAL;
+        selectedBloodEffect = Cosmetics.BloodEffects.NORMAL;*/
 
         friends = new LinkedList<>();
         friendsInvitesSent = new LinkedList<>();
@@ -66,16 +58,16 @@ public class User extends UserProfile {
     }
 
     public void updateDB() {
-        Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().updateProfile(this);
+        Sponge.getServiceManager().provide(ProfileService.class).ifPresent(t -> t.getUserRepo().updateProfile(this));
     }
 
     //endregion
 
     //region utility methods
 
-    public String chatName() {
-        return (rank == Rank.REGULAR ? "" : rank.title() + " ") + ((Bukkit.getPlayer(getUUID())) == null
-                ? mojangAPI.getUsername(getUUID()) : Bukkit.getPlayer(getUUID()).getName()) + Color.RESET;
+    public CompletableFuture<Text> chatName() {
+        return Sponge.getServer().getGameProfileManager().get(getUUID()).thenApply(p -> Text.of(
+                (rank == Rank.REGULAR ? "" : rank.title() + " "), p.getName()));
     }
 
     public Boolean owns(Purchasable product) {

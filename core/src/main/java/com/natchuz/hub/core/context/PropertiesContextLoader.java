@@ -1,15 +1,15 @@
 package com.natchuz.hub.core.context;
 
-import com.natchuz.hub.core.api.PrivilegedFacade;
+import com.natchuz.hub.core.api.MainFacade;
 
 /**
  * Loads context from Java System Properties
  */
 public class PropertiesContextLoader implements ContextLoader {
 
-    private final PrivilegedFacade facade;
+    private final MainFacade facade;
 
-    public PropertiesContextLoader(PrivilegedFacade facade) {
+    public PropertiesContextLoader(MainFacade facade) {
         this.facade = facade;
     }
 

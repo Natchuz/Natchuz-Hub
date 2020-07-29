@@ -6,6 +6,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import lombok.SneakyThrows;
 import org.bson.UuidRepresentation;
+import org.spongepowered.api.Sponge;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +15,7 @@ import com.natchuz.hub.protocol.arch.Services;
 import com.natchuz.hub.protocol.messaging.Protocol;
 import com.natchuz.hub.protocol.state.RedisStateDatabase;
 import com.natchuz.hub.protocol.state.StateDatabase;
-import com.natchuz.hub.core.api.PrivilegedFacade;
+import com.natchuz.hub.core.api.MainFacade;
 import com.natchuz.hub.core.map.LocalMapRepository;
 import com.natchuz.hub.core.map.MapRepository;
 import com.natchuz.hub.core.modules.*;
@@ -30,14 +31,14 @@ import com.natchuz.hub.core.proxy.ProxyBackend;
  */
 public class NetworkContext implements ServerContext {
 
-    private final PrivilegedFacade facade;
+    private final MainFacade facade;
     private final MongoDatabase database;
     private final Protocol protocol;
 
     private final String DB_NAME = "natchuz-hub";
 
     @SneakyThrows
-    public NetworkContext(PrivilegedFacade facade) {
+    public NetworkContext(MainFacade facade) {
         this.facade = facade;
 
         MongoClientSettings settings = MongoClientSettings.builder().uuidRepresentation(UuidRepresentation.STANDARD)
@@ -50,7 +51,7 @@ public class NetworkContext implements ServerContext {
 
     @Override
     public MapRepository createMapRepository() {
-        return new LocalMapRepository(facade.getPlugin().getDataFolder());
+        return new LocalMapRepository(Sponge.getGame().getGameDirectory().toFile());
     }
 
     @Override
@@ -71,10 +72,10 @@ public class NetworkContext implements ServerContext {
     @Override
     public List<Module> createModules() {
         return Arrays.asList(
-                new FriendsNotifier(facade, protocol),
+                new FriendsNotifier(protocol),
                 new PlayerSubscriber(protocol),
-                new NetworkListener(facade),
-                new ProtocolHandler(facade, protocol)
+                new NetworkListener(),
+                new ProtocolHandler()
         );
     }
 }

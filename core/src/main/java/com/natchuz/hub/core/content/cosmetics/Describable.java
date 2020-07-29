@@ -1,7 +1,7 @@
 package com.natchuz.hub.core.content.cosmetics;
 
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.item.inventory.ItemStack;
 
 public interface Describable {
     ItemStack icon();

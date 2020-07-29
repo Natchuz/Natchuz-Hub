@@ -1,20 +1,13 @@
 package com.natchuz.hub.core.content.ui;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.inventory.meta.SkullMeta;
-
 import com.natchuz.hub.paper.managers.Dialog;
-import com.natchuz.hub.core.NetworkMain;
-import com.natchuz.hub.core.content.Items;
-import com.natchuz.hub.core.user.User;
 
 /**
  * Main menu dialog
  */
 public class MenuDialog extends Dialog {
 
-    private User user;
+    /*private User user;
 
     @Override
     protected void init() {
@@ -39,5 +32,5 @@ public class MenuDialog extends Dialog {
         setField(Items.COSMETICS, 1, 1, (c) -> {
             open(new CosmeticDialog());
         });
-    }
+    }*/
 }

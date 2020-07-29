@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import com.natchuz.hub.paper.regions.BlockVectors;
-import com.natchuz.hub.core.api.CoreFacade;
+import com.natchuz.hub.core.api.MainFacade;
 import com.natchuz.hub.kitpvp.map.MapConfig;
 import com.natchuz.hub.kitpvp.map.MapConfig.KitLocation;
 

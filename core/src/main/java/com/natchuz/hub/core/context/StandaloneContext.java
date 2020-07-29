@@ -1,10 +1,13 @@
 package com.natchuz.hub.core.context;
 
+import org.spongepowered.api.Sponge;
+import sun.reflect.generics.factory.CoreReflectionFactory;
+
 import java.util.Collections;
 import java.util.List;
 
 import com.natchuz.hub.protocol.state.StateDatabase;
-import com.natchuz.hub.core.api.PrivilegedFacade;
+import com.natchuz.hub.core.api.MainFacade;
 import com.natchuz.hub.core.map.LocalMapRepository;
 import com.natchuz.hub.core.map.MapRepository;
 import com.natchuz.hub.core.modules.Module;
@@ -20,15 +23,15 @@ import com.natchuz.hub.core.standalone.FakeStateDatabase;
  */
 public class StandaloneContext implements ServerContext {
 
-    private final PrivilegedFacade facade;
+    private final MainFacade facade;
 
-    public StandaloneContext(PrivilegedFacade facade) {
+    public StandaloneContext(MainFacade facade) {
         this.facade = facade;
     }
 
     @Override
     public MapRepository createMapRepository() {
-        return new LocalMapRepository(facade.getPlugin().getDataFolder());
+        return new LocalMapRepository(Sponge.getGame().getGameDirectory().toFile());
     }
 
     @Override

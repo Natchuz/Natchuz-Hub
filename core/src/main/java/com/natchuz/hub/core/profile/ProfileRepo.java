@@ -1,7 +1,5 @@
 package com.natchuz.hub.core.profile;
 
-import org.bukkit.entity.Player;
-
 import java.util.UUID;
 
 /**
@@ -25,8 +23,4 @@ public interface ProfileRepo<T extends UserProfile> {
      * @param profile profile to be updated
      */
     void updateProfile(T profile);
-
-    default T getProfile(Player player) {
-        return getProfile(player.getUniqueId());
-    }
 }

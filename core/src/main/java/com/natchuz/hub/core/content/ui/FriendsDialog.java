@@ -1,27 +1,13 @@
 package com.natchuz.hub.core.content.ui;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
-
-import java.util.List;
-
 import com.natchuz.hub.paper.managers.Dialog;
-import com.natchuz.hub.core.NetworkMain;
-import com.natchuz.hub.core.content.Items;
-import com.natchuz.hub.core.user.User;
-
-import static com.natchuz.hub.paper.Color.GREY;
-import static com.natchuz.hub.paper.Color.RESET;
-import static org.bukkit.event.inventory.ClickType.*;
 
 /**
  * Dialog that manages friends
  */
 public class FriendsDialog extends Dialog {
 
-    private User user;
+    /*private User user;
     private int page = 0;
     private DialogView context = DialogView.FRIENDS;
 
@@ -103,5 +89,5 @@ public class FriendsDialog extends Dialog {
 
     private enum DialogView {
         FRIENDS, INVITES
-    }
+    }*/
 }

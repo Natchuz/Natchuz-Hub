@@ -2,25 +2,24 @@ package com.natchuz.hub.core;
 
 import com.google.inject.Inject;
 import lombok.SneakyThrows;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
+import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePostInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStoppedEvent;
 import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.world.World;
 
 import java.util.List;
+import java.util.UUID;
 
-import com.natchuz.hub.paper.managers.DialogManager;
-import com.natchuz.hub.paper.managers.SidebarManager;
 import com.natchuz.hub.protocol.state.JoinFlags;
 import com.natchuz.hub.protocol.state.ServerID;
 import com.natchuz.hub.protocol.state.StateDatabase;
-import com.natchuz.hub.core.api.PrivilegedFacade;
+import com.natchuz.hub.core.api.MainFacade;
 import com.natchuz.hub.core.content.commands.NetworkCommands;
 import com.natchuz.hub.core.content.cosmetics.CosmeticsListener;
 import com.natchuz.hub.core.context.ContextLoader;
@@ -38,11 +37,8 @@ import com.natchuz.hub.core.user.User;
  * This is entry class of Network plugin for Paper
  */
 @Plugin(id = "core-plugin", name = "Core Plugin", version = "1.0")
-public class NetworkMain implements PrivilegedFacade {
+public class NetworkMain implements MainFacade {
 
-    private HologramManager hologramManager;
-    private SidebarManager sidebarManager;
-    private DialogManager dialogManager;
     private FriendUtils friendUtils;
     private String serverID;
 
@@ -85,14 +81,6 @@ public class NetworkMain implements PrivilegedFacade {
         MapLoader loader = new AnvilZipMapLoader(repository);
         loadedMap = loader.load("testMap");
 
-        // TODO: get rid of it to external plugin
-        // construct and register all paper utils
-        hologramManager = new HologramManager((org.bukkit.plugin.Plugin) this);
-        sidebarManager = new SidebarManager("Natchuz Hub", getServerId());
-        dialogManager = new DialogManager();
-        game.getEventManager().registerListeners(this, hologramManager);
-        game.getEventManager().registerListeners(this, dialogManager);
-
         // construct fixed listeners
         friendUtils = new FriendUtils();
         CosmeticsListener cosmeticsListener = new CosmeticsListener();
@@ -119,6 +107,7 @@ public class NetworkMain implements PrivilegedFacade {
         game.getServiceManager().setProvider(this, FriendUtils.class, friendUtils);
     }
 
+    @SneakyThrows
     @Listener
     public void onStop(GameStoppedEvent event) {
         // unregister server from state database
@@ -127,10 +116,6 @@ public class NetworkMain implements PrivilegedFacade {
 
     //region facade implementation
 
-    @Override
-    public HologramManager getHologramManager() {
-        return hologramManager;
-    }
 
     @Override
     public MapManifest getMapManifest() {
@@ -143,23 +128,13 @@ public class NetworkMain implements PrivilegedFacade {
     }
 
     @Override
-    public World getMapWorld() {
-        return loadedMap.getWorld();
+    public UUID getMapWorld() {
+        return loadedMap.getWorld().getUniqueId();
     }
 
     @Override
     public void sendToLobby(Player player) {
         networkUtils.send(player, "lb", JoinFlags.LOBBY_RETURN);
-    }
-
-    @Override
-    public SidebarManager getSidebarManager() {
-        return sidebarManager;
-    }
-
-    @Override
-    public DialogManager getDialogManager() {
-        return dialogManager;
     }
 
     @Override

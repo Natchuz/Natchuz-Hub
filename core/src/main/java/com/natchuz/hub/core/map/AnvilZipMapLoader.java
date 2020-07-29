@@ -33,7 +33,7 @@ public class AnvilZipMapLoader implements MapLoader {
      */
     public AnvilZipMapLoader(MapRepository mapRepository) {
         this.mapRepository = mapRepository;
-        Sponge.getPluginManager().getPlugin("core-plugin").get().getLogger();
+        logger = Sponge.getPluginManager().getPlugin("core-plugin").get().getLogger();
     }
 
     @Override

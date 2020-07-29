@@ -1,23 +1,18 @@
 package com.natchuz.hub.core.content.ui;
 
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-
 import com.natchuz.hub.paper.managers.Dialog;
-
-import static com.natchuz.hub.paper.Color.*;
 
 /**
  * A dialog that ask for confirmation
  */
 public class ConfirmationDialog extends Dialog {
 
-    private final Runnable confirm;
+    /*private final Runnable confirm;
     private final Runnable decline;
     private final String title;
     private String confirmText;
     private String declineText;
-    private final ItemStack icon;
+    private final ItemStack icon;*/
 
     /**
      * @param confirm action performed when player answers positive
@@ -25,15 +20,15 @@ public class ConfirmationDialog extends Dialog {
      * @param icon    icon to be displayed
      * @param title   title of dialog
      */
-    public ConfirmationDialog(Runnable confirm, Runnable decline, ItemStack icon, String title) {
-        this.confirm = confirm;
+    public ConfirmationDialog(/*Runnable confirm, Runnable decline, ItemStack icon, String title*/) {
+        /*this.confirm = confirm;
         this.decline = decline;
         this.icon = icon;
         this.title = title;
 
         setHeight(3);
         setWidth(3);
-        setName(title);
+        setName(title);*/
     }
 
     /**
@@ -41,11 +36,11 @@ public class ConfirmationDialog extends Dialog {
      * @param decline action performed when player answers negative
      * @param icon    icon to be displayed
      */
-    public ConfirmationDialog(Runnable confirm, Runnable decline, ItemStack icon) {
-        this(confirm, decline, icon, "Confirm?");
-    }
+    //public ConfirmationDialog(/*Runnable confirm, Runnable decline, ItemStack icon*/) {
+    //this(confirm, decline, icon, "Confirm?");
+    //}
 
-    @Override
+    /*@Override
     protected void build() {
         setField(icon, 1, 0, (c) -> {
         });
@@ -57,5 +52,5 @@ public class ConfirmationDialog extends Dialog {
             confirm.run();
             close();
         });
-    }
+    }*/
 }

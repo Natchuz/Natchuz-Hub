@@ -2,7 +2,8 @@ package com.natchuz.hub.core.map;
 
 import lombok.SneakyThrows;
 import org.apache.commons.lang.Validate;
-import org.bukkit.Bukkit;
+import org.slf4j.Logger;
+import org.spongepowered.api.Sponge;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,6 +19,7 @@ import java.util.zip.ZipFile;
 public class LocalMapRepository implements MapRepository {
 
     private final File repoLocation;
+    private Logger logger;
 
     /**
      * @param repoLocation directory of repo
@@ -25,6 +27,7 @@ public class LocalMapRepository implements MapRepository {
     public LocalMapRepository(File repoLocation) {
         Validate.isTrue(repoLocation.isDirectory(), "Repo location has to be directory!");
         this.repoLocation = repoLocation;
+        logger = Sponge.getPluginManager().getPlugin("core-plugin").get().getLogger();
     }
 
     @SneakyThrows
@@ -37,7 +40,7 @@ public class LocalMapRepository implements MapRepository {
                 ZipFile zipFile = new ZipFile(file);
                 ZipEntry manifestEntry = zipFile.getEntry("manifest.properties");
                 if (manifestEntry == null) {
-                    Bukkit.getLogger().info("[LocalMapRepository] File "
+                    logger.info("[LocalMapRepository] File "
                             + file.getCanonicalPath() + " does not contain manifest.properties! Skipping.");
                     continue;
                 }

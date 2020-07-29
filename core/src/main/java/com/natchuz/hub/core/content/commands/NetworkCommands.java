@@ -1,9 +1,5 @@
 package com.natchuz.hub.core.content.commands;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.event.server.PluginEnableEvent;
 import org.spongepowered.api.event.Listener;
 
 import java.util.Objects;
@@ -16,7 +12,7 @@ import com.natchuz.hub.core.content.ui.MenuDialog;
 
 public class NetworkCommands {
 
-    private final VersionInfo info;
+    /*private final VersionInfo info;
 
     public NetworkCommands() {
         info = new VersionInfo(NetworkCommands.class);
@@ -29,13 +25,13 @@ public class NetworkCommands {
         for (String s : new String[]{"menu", "v", "hub"}) {
             Objects.requireNonNull(NetworkMain.getInstance().getPlugin().getCommand(s)).setExecutor(this::onCommand);
         }
-    }
+    }*/
 
     //endregion
 
     //region commands
 
-    private boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    /*private boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (sender instanceof Player) {
             final Player player = (Player) sender;
@@ -55,7 +51,7 @@ public class NetworkCommands {
         }
 
         return true;
-    }
+    }*/
 
     //endregion
 }

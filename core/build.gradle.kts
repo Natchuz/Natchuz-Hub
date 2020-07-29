@@ -56,13 +56,7 @@ dependencies {
     api(project(":protocol"))
     api(project(":utils"))
 
-    api(Deps.PAPER)
-    api(Deps.PROTOCOL_LIB)
-
     implementation(Deps.SPONGE_API)
-
-    compileOnly(Deps.PLUGIN_ANNOTATIONS)
-    annotationProcessor(Deps.PLUGIN_ANNOTATIONS)
 
     implementation(Deps.COMMONS_IO)
     implementation(Deps.JAVA_MOJANG_API)

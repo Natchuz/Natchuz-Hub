@@ -8,10 +8,10 @@ import com.natchuz.hub.paper.managers.Dialog;
  */
 public class RewardsDialog extends Dialog {
 
-    @Override
+    /*@Override
     protected void build() {
         setName("Rewards");
         setHeight(1);
         setWidth(1);
-    }
+    }*/
 }

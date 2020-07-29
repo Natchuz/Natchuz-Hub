@@ -1,6 +1,6 @@
 package com.natchuz.hub.core.proxy;
 
-import org.bukkit.entity.Player;
+import org.spongepowered.api.entity.living.player.Player;
 
 import com.natchuz.hub.protocol.arch.Services;
 import com.natchuz.hub.protocol.messaging.Protocol;

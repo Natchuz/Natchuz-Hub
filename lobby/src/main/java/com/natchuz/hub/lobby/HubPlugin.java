@@ -7,7 +7,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.natchuz.hub.paper.serialization.LocationDeserializer;
 import com.natchuz.hub.core.NetworkMain;
-import com.natchuz.hub.core.api.PrivilegedFacade;
 
 public class HubPlugin extends JavaPlugin {
 

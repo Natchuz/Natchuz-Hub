@@ -5,6 +5,8 @@
 ![](https://img.shields.io/badge/minecraft%20version-1.14.4-brightgreen)
 ![](https://img.shields.io/github/stars/Natchuz-Hub/Natchuz-Hub?style=social)
 
+**NOTE: THIS BRANCH IS A CHAOTIC REWRITE TO SPONGE AND KOTLIN, DO NOT USE**
+
 **Currently work is still in progress!**
 
 Open source Minecraft minigames server targeting the latest versions of game.

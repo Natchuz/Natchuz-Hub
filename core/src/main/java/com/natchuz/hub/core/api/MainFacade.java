@@ -1,10 +1,9 @@
 package com.natchuz.hub.core.api;
 
-import org.bukkit.World;
-import org.bukkit.entity.Player;
+import org.spongepowered.api.entity.living.player.Player;
 
-import com.natchuz.hub.paper.managers.DialogManager;
-import com.natchuz.hub.paper.managers.SidebarManager;
+import java.util.UUID;
+
 import com.natchuz.hub.core.map.MapManifest;
 import com.natchuz.hub.core.profile.ProfileRepo;
 import com.natchuz.hub.core.profile.UserProfile;
@@ -12,7 +11,7 @@ import com.natchuz.hub.core.profile.UserProfile;
 /**
  * Ships all utils for all gamemodes
  */
-public interface CoreFacade {
+public interface MainFacade {
 
     /**
      * Returns current's {@link MapManifest map manifest}
@@ -25,9 +24,9 @@ public interface CoreFacade {
     String getMapConfiguration();
 
     /**
-     * Returns current's map {@link World world}
+     * Returns UUID of current's map {@link org.spongepowered.api.world.World world}
      */
-    World getMapWorld();
+    UUID getMapWorld();
 
     /**
      * Sends player to lobby
@@ -37,20 +36,10 @@ public interface CoreFacade {
     /**
      * @deprecated until new api will be developed
      */
-    HologramManager getHologramManager();
-
-    /**
-     * @deprecated until new api will be developed
-     */
-    SidebarManager getSidebarManager();
-
-    /**
-     * @deprecated until new api will be developed
-     */
-    DialogManager getDialogManager();
-
-    /**
-     * @deprecated until new api will be developed
-     */
     <T extends UserProfile> ProfileRepo<T> createProfileRepo(Class<T> clazz);
+
+    /**
+     * Server id
+     */
+    String getServerId();
 }

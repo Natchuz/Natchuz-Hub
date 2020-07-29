@@ -1,25 +1,5 @@
 package com.natchuz.hub.core.content.cosmetics;
 
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.block.Banner;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.banner.Pattern;
-import org.bukkit.block.banner.PatternType;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BlockStateMeta;
-
-import java.util.Arrays;
-import java.util.function.Consumer;
-
-import com.natchuz.hub.core.NetworkMain;
-import com.natchuz.hub.core.user.Purchasable;
-
-import static com.natchuz.hub.paper.Color.*;
-
 /**
  * This class contains all cosmetics
  */
@@ -29,7 +9,7 @@ public class Cosmetics {
      * Arrow traits
      */
     public enum Traits implements Cosmetic {
-        NONE(null, 0, Material.BLACK_STAINED_GLASS, "None", "OG particle"),
+        /*NONE(null, 0, Material.BLACK_STAINED_GLASS, "None", "OG particle"),
         NOTE(Particle.NOTE, 80, Material.NOTE_BLOCK, "Note", "So, you're a musician?"),
         FLAME(Particle.FLAME, 81, Material.BLAZE_POWDER, "Fire", "Hellfire, Hellfire, take my soul!"),
         SNOW(Particle.SNOWBALL, 82, Material.SNOWBALL, "Snow", "It's cold outside!");
@@ -82,14 +62,14 @@ public class Cosmetics {
         @Override
         public String description() {
             return GREY + desc + RESET;
-        }
+        }*/
     }
 
     /**
      * Shields patterns
      */
     public enum Shields implements Cosmetic {
-        NONE(new Pattern[]{}, 0, "Default", "Newly forged wooden shield"),
+        /*NONE(new Pattern[]{}, 0, "Default", "Newly forged wooden shield"),
         CRUSADER(new Pattern[]{new Pattern(DyeColor.RED, PatternType.STRAIGHT_CROSS)}, 0, "Lorem ipsum", "Let's take the Jerusalem");
 
         private final Pattern[] pattern;
@@ -139,14 +119,14 @@ public class Cosmetics {
         @Override
         public String description() {
             return ITALIC + YELLOW + quote;
-        }
+        }*/
     }
 
     /**
      * Blood effects
      */
     public enum BloodEffects implements Cosmetic {
-        NORMAL((p) -> {
+        /*NORMAL((p) -> {
             BlockData data = Material.REDSTONE_BLOCK.createBlockData();
             for (int i = 0; i < 10; i++) {
                 p.getLocation().getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation().add(
@@ -199,10 +179,10 @@ public class Cosmetics {
                 NetworkMain.getInstance().getProfile(player).setSelectedBloodEffect(this);
             }
             return ownedBy(player);
-        }
+        }*/
     }
 
-    public interface Cosmetic extends Purchasable, Selectable, Describable {
+    public interface Cosmetic {} /*extends Purchasable, Selectable, Describable {
 
         @Override
         default ItemStack icon(Player p) {
@@ -225,5 +205,5 @@ public class Cosmetics {
             return b.toString();
         }
 
-    }
+    }*/
 }

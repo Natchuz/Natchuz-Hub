@@ -30,7 +30,6 @@ import com.natchuz.hub.paper.managers.DialogManager;
 import com.natchuz.hub.paper.regions.BlockVectors;
 import com.natchuz.hub.protocol.state.JoinFlags;
 import com.natchuz.hub.utils.VersionInfo;
-import com.natchuz.hub.core.api.PrivilegedFacade;
 import com.natchuz.hub.core.content.Items;
 import com.natchuz.hub.core.content.ui.CosmeticDialog;
 import com.natchuz.hub.core.content.ui.MenuDialog;

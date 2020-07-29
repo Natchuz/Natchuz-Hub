@@ -1,27 +1,10 @@
 package com.natchuz.hub.core.content.cosmetics;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.event.player.PlayerFishEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
-
-import java.util.HashMap;
-
-import com.natchuz.hub.core.NetworkMain;
-import com.natchuz.hub.core.user.User;
-
 /**
  * Handles all passive cosmetics
  */
-public class CosmeticsListener implements Listener {
-
+public class CosmeticsListener {
+/*
     //region event handlers
 
     //region projectiles trait
@@ -75,5 +58,5 @@ public class CosmeticsListener implements Listener {
 
     //endregion
 
-    //endregion
+    //endregion*/
 }

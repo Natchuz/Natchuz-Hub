@@ -1,30 +1,32 @@
 package com.natchuz.hub.core.user;
 
-import static com.natchuz.hub.paper.Color.*;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.format.TextColors;
+import org.spongepowered.api.text.format.TextStyles;
 
 /**
  * All possible ranks
  */
 public enum Rank {
-    REGULAR("", DARK_GREY + BOLD + "Regular", false),
-    VIP(GREEN + BOLD + "VIP"),
-    PATRON(RED + BOLD + "PATRON"),
-    MOD(DARK_GREEN + BOLD + "MOD", true),
-    ADMIN(DARK_RED + BOLD + "ADMIN", true);
+    REGULAR(Text.EMPTY, Text.of(TextColors.DARK_GRAY, TextStyles.BOLD, "Regular"), false),
+    VIP(Text.of(TextColors.GREEN, TextStyles.BOLD, "VIP")),
+    PATRON(Text.of(TextColors.RED, TextStyles.BOLD, "PATRON")),
+    MOD(Text.of(TextColors.DARK_GREEN, TextStyles.BOLD, "MOD"), true),
+    ADMIN(Text.of(TextColors.DARK_RED, TextStyles.BOLD, "ADMIN"), true);
 
-    private final String display;
-    private final String name;
+    private final Text display;
+    private final Text name;
     private final boolean ownsAll;
 
-    Rank(String display) {
+    Rank(Text display) {
         this(display, display, false);
     }
 
-    Rank(String display, boolean ownsAll) {
+    Rank(Text display, boolean ownsAll) {
         this(display, display, ownsAll);
     }
 
-    Rank(String display, String name, boolean ownsAll) {
+    Rank(Text display, Text name, boolean ownsAll) {
         this.display = display;
         this.name = name;
         this.ownsAll = ownsAll;
@@ -34,11 +36,11 @@ public enum Rank {
         return this.ordinal();
     }
 
-    public String title() {
-        return display + RESET;
+    public Text title() {
+        return display;
     }
 
-    public String getName() {
+    public Text getName() {
         return name;
     }
 

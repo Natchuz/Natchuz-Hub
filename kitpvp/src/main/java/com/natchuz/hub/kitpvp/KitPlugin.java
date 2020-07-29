@@ -21,7 +21,7 @@ import com.natchuz.hub.paper.serialization.ItemStackAdapter;
 import com.natchuz.hub.paper.serialization.LocationDeserializer;
 import com.natchuz.hub.paper.serialization.RegionDeserializer;
 import com.natchuz.hub.core.NetworkMain;
-import com.natchuz.hub.core.api.CoreFacade;
+import com.natchuz.hub.core.api.MainFacade;
 import com.natchuz.hub.core.profile.ProfileRepo;
 import com.natchuz.hub.kitpvp.impl.*;
 import com.natchuz.hub.kitpvp.map.MapConfig;

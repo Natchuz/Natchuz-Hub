@@ -1,35 +1,13 @@
 package com.natchuz.hub.core.user;
 
-import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.server.PluginEnableEvent;
-import org.spongepowered.api.Sponge;
+import org.spongepowered.api.event.Listener;
 
 import java.util.UUID;
 
-import com.natchuz.hub.paper.managers.DialogManager;
-import com.natchuz.hub.utils.mojang.ElectroidMojangAPI;
-import com.natchuz.hub.utils.mojang.MojangAPI;
-import com.natchuz.hub.core.NetworkMain;
-import com.natchuz.hub.core.content.ui.FriendsDialog;
-
-import static com.natchuz.hub.paper.Color.*;
-
 /**
- * Used as Paper client for friend operations, that includes logging into the chat, sending notification, etc.
+ * Used as client for friend operations, that includes logging into the chat, sending notification, etc.
  */
-public class FriendUtils implements Listener {
-
-    private final MojangAPI mojangApi;
-
-    public FriendUtils() {
-        this.mojangApi = new ElectroidMojangAPI();
-    }
+public class FriendUtils {
 
     /**
      * Invites player
@@ -38,7 +16,7 @@ public class FriendUtils implements Listener {
      * @param target target player
      */
     public void invite(UUID sender, UUID target) {
-        User senderU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(sender);
+        /*User senderU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(sender);
         Player senderP = Bukkit.getPlayer(sender);
         User targetU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(target);
         Player targetP = Bukkit.getPlayer(target);
@@ -58,7 +36,7 @@ public class FriendUtils implements Listener {
             case INTERNAL_ERROR:
                 senderP.sendMessage(RED + BOLD + "We were unable to send friend invite due to internal database error! Please, contact with support!");
                 break;
-        }
+        }*/
     }
 
     /**
@@ -68,7 +46,7 @@ public class FriendUtils implements Listener {
      * @param target player to remove
      */
     public void removeFriend(UUID sender, UUID target) {
-        User senderU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(sender);
+        /*User senderU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(sender);
         Player senderP = Bukkit.getPlayer(sender);
         User targetU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(target);
 
@@ -86,7 +64,7 @@ public class FriendUtils implements Listener {
             case INTERNAL_ERROR:
                 senderP.sendMessage(RED + BOLD + "We were unable to remove friend due to internal database error! Please, contact with support!");
                 break;
-        }
+        }*/
     }
 
     /**
@@ -96,7 +74,7 @@ public class FriendUtils implements Listener {
      * @param target a player to accept
      */
     public void acceptFriend(UUID sender, UUID target) {
-        User senderU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(sender);
+        /*User senderU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(sender);
         Player senderP = Bukkit.getPlayer(sender);
         User targetU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(target);
         Player targetP = Bukkit.getPlayer(target);
@@ -117,7 +95,7 @@ public class FriendUtils implements Listener {
             case INTERNAL_ERROR:
                 senderP.sendMessage(RED + BOLD + "We were unable to accept friend invite due to internal database error! Please, contact with support!");
                 break;
-        }
+        }*/
     }
 
     /**
@@ -127,7 +105,7 @@ public class FriendUtils implements Listener {
      * @param target a player to decline
      */
     public void declineFriend(UUID sender, UUID target) {
-        User senderU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(sender);
+        /*User senderU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(sender);
         Player senderP = Bukkit.getPlayer(sender);
         User targetU = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(target);
 
@@ -144,7 +122,7 @@ public class FriendUtils implements Listener {
             case INTERNAL_ERROR:
                 senderP.sendMessage(RED + BOLD + "We were unable to decline friend request due to internal database error! Please, contact with support!");
                 break;
-        }
+        }*/
     }
 
     //region event handlers
@@ -152,28 +130,28 @@ public class FriendUtils implements Listener {
     /**
      * Use this to hide command implementation
      */
-    @EventHandler
-    private void onEnable(PluginEnableEvent event) {
+    @Listener
+    private void onEnable(/*PluginEnableEvent event*/) {
         // methods can be used as single-method interface
         //Sponge.getCommandManager().register().setExecutor(this::friendCommand);
     }
 
-    @EventHandler
-    private void onPlayerJoin(PlayerJoinEvent event) {
-        User user = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(event.getPlayer());
+    @Listener
+    private void onPlayerJoin(/*PlayerJoinEvent event*/) {
+        /*User user = Sponge.getServiceManager().provide(ProfileService.class).get().getUserRepo().getProfile(event.getPlayer());
 
         int pending = user.getFriendsPendingInvites().size();
 
         if (pending > 0) {
             event.getPlayer().sendMessage(YELLOW + "You have " + pending + " pending friends requests");
-        }
+        }*/
     }
 
     //endregion
     //region commands
 
-    private boolean friendCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!command.getName().equalsIgnoreCase("f")) return false;
+    private boolean friendCommand(/*CommandSender sender, Command command, String label, String[] args*/) {
+        /*if (!command.getName().equalsIgnoreCase("f")) return false;
         if (!(sender instanceof Player)) return false;
 
         if (args.length < 1) {
@@ -210,7 +188,7 @@ public class FriendUtils implements Listener {
                 if (args.length < 2) return false;
                 acceptFriend(((Player) sender).getUniqueId(), mojangApi.getUUID(args[1]));
                 break;
-        }
+        }*/
         return true;
     }
 

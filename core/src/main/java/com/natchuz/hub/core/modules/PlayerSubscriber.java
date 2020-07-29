@@ -1,10 +1,5 @@
 package com.natchuz.hub.core.modules;
 
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-
-import com.natchuz.hub.protocol.messaging.ExchangedClient;
 import com.natchuz.hub.protocol.messaging.Protocol;
 
 /**
@@ -18,13 +13,11 @@ public class PlayerSubscriber implements Module {
         this.protocol = protocol;
     }
 
-    @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
-        ((ExchangedClient) protocol.getClient()).subscribe("player." + event.getPlayer().getUniqueId().toString());
+    public void onJoin() {
+        //((ExchangedClient) protocol.getClient()).subscribe("player." + event.getPlayer().getUniqueId().toString());
     }
 
-    @EventHandler
-    public void onLeave(PlayerQuitEvent event) {
-        ((ExchangedClient) protocol.getClient()).unsubscribe("player." + event.getPlayer().getUniqueId().toString());
+    public void onLeave() {
+        //((ExchangedClient) protocol.getClient()).unsubscribe("player." + event.getPlayer().getUniqueId().toString());
     }
 }
