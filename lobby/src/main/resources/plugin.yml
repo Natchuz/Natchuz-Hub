@@ -1,9 +1,0 @@
-name: Hub
-description: The Main Hub for Natchuz Hub server
-main: com.natchuz.hub.lobby.HubPlugin
-version: 1.0
-api-version: 1.13
-
-depend:
-  - ProtocolLib
-  - NatchuzHub

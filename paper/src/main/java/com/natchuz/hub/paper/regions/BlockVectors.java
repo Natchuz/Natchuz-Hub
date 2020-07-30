@@ -4,6 +4,7 @@ import com.flowpowered.math.vector.Vector3d;
 import com.flowpowered.math.vector.Vector3i;
 import org.apache.commons.lang.Validate;
 import org.spongepowered.api.world.Location;
+import org.spongepowered.api.world.extent.Extent;
 
 public class BlockVectors {
 
@@ -17,7 +18,7 @@ public class BlockVectors {
         return center(pos.toInt());
     }
 
-    public static Location<?> center(Location<?> location) {
+    public static <T extends Extent> Location<T> center(Location<T> location) {
         Validate.notNull(location);
         return location.copy().setPosition(center(location.getPosition()));
     }
@@ -25,7 +26,7 @@ public class BlockVectors {
     /**
      * Center location only in x and z axis
      */
-    public static Location<?> centerFlat(Location<?> location) {
+    public static <T extends Extent> Location<T> centerFlat(Location<T> location) {
         Validate.notNull(location);
         Vector3i blockPosition = location.getBlockPosition();
         Vector3d position = location.getPosition();
