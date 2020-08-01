@@ -35,7 +35,7 @@ open class GamemodePlugin : Plugin<Project> {
         project.tasks.register("run", JavaExec::class.java) { task ->
             task.dependsOn("prepareEnvironment")
             task.workingDir = File(extension.workDirectory)
-            task.classpath = project.files("${extension.workDirectory}/paper.jar")
+            task.classpath = project.files("${extension.workDirectory}/sponge.jar")
             task.systemProperties["server.context"] = "standalone"
             task.environment["SERVERID"] = "testing-1"
             task.environment["SERVERTYPE"] = "testing"
