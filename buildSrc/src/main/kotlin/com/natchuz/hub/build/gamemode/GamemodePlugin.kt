@@ -17,10 +17,10 @@ open class GamemodePlugin : Plugin<Project> {
         project.tasks.register("prepareEnvironment", Copy::class.java) { task ->
             task.from(extension.baseProject.configurations.getByName(LOCAL_SERVER_CONFIGURATION))
             task.from(extension.testMapFile) { scope ->
-                scope.into("plugins/NatchuzHub")
+                scope.into("maps")
             }
             task.from(project.configurations.getByName("shadow").artifacts.files) { scope ->
-                scope.into("plugins")
+                scope.into("mods")
             }
             task.into(extension.workDirectory)
             task.dependsOn("build")
@@ -34,6 +34,7 @@ open class GamemodePlugin : Plugin<Project> {
 
         project.tasks.register("run", JavaExec::class.java) { task ->
             task.dependsOn("prepareEnvironment")
+            task.standardInput = System.`in`
             task.workingDir = File(extension.workDirectory)
             task.classpath = project.files("${extension.workDirectory}/sponge.jar")
             task.systemProperties["server.context"] = "standalone"

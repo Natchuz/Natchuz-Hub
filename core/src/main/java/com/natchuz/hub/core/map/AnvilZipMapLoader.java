@@ -33,7 +33,7 @@ public class AnvilZipMapLoader implements MapLoader {
      */
     public AnvilZipMapLoader(MapRepository mapRepository) {
         this.mapRepository = mapRepository;
-        logger = Sponge.getPluginManager().getPlugin("core-plugin").get().getLogger();
+        logger = Sponge.getPluginManager().getPlugin("natchuz-hub-core").get().getLogger();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class AnvilZipMapLoader implements MapLoader {
                 () -> new IllegalArgumentException("Map with this id (" + id + ") does not exist in repo!"));
 
         // create a directory for map
-        File creatingWorldContainer = new File(Sponge.getGame().getGameDirectory() + "/"
+        File creatingWorldContainer = new File(Sponge.getGame().getGameDirectory().toAbsolutePath() + "/world/"
                 + UUIDConverter.toCondensed(loadingUUID));
         creatingWorldContainer.mkdirs();
         ZipInputStream zipStream = new ZipInputStream(mapStream);
@@ -55,7 +55,7 @@ public class AnvilZipMapLoader implements MapLoader {
         // Unpack map archive
         ZipEntry entry = zipStream.getNextEntry();
         while (entry != null) {
-            File outputFile = new File(creatingWorldContainer + "/" + entry.getName());
+            File outputFile = new File(creatingWorldContainer + "/" + entry.getName()).getAbsoluteFile();
             if (entry.isDirectory()) {
                 outputFile.mkdirs();
             } else {
@@ -82,11 +82,14 @@ public class AnvilZipMapLoader implements MapLoader {
 
         // init world
         String worldName = UUIDConverter.toCondensed(loadingUUID);
-        WorldProperties properties = Sponge.getServer().createWorldProperties(worldName, WorldArchetypes.THE_VOID);
-        World world = Sponge.getServer().loadWorld(properties)
-                .orElseThrow(() -> new RuntimeException("Map not found in folder"));
+        //Sponge.getServer().loadWorld("")
+        //WorldProperties properties = Sponge.getServer().createWorldProperties(worldName, WorldArchetypes.THE_VOID);
+        Sponge.getServer().loadWorld(worldName);
+        /*World world = *///Sponge.getServer().loadWorld(properties);
+                //.orElseThrow(() -> new RuntimeException("Map not found in folder"));
         logger.info("[AnvilZipMapLoader] Successfully loaded a map! ");
 
-        return new LoadedMap(world, config, mapManifest);
+        //return new LoadedMap(Sponge.getServer().getWorld(worldName).get().getUniqueId(), config, mapManifest);
+        return new LoadedMap(Sponge.getServer().getWorld("world").get().getUniqueId(), config, mapManifest);
     }
 }

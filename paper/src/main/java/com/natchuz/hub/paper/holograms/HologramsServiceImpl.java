@@ -68,7 +68,7 @@ public class HologramsServiceImpl extends PacketListenerAdapter implements Holog
 
     @Override
     public void onPacketWrite(PacketEvent packetEvent, PacketConnection connection) {
-        if (packetEvent.getPacket() instanceof SPacketEntityMetadata) {
+        /*if (packetEvent.getPacket() instanceof SPacketEntityMetadata) {
             SPacketEntityMetadata packet = (SPacketEntityMetadata) packetEvent.getPacket();
             List<EntityDataManager.DataEntry<?>> entries = packet.dataManagerEntries;
             for (int i = 0; i < entries.size(); i++) {
@@ -78,6 +78,6 @@ public class HologramsServiceImpl extends PacketListenerAdapter implements Holog
                     entries.set(i, entry.copy());
                 }
             }
-        }
+        }*/
     }
 }

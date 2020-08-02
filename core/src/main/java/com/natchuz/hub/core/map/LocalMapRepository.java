@@ -27,7 +27,7 @@ public class LocalMapRepository implements MapRepository {
     public LocalMapRepository(File repoLocation) {
         Validate.isTrue(repoLocation.isDirectory(), "Repo location has to be directory!");
         this.repoLocation = repoLocation;
-        logger = Sponge.getPluginManager().getPlugin("core-plugin").get().getLogger();
+        logger = Sponge.getPluginManager().getPlugin("natchuz-hub-core").get().getLogger();
     }
 
     @SneakyThrows

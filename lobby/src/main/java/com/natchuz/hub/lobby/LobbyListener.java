@@ -195,7 +195,7 @@ public class LobbyListener {
     }*/
 
     @Listener
-    public void onFoodChange(ChangeDataHolderEvent.ValueChange event, @Has(FoodData.class) Entity entity) {
+    public void onFoodChange(ChangeDataHolderEvent.ValueChange event, @Has(FoodData.class) @First Entity entity) {
         event.setCancelled(true);
     }
 

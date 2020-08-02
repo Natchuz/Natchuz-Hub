@@ -6,12 +6,8 @@ import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
-import org.spongepowered.api.event.game.state.GameInitializationEvent;
-import org.spongepowered.api.event.game.state.GamePostInitializationEvent;
-import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
-import org.spongepowered.api.event.game.state.GameStoppedEvent;
+import org.spongepowered.api.event.game.state.*;
 import org.spongepowered.api.plugin.Plugin;
-import org.spongepowered.api.world.World;
 
 import java.util.List;
 import java.util.UUID;
@@ -36,7 +32,7 @@ import com.natchuz.hub.core.user.User;
 /**
  * This is entry class of Network plugin for Paper
  */
-@Plugin(id = "core-plugin", name = "Core Plugin", version = "1.0")
+@Plugin(id = "natchuz-hub-core", name = "Core Plugin", version = "1.0")
 public class NetworkMain implements MainFacade {
 
     private FriendUtils friendUtils;
@@ -76,11 +72,6 @@ public class NetworkMain implements MainFacade {
         stateDatabase = context.createStateDatabase();
         networkUtils = context.createProxyBackend();
 
-        // load test map
-        MapRepository repository = context.createMapRepository();
-        MapLoader loader = new AnvilZipMapLoader(repository);
-        loadedMap = loader.load("testMap");
-
         // construct fixed listeners
         friendUtils = new FriendUtils();
         CosmeticsListener cosmeticsListener = new CosmeticsListener();
@@ -97,6 +88,21 @@ public class NetworkMain implements MainFacade {
 
         // register server in state database
         stateDatabase.registerServer(ServerID.fromString(System.getenv("SERVERTYPE") + "/" + getServerId())).get();
+    }
+
+    @SneakyThrows
+    @Listener
+    public void onAboutToStart(GameAboutToStartServerEvent event) {
+
+    }
+
+    @SneakyThrows
+    @Listener
+    public void sfsd(GameStartingServerEvent e) {
+        // load test map
+        MapRepository repository = context.createMapRepository();
+        MapLoader loader = new AnvilZipMapLoader(repository);
+        loadedMap = loader.load("testMap");
     }
 
     @Listener
@@ -129,7 +135,7 @@ public class NetworkMain implements MainFacade {
 
     @Override
     public UUID getMapWorld() {
-        return loadedMap.getWorld().getUniqueId();
+        return loadedMap.getWorld();
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.natchuz.hub.core.context;
 import org.spongepowered.api.Sponge;
 import sun.reflect.generics.factory.CoreReflectionFactory;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,7 +32,10 @@ public class StandaloneContext implements ServerContext {
 
     @Override
     public MapRepository createMapRepository() {
-        return new LocalMapRepository(Sponge.getGame().getGameDirectory().toFile());
+        File repo = new File(Sponge.getGame().getGameDirectory().toFile().getAbsoluteFile() + "/maps");
+        repo.mkdirs();
+        System.out.println(repo.toString());
+        return new LocalMapRepository(repo);
     }
 
     @Override
