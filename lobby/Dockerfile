@@ -1,8 +1,8 @@
-FROM network
+FROM natchuz-hub-core
 
-COPY build/libs/lobby-all.jar plugins/lobby.jar
+COPY build/libs/lobby-all.jar mods/lobby.jar
 
 ENV SERVERTYPE=lb
 
 # add map
-ADD locations.yml testMap.zip plugins/NatchuzHub/
+ADD testMap.zip maps/

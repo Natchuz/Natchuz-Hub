@@ -1,8 +1,8 @@
-FROM network
+FROM natchuz-hub-core
 
-COPY build/libs/kitpvp-all.jar plugins/kitpvp.jar
+COPY build/libs/kitpvp-all.jar mods/kitpvp.jar
 
 ENV SERVERTYPE=kp
 
 # add map
-ADD testMap.zip plugins/NatchuzHub/
+ADD testMap.zip maps/

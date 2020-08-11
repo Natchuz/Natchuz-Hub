@@ -40,7 +40,7 @@ import org.spongepowered.api.world.World;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import com.natchuz.hub.paper.regions.BlockVectors;
+import com.natchuz.hub.sponge.regions.BlockVectors;
 import com.natchuz.hub.protocol.state.JoinFlags;
 import com.natchuz.hub.protocol.state.StateDatabase;
 import com.natchuz.hub.utils.VersionInfo;

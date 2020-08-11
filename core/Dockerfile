@@ -4,16 +4,15 @@ WORKDIR /data
 
 RUN apk add --no-cache curl coreutils
 
-# download paper and other plugins
-RUN curl "https://papermc.io/api/v1/paper/1.14.4/latest/download" -o paper.jar && \
-    mkdir plugins && \
-    curl "https://media.forgecdn.net/files/2760/373/worldedit-bukkit-7.0.1.jar" -o plugins/WorldEdit.jar && \
-    curl -L "https://github.com/dmulloy2/ProtocolLib/releases/download/4.5.1/ProtocolLib.jar" -o plugins/ProtocolLib.jar
+# download spigot and other plugins
+RUN mkdir mods && \
+    curl -L "https://repo.spongepowered.org/maven/org/spongepowered/spongevanilla/1.12.2-7.2.3/spongevanilla-1.12.2-7.2.3.jar" -o sponge.jar && \
+    curl -L "https://github.com/CrushedPixel/PacketGate/releases/download/0.1.1/PacketGate-0.1.1.jar" -o mods/packetgate.jar
 
 # add config files
 COPY common network ./
 
-# add compiled network plugin
-COPY build/libs/core-all.jar plugins/core.jar
+# add compiled core plugin
+COPY ["build/libs/core-all.jar", "build/libs/sponge-all.jar", "mods/"]
 
-ENTRYPOINT ["java", "-Dserver.context=network", "-jar", "paper.jar"]
+ENTRYPOINT ["java", "-Dserver.context=network", "-jar", "sponge.jar"]

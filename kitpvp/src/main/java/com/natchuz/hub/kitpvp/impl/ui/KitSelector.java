@@ -8,12 +8,12 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 import java.util.function.Consumer;
 
-import com.natchuz.hub.paper.managers.Dialog;
+import com.natchuz.hub.sponge.managers.Dialog;
 import com.natchuz.hub.core.content.Items;
 import com.natchuz.hub.kitpvp.ConcreteKitGamemode;
 import com.natchuz.hub.kitpvp.model.content.Kit;
 
-import static com.natchuz.hub.paper.Color.*;
+import static com.natchuz.hub.sponge.Color.*;
 
 @AllArgsConstructor
 public class KitSelector extends Dialog {

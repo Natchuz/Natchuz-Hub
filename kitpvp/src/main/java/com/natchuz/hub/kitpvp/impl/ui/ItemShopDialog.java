@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.function.BiConsumer;
 
-import com.natchuz.hub.paper.managers.Dialog;
+import com.natchuz.hub.sponge.managers.Dialog;
 import com.natchuz.hub.core.content.Items;
 import com.natchuz.hub.core.profile.ProfileRepo;
 import com.natchuz.hub.kitpvp.model.KitProfile;

@@ -16,10 +16,10 @@ import org.bukkit.plugin.java.annotation.plugin.author.Author;
 import java.io.InputStreamReader;
 import java.util.UUID;
 
-import com.natchuz.hub.paper.regions.Region;
-import com.natchuz.hub.paper.serialization.ItemStackAdapter;
-import com.natchuz.hub.paper.serialization.LocationDeserializer;
-import com.natchuz.hub.paper.serialization.RegionDeserializer;
+import com.natchuz.hub.sponge.regions.Region;
+import com.natchuz.hub.sponge.serialization.ItemStackAdapter;
+import com.natchuz.hub.sponge.serialization.LocationDeserializer;
+import com.natchuz.hub.sponge.serialization.RegionDeserializer;
 import com.natchuz.hub.core.NetworkMain;
 import com.natchuz.hub.core.api.MainFacade;
 import com.natchuz.hub.core.profile.ProfileRepo;

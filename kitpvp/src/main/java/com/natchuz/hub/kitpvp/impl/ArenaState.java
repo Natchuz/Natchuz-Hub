@@ -15,14 +15,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.natchuz.hub.paper.regions.BlockVectors;
+import com.natchuz.hub.sponge.regions.BlockVectors;
 import com.natchuz.hub.kitpvp.ConcreteKitGamemode;
 import com.natchuz.hub.kitpvp.map.ArenaSpawn;
 import com.natchuz.hub.kitpvp.model.ArenaStats;
 import com.natchuz.hub.kitpvp.model.KitProfile;
 import com.natchuz.hub.kitpvp.model.content.Kit;
 
-import static com.natchuz.hub.paper.Color.*;
+import static com.natchuz.hub.sponge.Color.*;
 
 /**
  * Arena state when player is on arena

@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
-import com.natchuz.hub.paper.managers.Dialog;
+import com.natchuz.hub.sponge.managers.Dialog;
 import com.natchuz.hub.kitpvp.ConcreteKitGamemode;
 import com.natchuz.hub.kitpvp.impl.Arena;
 import com.natchuz.hub.kitpvp.impl.ArenaState;
@@ -17,7 +17,7 @@ import com.natchuz.hub.kitpvp.map.ArenaSpawn;
 import com.natchuz.hub.kitpvp.model.content.EmptyKit;
 import com.natchuz.hub.kitpvp.model.content.Kit;
 
-import static com.natchuz.hub.paper.Color.*;
+import static com.natchuz.hub.sponge.Color.*;
 
 @AllArgsConstructor
 public class SpawnContextDialog extends Dialog {

@@ -1,15 +1,5 @@
 package com.natchuz.hub.core.content.commands;
 
-import org.spongepowered.api.event.Listener;
-
-import java.util.Objects;
-
-import com.natchuz.hub.paper.managers.DialogManager;
-import com.natchuz.hub.protocol.state.JoinFlags;
-import com.natchuz.hub.utils.VersionInfo;
-import com.natchuz.hub.core.NetworkMain;
-import com.natchuz.hub.core.content.ui.MenuDialog;
-
 public class NetworkCommands {
 
     /*private final VersionInfo info;

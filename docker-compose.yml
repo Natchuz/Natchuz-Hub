@@ -21,14 +21,6 @@ services:
     networks:
       - main
 
-  # kitpvp
-  kitpvp:
-    image: kitpvp
-    environment:
-      - SERVERID=kitpvp
-    networks:
-      - main
-
   # service
   service:
     image: service

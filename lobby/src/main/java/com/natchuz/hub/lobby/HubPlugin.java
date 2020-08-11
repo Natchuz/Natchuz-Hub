@@ -6,14 +6,13 @@ import com.google.gson.reflect.TypeToken;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
-import org.spongepowered.api.event.game.state.GameStartingServerEvent;
 import org.spongepowered.api.plugin.Dependency;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
-import com.natchuz.hub.paper.serialization.LocationDeserializer;
-import com.natchuz.hub.core.NetworkMain;
+import com.natchuz.hub.sponge.serialization.LocationDeserializer;
+import com.natchuz.hub.core.CorePlugin;
 import com.natchuz.hub.core.api.MainFacade;
 
 @Plugin(id = "natchuz-hub-lobby", dependencies = {@Dependency(id="natchuz-hub-core")})
@@ -22,7 +21,7 @@ public class HubPlugin {
     @Listener
     public void onReady(GameStartedServerEvent event) {
 
-        MainFacade core = (NetworkMain) Sponge.getPluginManager().getPlugin("natchuz-hub-core").get()
+        MainFacade core = (CorePlugin) Sponge.getPluginManager().getPlugin("natchuz-hub-core").get()
                 .getInstance().get();
 
         Gson gson = new GsonBuilder().registerTypeAdapter(new TypeToken<Location<World>>() {}.getType(),

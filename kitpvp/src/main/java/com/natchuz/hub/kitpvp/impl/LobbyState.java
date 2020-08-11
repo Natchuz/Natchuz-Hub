@@ -14,13 +14,13 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.natchuz.hub.paper.managers.DialogManager;
+import com.natchuz.hub.sponge.managers.DialogManager;
 import com.natchuz.hub.kitpvp.ConcreteKitGamemode;
 import com.natchuz.hub.kitpvp.impl.ui.SpawnContextDialog;
 import com.natchuz.hub.kitpvp.map.ArenaSpawn;
 import com.natchuz.hub.kitpvp.model.content.EmptyKit;
 
-import static com.natchuz.hub.paper.Color.GOLD;
+import static com.natchuz.hub.sponge.Color.GOLD;
 
 /**
  * Lobby state when player is in lobby

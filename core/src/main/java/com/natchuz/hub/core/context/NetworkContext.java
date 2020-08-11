@@ -8,6 +8,7 @@ import lombok.SneakyThrows;
 import org.bson.UuidRepresentation;
 import org.spongepowered.api.Sponge;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -51,7 +52,9 @@ public class NetworkContext implements ServerContext {
 
     @Override
     public MapRepository createMapRepository() {
-        return new LocalMapRepository(Sponge.getGame().getGameDirectory().toFile());
+        File repo = new File(Sponge.getGame().getGameDirectory().toFile().getAbsoluteFile() + "/maps");
+        repo.mkdirs();
+        return new LocalMapRepository(repo);
     }
 
     @Override

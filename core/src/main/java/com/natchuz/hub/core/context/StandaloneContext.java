@@ -34,7 +34,6 @@ public class StandaloneContext implements ServerContext {
     public MapRepository createMapRepository() {
         File repo = new File(Sponge.getGame().getGameDirectory().toFile().getAbsoluteFile() + "/maps");
         repo.mkdirs();
-        System.out.println(repo.toString());
         return new LocalMapRepository(repo);
     }
 

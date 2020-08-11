@@ -14,12 +14,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import com.natchuz.hub.paper.regions.BlockVectors;
+import com.natchuz.hub.sponge.regions.BlockVectors;
 import com.natchuz.hub.core.api.MainFacade;
 import com.natchuz.hub.kitpvp.map.MapConfig;
 import com.natchuz.hub.kitpvp.map.MapConfig.KitLocation;
 
-import static com.natchuz.hub.paper.Color.*;
+import static com.natchuz.hub.sponge.Color.*;
 
 @ToString
 public class Lobby {

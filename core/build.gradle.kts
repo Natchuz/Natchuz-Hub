@@ -1,5 +1,9 @@
 import de.undercouch.gradle.tasks.download.Download
 
+/*
+    This file requires a significant cleanup
+ */
+
 plugins {
     id("de.undercouch.download")
 }
@@ -9,7 +13,7 @@ configurations {
 }
 
 docker {
-    name = "network"
+    name = "natchuz-hub-core"
 }
 
 val localServerDir = "$buildDir/localServer"
@@ -39,12 +43,16 @@ tasks {
         from("$buildDir/libs/core-all.jar") {
             into("mods")
         }
+        from("${project(":sponge").buildDir}/libs/sponge-all.jar") {
+            into("mods")
+        }
         from("common")
         from("local")
         into(localServerDir)
         dependsOn("build")
         dependsOn("downloadSponge")
         dependsOn("downloadPlugins")
+        dependsOn(":sponge:build")
         group = localServerGroup
         description = "Prepares local server model"
     }
@@ -55,10 +63,20 @@ tasks {
     }
 
     findByName("clean")?.dependsOn("cleanLocalServer")
+
+    findByName("dockerPrepare")?.run {
+        doFirst {
+            copy {
+                from("${project(":sponge").buildDir}/libs/sponge-all.jar")
+                into("$buildDir/libs/sponge-all.jar")
+            }
+        }
+        dependsOn(":sponge:build")
+    }
 }
 
 dependencies {
-    api(project(":paper"))
+    api(project(":sponge"))
     api(project(":protocol"))
     api(project(":utils"))
 

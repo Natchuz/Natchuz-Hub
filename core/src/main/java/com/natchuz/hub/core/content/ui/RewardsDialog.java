@@ -1,6 +1,6 @@
 package com.natchuz.hub.core.content.ui;
 
-import com.natchuz.hub.paper.managers.Dialog;
+import com.natchuz.hub.sponge.managers.Dialog;
 
 /**
  * Dialog of current rewards
