@@ -8,15 +8,10 @@ import org.spongepowered.api.world.World;
  */
 public class MapConfig {
 
-    private final Location<World> rewards;
-    private final Location<World> kitpvp;
-    private final Location<World> spawn;
-
-    public MapConfig(Location<World> rewards, Location<World> kitpvp, Location<World> spawn) {
-        this.rewards = rewards;
-        this.kitpvp = kitpvp;
-        this.spawn = spawn;
-    }
+    private Location<World> rewards;
+    private Location<World> kitpvp;
+    private Location<World> spawn;
+    private int height;
 
     /**
      * Get location of rewards npc
@@ -37,6 +32,10 @@ public class MapConfig {
      */
     public Location<World> getSpawn() {
         return spawn;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     @Override

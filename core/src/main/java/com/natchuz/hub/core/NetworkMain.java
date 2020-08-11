@@ -92,13 +92,7 @@ public class NetworkMain implements MainFacade {
 
     @SneakyThrows
     @Listener
-    public void onAboutToStart(GameAboutToStartServerEvent event) {
-
-    }
-
-    @SneakyThrows
-    @Listener
-    public void sfsd(GameStartingServerEvent e) {
+    public void onStarting(GameStartingServerEvent event) {
         // load test map
         MapRepository repository = context.createMapRepository();
         MapLoader loader = new AnvilZipMapLoader(repository);

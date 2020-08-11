@@ -4,14 +4,13 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.world.World;
-import org.spongepowered.api.world.WorldArchetypes;
-import org.spongepowered.api.world.storage.WorldProperties;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -82,14 +81,12 @@ public class AnvilZipMapLoader implements MapLoader {
 
         // init world
         String worldName = UUIDConverter.toCondensed(loadingUUID);
-        //Sponge.getServer().loadWorld("")
-        //WorldProperties properties = Sponge.getServer().createWorldProperties(worldName, WorldArchetypes.THE_VOID);
-        Sponge.getServer().loadWorld(worldName);
-        /*World world = *///Sponge.getServer().loadWorld(properties);
-                //.orElseThrow(() -> new RuntimeException("Map not found in folder"));
-        logger.info("[AnvilZipMapLoader] Successfully loaded a map! ");
 
-        //return new LoadedMap(Sponge.getServer().getWorld(worldName).get().getUniqueId(), config, mapManifest);
-        return new LoadedMap(Sponge.getServer().getWorld("world").get().getUniqueId(), config, mapManifest);
+        Optional<World> loadedWorld = Sponge.getServer().loadWorld(worldName);
+        logger.info("[AnvilZipMapLoader] Successfully loaded a map!");
+
+        return new LoadedMap(loadedWorld
+                .orElseThrow(() -> new RuntimeException("This wasn't supposed to happen")).getUniqueId(),
+                config, mapManifest);
     }
 }

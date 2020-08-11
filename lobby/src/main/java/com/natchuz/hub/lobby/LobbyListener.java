@@ -183,7 +183,7 @@ public class LobbyListener {
     public void onMove(MoveEntityEvent event, @First Player player) {
 
         // check if player falls under the map
-        if (event.getToTransform().getPosition().getY() < 90) {
+        if (event.getToTransform().getPosition().getY() < mapConfig.getHeight()) {
             player.setTransform(new Transform<>(mapConfig.getSpawn()));
             player.playSound(SoundTypes.ENTITY_ENDERMEN_TELEPORT, player.getPosition(), 1);
         }
