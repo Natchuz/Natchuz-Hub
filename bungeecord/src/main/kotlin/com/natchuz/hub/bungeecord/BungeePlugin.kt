@@ -43,7 +43,7 @@ class BungeeMain : Plugin(), Listener {
         playersPing = Players(5000, proxy.onlineCount, emptyArray())
         favicon = Favicon.create(ImageIO.read(getResourceAsStream("logo.png")))
 
-        val version = VersionInfo(javaClass)
+        val version = VersionInfo(this::class)
         motd = TextComponent()
         motd.extra = Arrays.asList(*TextComponent.fromLegacyText("""             §e§lNatchuz§4 §lHub§r§8 | §7Best §r§a1.14 §r§7server§r§b§l!
             §r§f${StringUtils.center(version.display, 58)}"""))
