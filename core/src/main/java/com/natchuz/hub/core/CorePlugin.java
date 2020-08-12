@@ -32,8 +32,10 @@ import com.natchuz.hub.core.user.User;
 /**
  * This is entry class of Core plugin for Sponge
  */
-@Plugin(id = "natchuz-hub-core", name = "Core Plugin", version = "1.0")
+@Plugin(id = CorePlugin.ID, name = "Core Plugin", version = "1.0")
 public class CorePlugin implements MainFacade {
+
+    public static final String ID = "natchuz-hub-core";
 
     private FriendUtils friendUtils;
     private String serverID;

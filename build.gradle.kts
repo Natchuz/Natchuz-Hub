@@ -104,7 +104,7 @@ subprojects {
 /**
  * Kotlin projects
  */
-projects("bungeecord", "utils") {
+projects("bungeecord", "utils", "sponge", "lobby") {
     apply(plugin = "kotlin")
 
     dependencies {
