@@ -10,6 +10,7 @@ import com.natchuz.hub.sponge.serialization.LocationDeserializer
 import org.slf4j.Logger
 import org.spongepowered.api.Game
 import org.spongepowered.api.Sponge
+import org.spongepowered.api.entity.EntityTypes
 import org.spongepowered.api.event.Listener
 import org.spongepowered.api.event.game.state.GameStartedServerEvent
 import org.spongepowered.api.plugin.Dependency
@@ -38,7 +39,7 @@ class HubPlugin {
                 .create()
         val mapConfig = gson.fromJson(core.mapConfiguration, MapConfig::class.java)
 
-        game.eventManager.registerListeners(this, LobbyListener(mapConfig))
+        game.eventManager.registerListeners(this, LobbyListener.initLobby(mapConfig))
         logger.info("Successfully loaded lobby plugin")
     }
 

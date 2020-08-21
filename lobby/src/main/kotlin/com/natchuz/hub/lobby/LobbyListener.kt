@@ -4,12 +4,12 @@ import com.natchuz.hub.core.proxy.ProxyBackend
 import com.natchuz.hub.protocol.state.JoinFlags
 import com.natchuz.hub.protocol.state.StateDatabase
 import com.natchuz.hub.sponge.kotlin.EntityUUID
-import com.natchuz.hub.sponge.kotlin.provide
 import com.natchuz.hub.sponge.kotlin.require
 import com.natchuz.hub.sponge.regions.BlockVectors
 import com.natchuz.hub.utils.VersionInfo
 import org.spongepowered.api.Sponge
 import org.spongepowered.api.boss.BossBarColors
+import org.spongepowered.api.boss.BossBarOverlays
 import org.spongepowered.api.boss.ServerBossBar
 import org.spongepowered.api.data.key.Keys
 import org.spongepowered.api.data.manipulator.mutable.entity.FoodData
@@ -32,7 +32,6 @@ import org.spongepowered.api.event.entity.MoveEntityEvent
 import org.spongepowered.api.event.entity.SpawnEntityEvent
 import org.spongepowered.api.event.filter.cause.First
 import org.spongepowered.api.event.filter.data.Has
-import org.spongepowered.api.event.game.state.GameStartingServerEvent
 import org.spongepowered.api.event.network.ClientConnectionEvent
 import org.spongepowered.api.event.world.ChangeWorldWeatherEvent
 import org.spongepowered.api.scheduler.Task
@@ -42,61 +41,77 @@ import org.spongepowered.api.text.format.TextStyles
 import org.spongepowered.api.text.title.Title
 import java.util.concurrent.TimeUnit
 
-class LobbyListener(private val mapConfig: MapConfig) {
+class LobbyListener private constructor(private val mapConfig: MapConfig) {
 
     private val versionInfo: VersionInfo = VersionInfo(this::class)
 
+    /** UUID of the NPC that have rewards for players */
     private lateinit var rewardsDealer: EntityUUID
+
+    /** UUID of the NPC that teleports to KitPvP server */
     private lateinit var kitpvpNPC: EntityUUID
 
-    @Listener
-    fun onEnable(event: GameStartingServerEvent) {
+    /** Boss bar to be displayed to every player in lobby */
+    private lateinit var infoBossBar: ServerBossBar
 
-        // add rewards dealer
-        kotlin.run {
-            val npcLocation = BlockVectors.centerFlat(mapConfig.rewards)
-            val container = EntityArchetype.builder().run {
-                set(Keys.DISPLAY_NAME, Text.of("Rewards Dealer"))
-                set(Keys.AI_ENABLED, false)
-                type(EntityTypes.VILLAGER)
-                build()
-            }.entityData
+    companion object Factory {
 
-            val world = npcLocation.extent
-            val npcEntity = world.createEntity(container, npcLocation.position)
-                    .orElseThrow { AssertionError("This was not supposed to happen") }
-            world.spawnEntity(npcEntity)
-            rewardsDealer = npcEntity.uniqueId
-        }
+        fun initLobby(mapConfig: MapConfig) : LobbyListener = LobbyListener(mapConfig).apply {
+            //FIXME: these entities just cannot be created, because yes
 
-        // add kitpvp npc teleport
-        kotlin.run {
-            val npcLocation = BlockVectors.centerFlat(mapConfig.kitpvp)
-            val container = EntityArchetype.builder().run {
-                set(Keys.DISPLAY_NAME, Text.of("Kit PvP"))
-                set(Keys.AI_ENABLED, false)
-                type(EntityTypes.ZOMBIE)
-                build()
-            }.entityData
+            /*
 
-            val world = npcLocation.extent
-            val npcEntity = world.createEntity(container, npcLocation.position)
-                    .orElseThrow { AssertionError("This was not supposed to happen") }
-            world.spawnEntity(npcEntity)
-            kitpvpNPC = npcEntity.uniqueId
-        }
+            /* Spawn rewards npc */
+            with(BlockVectors.centerFlat(mapConfig.rewards)) {
+                val container = EntityArchetype.builder().run {
+                    set(Keys.DISPLAY_NAME, Text.of("Rewards Dealer"))
+                    set(Keys.AI_ENABLED, false)
+                    type(EntityTypes.VILLAGER)
+                    build()
+                }.entityData
 
-        // set a time for a map
-        Task.builder().interval(3, TimeUnit.SECONDS).execute { ->
-            Sponge.getServer().worlds.forEach {
-                it.properties.worldTime = 5000
+                val npc = extent.createEntity(container, position)
+                        .orElseThrow { AssertionError("Could not create entity!") }
+
+                if (!extent.spawnEntity(npc))
+                    throw AssertionError("Could not spawn entity!")
+
+                rewardsDealer = npc.uniqueId
             }
-        }.submit(Sponge.getPluginManager().getHubPluginInstance())
 
-        ServerBossBar.builder()
-                .name(Text.of(TextStyles.BOLD, "Natchuz ", TextColors.YELLOW, TextStyles.BOLD, "HUB"))
-                .color(BossBarColors.YELLOW)
-                .build()
+            /* Spawn kit pvp npc */
+            with(BlockVectors.centerFlat(mapConfig.kitpvp)) {
+                val container = EntityArchetype.builder().run {
+                    set(Keys.DISPLAY_NAME, Text.of("Kit PvP"))
+                    set(Keys.AI_ENABLED, false)
+                    type(EntityTypes.ZOMBIE)
+                    build()
+                }.entityData
+
+                val npc = extent.createEntity(container, position)
+                        .orElseThrow { AssertionError("Could not create entity!") }
+
+                if (!extent.spawnEntity(npc))
+                    throw AssertionError("Could not spawn entity!")
+
+                kitpvpNPC = npc.uniqueId
+            }
+             */
+
+            /* Set map daytime */
+            Task.builder().interval(3, TimeUnit.SECONDS).execute { ->
+                Sponge.getServer().worlds.forEach { // To be replaced with Map Service in core
+                    it.properties.worldTime = 5000
+                }
+            }.submit(Sponge.getPluginManager().getHubPluginInstance())
+
+            /* Info boss bar that will be displayed to every player */
+            infoBossBar = ServerBossBar.builder()
+                    .name(Text.of(TextStyles.BOLD, "Natchuz ", TextColors.YELLOW, TextStyles.BOLD, "HUB"))
+                    .color(BossBarColors.YELLOW)
+                    .overlay(BossBarOverlays.PROGRESS)
+                    .build()
+        }
     }
 
     @Listener
@@ -117,6 +132,11 @@ class LobbyListener(private val mapConfig: MapConfig) {
                         }
                     }
                 }
+
+        player.sendMessage(Text.of("""
+            |So there is an issue where entities just don't spawn. I've been stuck for a week there, 
+            |and decided to move on and do more interesting things than fixing bugs
+        """.trimMargin("|")))
 
         player.transform = Transform(BlockVectors.centerFlat(mapConfig.spawn))
         player.offer(Keys.GAME_MODE, GameModes.ADVENTURE)
