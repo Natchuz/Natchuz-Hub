@@ -1,11 +1,19 @@
 package com.natchuz.hub.bungeecord
 
+import com.natchuz.hub.backend.state.PlayerLoginRequest
+import com.natchuz.hub.backend.state.PlayerLoginResponse
+import com.natchuz.hub.backend.state.PlayerLogoutRequest
 import com.natchuz.hub.protocol.arch.Services
 import com.natchuz.hub.protocol.messaging.Protocol
 import com.natchuz.hub.protocol.state.JoinFlags
 import com.natchuz.hub.protocol.state.RedisStateDatabase
 import com.natchuz.hub.protocol.state.StateDatabase
 import com.natchuz.hub.utils.VersionInfo
+import io.ktor.client.*
+import io.ktor.client.features.*
+import io.ktor.client.features.json.*
+import io.ktor.client.features.json.serializer.*
+import io.ktor.client.request.*
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.Favicon
 import net.md_5.bungee.api.ServerPing.Players
@@ -29,15 +37,20 @@ import javax.imageio.ImageIO
  */
 class BungeeMain : Plugin(), Listener {
 
-    private val landingServerType = "lb"
-
     private lateinit var protocol: Protocol
     private lateinit var favicon: Favicon
     private lateinit var playersPing: Players
     private lateinit var motd: TextComponent
     private lateinit var state: StateDatabase
+    private lateinit var backendClient: HttpClient
 
     override fun onLoad() {
+        backendClient = HttpClient {
+            install(JsonFeature) {
+                serializer = KotlinxSerializer()
+            }
+        }
+
         protocol = Protocol(Services.BUNGEECORD.createClient())
 
         playersPing = Players(5000, proxy.onlineCount, emptyArray())
@@ -99,7 +112,13 @@ class BungeeMain : Plugin(), Listener {
     }
 
     @EventHandler
-    fun onLeave(event: PlayerDisconnectEvent) {
+    suspend fun onLeave(event: PlayerDisconnectEvent) {
+        backendClient.post<Unit> {
+            url("")
+            body = PlayerLogoutRequest(event.player.uniqueId)
+        }
+
+        // TODO: Legacy code
         state.dropPlayer(event.player.uniqueId)
     }
 
@@ -109,12 +128,30 @@ class BungeeMain : Plugin(), Listener {
     }
 
     @EventHandler
-    fun onJoin(event: ServerConnectEvent) {
+    suspend fun onJoin(event: ServerConnectEvent) = with(event) {
+        if (reason == ServerConnectEvent.Reason.JOIN_PROXY) {
+            val response = backendClient.post<PlayerLoginResponse> {
+                url("")
+                body = PlayerLoginRequest(player.uniqueId)
+                timeout {
+                    player.disconnect("Could not connect!")
+                }
+            }
+            when (response) {
+                is PlayerLoginResponse.OkStatus -> target = proxy.getServerInfo(response.targetServer)
+                is PlayerLoginResponse.BanStatus -> {
+                    player.disconnect("Yeah")
+                }
+                else -> Unit
+            }
+        }
+
+        // TODO: legacy code
         if (event.reason == ServerConnectEvent.Reason.JOIN_PROXY) {
             state.setPlayerJoinFlags(event.player.uniqueId, JoinFlags.PROXY_JOIN)
-            state.getServers(landingServerType).get().stream()
+            /*state.getServers(landingServerType).get().stream()
                     .min(Comparator.comparingInt { it.players })
-                    .ifPresent { event.target = proxy.getServerInfo(it.id.id) }
+                    .ifPresent { event.target = proxy.getServerInfo(it.id.id) }*/
         }
     }
 

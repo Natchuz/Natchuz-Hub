@@ -33,7 +33,9 @@ plugins {
     // plugin used to decompile NMS
     id(Plugins.NMS) version "2.2-6" apply false
 
-    kotlin("jvm") version "1.3.72" apply false
+    kotlin("jvm") version "1.4.0" apply false
+    kotlin("plugin.serialization") version "1.4.0" apply false
+
     idea
     `java-library`
 }
@@ -104,8 +106,9 @@ subprojects {
 /**
  * Kotlin projects
  */
-projects("bungeecord", "utils", "sponge", "lobby") {
+subprojects {
     apply(plugin = "kotlin")
+    apply(plugin = "kotlinx-serialization")
 
     dependencies {
         implementation(kotlin("stdlib-jdk8"))
@@ -148,7 +151,7 @@ projects("sponge") {
 /**
  * Docker configuration
  */
-projects("bungeecord", "service", "core", "lobby") {
+projects("bungeecord", "core", "lobby") {
     apply(plugin = Plugins.DOCKER)
 
     configure<DockerExtension> {

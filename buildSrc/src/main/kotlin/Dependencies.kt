@@ -26,6 +26,8 @@ object Deps {
     const val GSON = "com.google.code.gson:gson:2.8.6"
     const val GUAVA = "com.google.guava:guava:29.0-jre"
 
+    const val SLF4J = "org.slf4j:slf4j-simple:1.7.30"
+
     const val JEDIS = "redis.clients:jedis:3.1.0"
     const val MONGO_SYNC = "org.mongodb:mongodb-driver-sync:4.0.2"
     const val RABBITMQ = "com.rabbitmq:amqp-client:5.8.0"
@@ -34,6 +36,17 @@ object Deps {
 
     const val SPONGE_API = "org.spongepowered:spongeapi:7.2.0"
     const val PACKET_GATE = "com.github.CrushedPixel:PacketGate:0.1.1"
+
+    const val KTOR_SERVER_CORE = "io.ktor:ktor-server-core:1.4.0"
+    const val KTOR_SERVER_NETTY = "io.ktor:ktor-server-netty:1.4.0"
+    const val KTOR_SERIALIZATION = "io.ktor:ktor-serialization:1.4.0"
+    const val KTOR_GSON = "io.ktor:ktor-gson:1.4.0"
+
+    const val KTOR_CLIENT_CIO = "io.ktor:ktor-client-cio:1.4.0"
+    const val KTOR_CLIENT_JSON = "io.ktor:ktor-client-json-jvm:1.4.0"
+    const val KTOR_CLIENT_SERIALIZATION = "io.ktor:ktor-client-serialization-jvm:1.4.0"
+
+    const val KOTLIN_SERIALIZATION_CORE = "org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0-RC"
 }
 
 /**
