@@ -45,7 +45,7 @@ You will need Java 8, the Kotlin compiler and [Docker] along with [Docker Compos
 to work [without root privileges](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user).
 You will also need a good IDE with lombok support - We highly recommend IntelliJ.
 
-After cloning, all you need to do is to simply import as a Gradle project to your IDE of choice (We use IntelliJ 😉).
+After cloning, all you need to do is to simply import as a Gradle project to your IDE of choice (We use IntelliJ).
 
 ### Building & Running
 
