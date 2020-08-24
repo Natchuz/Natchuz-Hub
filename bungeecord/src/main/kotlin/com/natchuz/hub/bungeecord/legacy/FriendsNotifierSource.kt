@@ -1,4 +1,4 @@
-package com.natchuz.hub.bungeecord
+package com.natchuz.hub.bungeecord.legacy
 
 import com.natchuz.hub.protocol.arch.Services
 import com.natchuz.hub.protocol.messaging.Protocol

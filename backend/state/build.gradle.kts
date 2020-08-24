@@ -8,7 +8,10 @@ dependencies {
     implementation(Deps.KTOR_SERVER_NETTY)
     implementation(Deps.KTOR_SERIALIZATION)
     implementation(Deps.SLF4J)
+    implementation(Deps.JEDIS)
     implementation(project(":utils"))
+
+    testImplementation(Deps.KTOR_TESTING)
 }
 
 application {
@@ -21,4 +24,8 @@ tasks {
             attributes(mapOf("Main-Class" to application.mainClassName))
         }
     }
+}
+
+docker {
+    name = "backend-state"
 }

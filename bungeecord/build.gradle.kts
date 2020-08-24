@@ -8,7 +8,9 @@ dependencies {
     implementation(Deps.KTOR_CLIENT_SERIALIZATION)
 
     compileOnly(Deps.BUNGEECORD)
+
     testImplementation(Deps.BUNGEECORD)
+    testImplementation(Deps.KTOR_CLIENT_TEST)
 }
 
 docker {

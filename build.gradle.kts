@@ -35,6 +35,7 @@ plugins {
 
     kotlin("jvm") version "1.4.0" apply false
     kotlin("plugin.serialization") version "1.4.0" apply false
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.4.0" apply false
 
     idea
     `java-library`
@@ -109,6 +110,11 @@ subprojects {
 subprojects {
     apply(plugin = "kotlin")
     apply(plugin = "kotlinx-serialization")
+    apply(plugin = "kotlin-allopen")
+
+    configure<org.jetbrains.kotlin.allopen.gradle.AllOpenExtension> {
+        annotation("com.natchuz.hub.utils.Mockable")
+    }
 
     dependencies {
         implementation(kotlin("stdlib-jdk8"))
@@ -151,7 +157,7 @@ projects("sponge") {
 /**
  * Docker configuration
  */
-projects("bungeecord", "core", "lobby") {
+projects("bungeecord", "core", "lobby", "backend:state") {
     apply(plugin = Plugins.DOCKER)
 
     configure<DockerExtension> {

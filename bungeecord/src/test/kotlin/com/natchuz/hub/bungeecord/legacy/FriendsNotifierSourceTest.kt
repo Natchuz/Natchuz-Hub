@@ -1,23 +1,16 @@
-package com.natchuz.hub.bungeecord
+package com.natchuz.hub.bungeecord.legacy
 
-import com.natchuz.hub.bungeecord.FriendsNotifierSource
 import com.natchuz.hub.protocol.messaging.MessageEndpoint
 import com.natchuz.hub.protocol.messaging.Protocol
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.spy
-import com.nhaarman.mockitokotlin2.whenever
 import net.md_5.bungee.api.connection.ProxiedPlayer
 import net.md_5.bungee.api.event.PlayerDisconnectEvent
 import net.md_5.bungee.api.event.ServerConnectEvent
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers
-import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.Mockito.spy
 import org.mockito.Mockito.verify
-import org.mockito.MockitoAnnotations
 import java.util.*
 
 class FriendsNotifierSourceTest {

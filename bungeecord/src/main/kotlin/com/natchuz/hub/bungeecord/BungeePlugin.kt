@@ -1,19 +1,19 @@
 package com.natchuz.hub.bungeecord
 
-import com.natchuz.hub.backend.state.PlayerLoginRequest
-import com.natchuz.hub.backend.state.PlayerLoginResponse
-import com.natchuz.hub.backend.state.PlayerLogoutRequest
+import com.natchuz.hub.backend.state.PlayerLoginStatus
+import com.natchuz.hub.bungeecord.handlers.ServerConnectHandler
+import com.natchuz.hub.bungeecord.legacy.FriendsNotifierSource
 import com.natchuz.hub.protocol.arch.Services
 import com.natchuz.hub.protocol.messaging.Protocol
-import com.natchuz.hub.protocol.state.JoinFlags
-import com.natchuz.hub.protocol.state.RedisStateDatabase
-import com.natchuz.hub.protocol.state.StateDatabase
 import com.natchuz.hub.utils.VersionInfo
 import io.ktor.client.*
+import io.ktor.client.engine.cio.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
+import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.modules.SerializersModule
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.Favicon
 import net.md_5.bungee.api.ServerPing.Players
@@ -31,6 +31,7 @@ import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.util.*
 import javax.imageio.ImageIO
+import kotlinx.serialization.json.Json as JsonBuilder
 
 /**
  * Entry class for Bungeecord Plugin
@@ -41,15 +42,18 @@ class BungeeMain : Plugin(), Listener {
     private lateinit var favicon: Favicon
     private lateinit var playersPing: Players
     private lateinit var motd: TextComponent
-    private lateinit var state: StateDatabase
     private lateinit var backendClient: HttpClient
+    private lateinit var serverConnectHandler: ServerConnectHandler
 
     override fun onLoad() {
         backendClient = HttpClient {
-            install(JsonFeature) {
-                serializer = KotlinxSerializer()
+            installSerializers()
+            install(HttpTimeout) {
+                requestTimeoutMillis = 1000
             }
         }
+
+        serverConnectHandler = ServerConnectHandler(backendClient, proxy)
 
         protocol = Protocol(Services.BUNGEECORD.createClient())
 
@@ -58,14 +62,13 @@ class BungeeMain : Plugin(), Listener {
 
         val version = VersionInfo(this::class)
         motd = TextComponent()
-        motd.extra = Arrays.asList(*TextComponent.fromLegacyText("""             §e§lNatchuz§4 §lHub§r§8 | §7Best §r§a1.14 §r§7server§r§b§l!
+        motd.extra = listOf(*TextComponent.fromLegacyText("""             §e§lNatchuz§4 §lHub§r§8 | §7Best §r§a1.14 §r§7server§r§b§l!
             §r§f${StringUtils.center(version.display, 58)}"""))
-
-        state = RedisStateDatabase("redis")
     }
 
     override fun onEnable() {
         proxy.pluginManager.registerListener(this, this)
+        proxy.pluginManager.registerListener(this, serverConnectHandler)
         proxy.pluginManager.registerListener(this, FriendsNotifierSource(protocol))
 
         protocol.handle("connect") {
@@ -79,27 +82,16 @@ class BungeeMain : Plugin(), Listener {
 
         protocol.handle("send") {
             val player = proxy.getPlayer(it[0]) ?: return@handle
-            val freeServer = state.getServers(it[1]).get().minWith(Comparator.comparingInt { obj -> obj.players })
+            val server = proxy.getServerInfo(it[1])
 
-            if (freeServer != null) { // when there was at least one server
-                val server = proxy.getServerInfo(freeServer.id.id)
+            player.sendMessage(*ComponentBuilder("Sending you to ${server.name}")
+                    .color(ChatColor.GREEN).create())
 
-                state.setPlayerJoinFlags(player.uniqueId,
-                        *it.sliceArray((2 until it.size)).map { i -> JoinFlags.valueOf(i) }.toTypedArray())
-
-                player.sendMessage(*ComponentBuilder("Sending you to ${server.name}")
-                        .color(ChatColor.GREEN).create())
-
-                player.connect(server, { success, _ ->
-                    if (!success)
-                        player.sendMessage(*ComponentBuilder("Could not send you to server ${server.name}")
-                                .color(ChatColor.RED).create())
-                }, ServerConnectEvent.Reason.PLUGIN)
-            } else { // when there was no server
-                player.sendMessage(*ComponentBuilder("No servers of this type are running right now")
-                        .color(ChatColor.RED)
-                        .create())
-            }
+            player.connect(server, { success, _ ->
+                if (!success)
+                    player.sendMessage(*ComponentBuilder("Could not send you to server ${server.name}")
+                            .color(ChatColor.RED).create())
+            }, ServerConnectEvent.Reason.PLUGIN)
         }
 
         protocol.handle("kill") {
@@ -112,53 +104,27 @@ class BungeeMain : Plugin(), Listener {
     }
 
     @EventHandler
-    suspend fun onLeave(event: PlayerDisconnectEvent) {
-        backendClient.post<Unit> {
-            url("")
-            body = PlayerLogoutRequest(event.player.uniqueId)
-        }
-
-        // TODO: Legacy code
-        state.dropPlayer(event.player.uniqueId)
+    fun onLeave(event: PlayerDisconnectEvent): Unit = runBlocking {
+        backendClient.post("http://state/player/${event.player.uniqueId}/logout")
     }
 
     @EventHandler
-    fun onChange(event: ServerConnectedEvent) {
-        state.setPlayerLocation(event.player.uniqueId, event.server.info.name)
-    }
+    fun onChange(event: ServerConnectedEvent): Unit = TODO("inform backend about change")
 
     @EventHandler
-    suspend fun onJoin(event: ServerConnectEvent) = with(event) {
-        if (reason == ServerConnectEvent.Reason.JOIN_PROXY) {
-            val response = backendClient.post<PlayerLoginResponse> {
-                url("")
-                body = PlayerLoginRequest(player.uniqueId)
-                timeout {
-                    player.disconnect("Could not connect!")
-                }
+    fun onPing(event: ProxyPingEvent) = with(event.response) {
+        descriptionComponent = motd
+        players = playersPing
+        setFavicon(favicon)
+    }
+}
+
+fun HttpClientConfig<*>.installSerializers() {
+    install(JsonFeature) {
+        serializer = KotlinxSerializer(JsonBuilder {
+            serializersModule = SerializersModule {
+                contextual(PlayerLoginStatus::class, PlayerLoginStatus.Serializer)
             }
-            when (response) {
-                is PlayerLoginResponse.OkStatus -> target = proxy.getServerInfo(response.targetServer)
-                is PlayerLoginResponse.BanStatus -> {
-                    player.disconnect("Yeah")
-                }
-                else -> Unit
-            }
-        }
-
-        // TODO: legacy code
-        if (event.reason == ServerConnectEvent.Reason.JOIN_PROXY) {
-            state.setPlayerJoinFlags(event.player.uniqueId, JoinFlags.PROXY_JOIN)
-            /*state.getServers(landingServerType).get().stream()
-                    .min(Comparator.comparingInt { it.players })
-                    .ifPresent { event.target = proxy.getServerInfo(it.id.id) }*/
-        }
-    }
-
-    @EventHandler
-    fun onPing(event: ProxyPingEvent) {
-        event.response.descriptionComponent = motd
-        event.response.players = playersPing
-        event.response.setFavicon(favicon)
+        })
     }
 }

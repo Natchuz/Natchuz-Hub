@@ -4,57 +4,58 @@ package com.natchuz.hub.backend.state
 
 import com.natchuz.hub.utils.UUIDSerializer
 import kotlinx.serialization.*
-import kotlinx.serialization.json.JsonContentPolymorphicSerializer
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.*
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.plus
 import java.util.*
 
-/** Use to acknowledge if player can be logged */
+/** Contains information about if player was logged */
 @Serializable
-data class PlayerLoginRequest(
-        /** UUID of player */
-        val player: UUID
-)
+sealed class PlayerLoginStatus(val status: String) {
 
-/** Response to [PlayerLoginRequest] */
-@Serializable
-sealed class PlayerLoginResponse(val status: String) {
-
-    companion object Serializer : JsonContentPolymorphicSerializer<PlayerLoginResponse>(PlayerLoginResponse::class) {
+    /** Serializer for [PlayerLoginStatus] */
+    companion object Serializer : JsonContentPolymorphicSerializer<PlayerLoginStatus>(PlayerLoginStatus::class) {
         override fun selectDeserializer(element: JsonElement) = when (element.jsonObject["status"]?.jsonPrimitive?.content) {
-            "ok" -> OkStatus.serializer()
-            "ban" -> BanStatus.serializer()
-            "other" -> OtherStatus.serializer()
-            "maintenance" -> MaintenanceStatus.serializer()
-            "error" -> ErrorStatus.serializer()
+            "ok" -> Ok.serializer()
+            "ban" -> Ban.serializer()
+            "other" -> Other.serializer()
+            "maintenance" -> Maintenance.serializer()
             else -> throw IllegalStateException("Wrong status ID")
         }
     }
 
-    /** Indicates that player can log in */
+    /** Player was logged in */
     @Serializable
-    data class OkStatus(
+    data class Ok(
             /** Target server id */
             val targetServer: String
-    ) : PlayerLoginResponse("ok")
+    ) : PlayerLoginStatus("ok")
 
-    /** When player is banned */
+    /** Player could not be logged in due to ban */
     @Serializable
-    data class BanStatus(val reason: String) : PlayerLoginResponse("ban")
+    data class Ban(
+            /** Ban reason */
+            val reason: String
+    ) : PlayerLoginStatus("ban")
 
+    /** Player could not be logged due to other reasons */
     @Serializable
-    data class ErrorStatus(val info: String) : PlayerLoginResponse("error")
+    data class Other(
+            /** Reason info */
+            val info: String
+    ) : PlayerLoginStatus("other")
 
+    /** Player could not be logged due to pending maintenance */
     @Serializable
-    data class OtherStatus(val other: String) : PlayerLoginResponse("other")
-
-    @Serializable
-    object MaintenanceStatus : PlayerLoginResponse("maintenance")
+    class Maintenance : PlayerLoginStatus("maintenance")
 }
 
-@Serializable
-data class PlayerLogoutRequest(
-        /** UUID of player */
-        val player: UUID
-)
+/**
+ * [Json] containing modules for serializing classes in this file
+ */
+val MessagesJson = Json {
+    prettyPrint = true
+    serializersModule += SerializersModule {
+        contextual(PlayerLoginStatus::class, PlayerLoginStatus.Serializer)
+    }
+}

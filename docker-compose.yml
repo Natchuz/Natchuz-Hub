@@ -11,7 +11,7 @@ services:
     depends_on:
       - redis
       - rabbit
-      - service
+      - state
 
   # lobby
   lobby:
@@ -20,17 +20,6 @@ services:
       - SERVERID=lobby
     networks:
       - main
-
-  # service
-  service:
-    image: service
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - main
-    depends_on:
-      - redis
-      - rabbit
 
   # redis database
   redis:
@@ -51,6 +40,12 @@ services:
     image: mongo
     ports:
       - "27017:27017/tcp"
+    networks:
+      - main
+
+  # backends
+  state:
+    image: backend-state
     networks:
       - main
 

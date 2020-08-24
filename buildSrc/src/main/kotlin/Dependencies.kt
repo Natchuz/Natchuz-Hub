@@ -41,10 +41,14 @@ object Deps {
     const val KTOR_SERVER_NETTY = "io.ktor:ktor-server-netty:1.4.0"
     const val KTOR_SERIALIZATION = "io.ktor:ktor-serialization:1.4.0"
     const val KTOR_GSON = "io.ktor:ktor-gson:1.4.0"
+    const val KTOR_LOCATIONS = "io.ktor:ktor-locations:1.4.0"
+    const val KTOR_TESTING = "io.ktor:ktor-server-test-host:1.4.0"
 
-    const val KTOR_CLIENT_CIO = "io.ktor:ktor-client-cio:1.4.0"
+    const val KTOR_CLIENT_CIO = "io.ktor:ktor-client-cio-jvm:1.4.0"
     const val KTOR_CLIENT_JSON = "io.ktor:ktor-client-json-jvm:1.4.0"
     const val KTOR_CLIENT_SERIALIZATION = "io.ktor:ktor-client-serialization-jvm:1.4.0"
+
+    const val KTOR_CLIENT_TEST = "io.ktor:ktor-client-mock-jvm:1.4.0"
 
     const val KOTLIN_SERIALIZATION_CORE = "org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0-RC"
 }
