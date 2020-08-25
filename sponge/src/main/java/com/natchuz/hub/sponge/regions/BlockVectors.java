@@ -2,7 +2,7 @@ package com.natchuz.hub.sponge.regions;
 
 import com.flowpowered.math.vector.Vector3d;
 import com.flowpowered.math.vector.Vector3i;
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.extent.Extent;
 

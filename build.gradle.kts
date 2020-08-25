@@ -1,21 +1,7 @@
 import com.palantir.gradle.docker.DockerExtension
-import net.minecraftforge.gradle.user.UserBaseExtension
 import net.nemerosa.versioning.VersioningExtension
 import net.nemerosa.versioning.tasks.VersionFileTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-/**
- * Libraries required by MCP plugin
- */
-buildscript {
-    repositories {
-        maven("https://files.minecraftforge.net/maven")
-        maven("https://repo.spongepowered.org/maven")
-    }
-    dependencies {
-        classpath("net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT")
-    }
-}
 
 plugins {
     // plugin to create file with current git status
@@ -25,13 +11,10 @@ plugins {
     id(Plugins.DOCKER) version "0.22.1" apply false
 
     // plugin used to create fat jars
-    id(Plugins.SHADOW) version "5.2.0" apply false
+    id(Plugins.SHADOW) version "6.0.0" apply false
 
     // plugin used for developing Sponge plugins
     id(Plugins.SPONGE) version "0.9.0" apply false
-
-    // plugin used to decompile NMS
-    id(Plugins.NMS) version "2.2-6" apply false
 
     kotlin("jvm") version "1.4.0" apply false
     kotlin("plugin.serialization") version "1.4.0" apply false
@@ -118,6 +101,7 @@ subprojects {
 
     dependencies {
         implementation(kotlin("stdlib-jdk8"))
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
         testImplementation(Deps.MOCKITO_KOTLIN)
     }
 
@@ -138,19 +122,6 @@ projects("sponge", "core", "lobby") {
 
     dependencies {
         implementation(Deps.SPONGE_API)
-    }
-}
-
-/**
- * NMS Projects
- */
-projects("sponge") {
-    apply(plugin = Plugins.NMS)
-
-    configure<UserBaseExtension> {
-        version = "1.12.2"
-        mappings = "snapshot_20180131"
-        makeObfSourceJar = false
     }
 }
 

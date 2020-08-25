@@ -4,7 +4,6 @@ import eu.crushedpixel.sponge.packetgate.api.event.PacketEvent;
 import eu.crushedpixel.sponge.packetgate.api.listener.PacketListenerAdapter;
 import eu.crushedpixel.sponge.packetgate.api.registry.PacketConnection;
 import eu.crushedpixel.sponge.packetgate.api.registry.PacketGate;
-import org.javatuples.Pair;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.Entity;
@@ -33,7 +32,7 @@ public class HologramsServiceImpl extends PacketListenerAdapter implements Holog
 
     @Override
     public void add(String id, Location<World> location, int length, Function<Player, String[]> fun) {
-        holograms.put(id, new Pair(new LinkedList<>(), fun));
+        holograms.put(id, new Pair<>(new LinkedList<>(), fun));
 
         for (int i = 0; i < length; i++) {
             Entity entity = location.getExtent().createEntity(EntityTypes.ARMOR_STAND,
@@ -48,7 +47,7 @@ public class HologramsServiceImpl extends PacketListenerAdapter implements Holog
             entity.offer(Keys.DISPLAY_NAME, Text.of("Oh yeah it's all coming together"));
 
             entities.put(entity.getUniqueId(), new Pair<>(id, length - i - 1));
-            holograms.get(id).getValue0().add(entity.getUniqueId());
+            holograms.get(id).getOne().add(entity.getUniqueId());
         }
     }
 
@@ -77,5 +76,23 @@ public class HologramsServiceImpl extends PacketListenerAdapter implements Holog
                 }
             }
         }*/
+    }
+
+    private static class Pair<T, V> {
+        private T one;
+        private V two;
+
+        public Pair(T one, V two) {
+            this.one = one;
+            this.two = two;
+        }
+
+        public T getOne() {
+            return one;
+        }
+
+        public V getTwo() {
+            return two;
+        }
     }
 }
