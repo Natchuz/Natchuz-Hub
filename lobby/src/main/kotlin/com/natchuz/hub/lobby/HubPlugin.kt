@@ -21,7 +21,8 @@ import org.spongepowered.api.world.Location
 import org.spongepowered.api.world.World
 
 @Suppress("ThrowableNotThrown")
-@Plugin(id = HubPlugin.ID, dependencies = [Dependency(id = CorePlugin.ID)])
+@Plugin(id = HubPlugin.ID, name = "Lobby plugin",
+        dependencies = [Dependency(id = CorePlugin.ID), Dependency(id = "natchuz-hub-sponge-utils")])
 class HubPlugin {
 
     @Inject private lateinit var game: Game

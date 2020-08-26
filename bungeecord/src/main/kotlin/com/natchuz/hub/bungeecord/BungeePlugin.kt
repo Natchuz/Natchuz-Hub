@@ -26,7 +26,6 @@ import net.md_5.bungee.api.event.ServerConnectedEvent
 import net.md_5.bungee.api.plugin.Listener
 import net.md_5.bungee.api.plugin.Plugin
 import net.md_5.bungee.event.EventHandler
-import org.apache.commons.lang.StringUtils
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.util.*
@@ -63,7 +62,7 @@ class BungeeMain : Plugin(), Listener {
         val version = VersionInfo(this::class)
         motd = TextComponent()
         motd.extra = listOf(*TextComponent.fromLegacyText("""             §e§lNatchuz§4 §lHub§r§8 | §7Best §r§a1.14 §r§7server§r§b§l!
-            §r§f${StringUtils.center(version.display, 58)}"""))
+            |§r§f${version.display}""".trimMargin("|")))
     }
 
     override fun onEnable() {
@@ -119,7 +118,7 @@ class BungeeMain : Plugin(), Listener {
     }
 }
 
-fun HttpClientConfig<*>.installSerializers() {
+internal fun HttpClientConfig<*>.installSerializers() {
     install(JsonFeature) {
         serializer = KotlinxSerializer(JsonBuilder {
             serializersModule = SerializersModule {

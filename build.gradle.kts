@@ -1,6 +1,8 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import com.palantir.gradle.docker.DockerExtension
 import net.nemerosa.versioning.VersioningExtension
 import net.nemerosa.versioning.tasks.VersionFileTask
+import org.jetbrains.kotlin.allopen.gradle.AllOpenExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -37,11 +39,9 @@ subprojects {
     repositories {
         mavenCentral()
         jcenter()
-        maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots")
         maven("https://oss.sonatype.org/content/repositories/snapshots")
         maven("https://repo.dmulloy2.net/nexus/repository/public/")
         maven("https://jitpack.io")
-        maven("https://papermc.io/repo/repository/maven-public/")
         maven("https://dl.bintray.com/kotlin/kotlin-eap")
     }
 
@@ -95,20 +95,25 @@ subprojects {
     apply(plugin = "kotlinx-serialization")
     apply(plugin = "kotlin-allopen")
 
-    configure<org.jetbrains.kotlin.allopen.gradle.AllOpenExtension> {
+    configure<AllOpenExtension> {
         annotation("com.natchuz.hub.utils.Mockable")
     }
 
     dependencies {
-        implementation(kotlin("stdlib-jdk8"))
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
         testImplementation(Deps.MOCKITO_KOTLIN)
     }
 
     tasks {
-        withType<KotlinCompile>().configureEach {
+        withType<KotlinCompile> {
             kotlinOptions.suppressWarnings = true
             kotlinOptions.jvmTarget = "1.8"
+        }
+
+        withType<ShadowJar> {
+            minimize()
+
+            /* this excludes module-info.class present in Kotlin standard libraries, that causes Sponge to crash */
+            exclude("META-INF/versions/**/*")
         }
     }
 }
@@ -122,6 +127,12 @@ projects("sponge", "core", "lobby") {
 
     dependencies {
         implementation(Deps.SPONGE_API)
+    }
+
+    tasks.withType<ShadowJar> {
+        dependencies {
+            exclude(dependency(Deps.SPONGE_API))
+        }
     }
 }
 

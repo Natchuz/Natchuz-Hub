@@ -1,18 +1,24 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 dependencies {
     implementation(project(":protocol"))
     implementation(project(":utils"))
     implementation(project(":backend:state"))
 
-    implementation(Deps.KTOR_CLIENT_CIO)
-    implementation(Deps.KTOR_CLIENT_JSON)
-    implementation(Deps.KTOR_CLIENT_SERIALIZATION)
+    implementation(Deps.BUNGEECORD)
+    implementation(Deps.Ktor.Client.ENGINE_CIO)
+    implementation(Deps.Ktor.Client.JSON_SUPPORT)
+    implementation(Deps.Ktor.Client.KOTLINX_SERIALIZATION)
 
-    compileOnly(Deps.BUNGEECORD)
-
-    testImplementation(Deps.BUNGEECORD)
-    testImplementation(Deps.KTOR_CLIENT_TEST)
+    testImplementation(Deps.Ktor.Client.ENGINE_TEST)
 }
 
 docker {
     name = "bungeecord"
+}
+
+tasks.withType<ShadowJar> {
+    dependencies {
+        exclude(dependency(Deps.BUNGEECORD))
+    }
 }

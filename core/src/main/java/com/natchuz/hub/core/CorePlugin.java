@@ -7,6 +7,7 @@ import org.spongepowered.api.Game;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.*;
+import org.spongepowered.api.plugin.Dependency;
 import org.spongepowered.api.plugin.Plugin;
 
 import java.util.List;
@@ -32,7 +33,8 @@ import com.natchuz.hub.core.user.User;
 /**
  * This is entry class of Core plugin for Sponge
  */
-@Plugin(id = CorePlugin.ID, name = "Core Plugin", version = "1.0")
+@Plugin(id = CorePlugin.ID, name = "Core Plugin", version = "1.0",
+        dependencies = @Dependency(id = "natchuz-hub-sponge-utils"))
 public class CorePlugin implements MainFacade {
 
     public static final String ID = "natchuz-hub-core";

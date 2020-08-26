@@ -19,5 +19,4 @@ include("lobby")
 // include("kitpvp") currently not in use
 
 /* Backend */
-include("backend:client")
 include("backend:state")

@@ -3,15 +3,15 @@ plugins {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
-    implementation(Deps.KTOR_SERVER_CORE)
-    implementation(Deps.KTOR_SERVER_NETTY)
-    implementation(Deps.KTOR_SERIALIZATION)
-    implementation(Deps.SLF4J)
-    implementation(Deps.JEDIS)
     implementation(project(":utils"))
 
-    testImplementation(Deps.KTOR_TESTING)
+    implementation(Deps.Ktor.Server.CORE)
+    implementation(Deps.Ktor.Server.ENGINE_NETTY)
+    implementation(Deps.Ktor.Server.SERIALIZATION)
+    implementation(Deps.SLF4J)
+    implementation(Deps.JEDIS)
+
+    testImplementation(Deps.Ktor.Server.ENGINE_TEST)
 }
 
 application {

@@ -1,7 +1,6 @@
 package com.natchuz.hub.core.context;
 
 import org.spongepowered.api.Sponge;
-import sun.reflect.generics.factory.CoreReflectionFactory;
 
 import java.io.File;
 import java.util.Collections;

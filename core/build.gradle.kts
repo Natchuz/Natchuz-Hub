@@ -1,3 +1,4 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import de.undercouch.gradle.tasks.download.Download
 
 /*
@@ -73,17 +74,21 @@ tasks {
         }
         dependsOn(":sponge:build")
     }
+
+    withType<ShadowJar> {
+        dependencies {
+            exclude(project(":sponge"))
+        }
+    }
 }
 
 dependencies {
-    api(project(":sponge"))
-    api(project(":protocol"))
-    api(project(":utils"))
+    implementation(project(":sponge"))
+    implementation(project(":protocol"))
+    implementation(project(":utils"))
 
-    implementation(Deps.SPONGE_API)
-
+    implementation(Deps.MONGO_SYNC)
     implementation(Deps.COMMONS_IO)
-    implementation(Deps.JAVA_MOJANG_API)
 
     "localServer"(files(localServerDir) {
         builtBy("prepareLocalServer")
