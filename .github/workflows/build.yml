@@ -10,8 +10,5 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Setup workspace
-        run: ./gradlew setupDecompWorkspace
-        continue-on-error: false
       - name: Build with Gradle
         run: ./gradlew docker
