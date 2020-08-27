@@ -3,11 +3,11 @@
 package com.natchuz.hub.backend.state
 
 import com.natchuz.hub.utils.UUIDSerializer
-import kotlinx.serialization.*
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseSerializers
 import kotlinx.serialization.json.*
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.plus
-import java.util.*
 
 /** Contains information about if player was logged */
 @Serializable
@@ -49,6 +49,12 @@ sealed class PlayerLoginStatus(val status: String) {
     @Serializable
     class Maintenance : PlayerLoginStatus("maintenance")
 }
+
+@Serializable
+data class SendRequest(
+        val targetServer: String,
+        val flags: List<PlayerFlags>
+)
 
 /**
  * [Json] containing modules for serializing classes in this file

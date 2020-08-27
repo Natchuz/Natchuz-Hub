@@ -2,7 +2,6 @@ package com.natchuz.hub.core.context;
 
 import java.util.List;
 
-import com.natchuz.hub.protocol.state.StateDatabase;
 import com.natchuz.hub.core.map.MapRepository;
 import com.natchuz.hub.core.modules.Module;
 import com.natchuz.hub.core.profile.ProfileRepo;
@@ -24,11 +23,6 @@ public interface ServerContext {
      * Creates a {@link ProxyBackend proxy backaend}
      */
     ProxyBackend createProxyBackend();
-
-    /**
-     * Create a {@link StateDatabase state database}
-     */
-    StateDatabase createStateDatabase();
 
     /**
      * Create a {@link ProfileRepo profile repo} to load users from

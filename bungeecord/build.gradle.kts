@@ -21,4 +21,8 @@ tasks.withType<ShadowJar> {
     dependencies {
         exclude(dependency(Deps.BUNGEECORD))
     }
+
+    minimize {
+        exclude(dependency(Deps.Ktor.Client.ENGINE_CIO))
+    }
 }

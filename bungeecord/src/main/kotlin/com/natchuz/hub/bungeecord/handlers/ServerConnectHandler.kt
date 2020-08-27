@@ -2,9 +2,7 @@ package com.natchuz.hub.bungeecord.handlers
 
 import com.natchuz.hub.backend.state.PlayerLoginStatus
 import io.ktor.client.*
-import io.ktor.client.features.*
 import io.ktor.client.request.*
-import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
 import net.md_5.bungee.api.ProxyServer
 import net.md_5.bungee.api.event.ServerConnectEvent
@@ -27,9 +25,6 @@ class ServerConnectHandler(
     private suspend fun handleJoinProxy(event: ServerConnectEvent) = with(event) {
         val response = backendClient.post<PlayerLoginStatus> {
             url("http://state/player/${player.uniqueId}/login")
-            timeout {
-                player.disconnect("Could not connect!")
-            }
         }
 
         when (response) {

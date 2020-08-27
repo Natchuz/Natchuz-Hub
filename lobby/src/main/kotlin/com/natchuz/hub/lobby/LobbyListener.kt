@@ -1,8 +1,8 @@
 package com.natchuz.hub.lobby
 
+import com.natchuz.hub.backend.state.PlayerFlags
 import com.natchuz.hub.core.proxy.ProxyBackend
-import com.natchuz.hub.protocol.state.JoinFlags
-import com.natchuz.hub.protocol.state.StateDatabase
+import com.natchuz.hub.core.service.PlayerService
 import com.natchuz.hub.sponge.kotlin.EntityUUID
 import com.natchuz.hub.sponge.kotlin.require
 import com.natchuz.hub.sponge.regions.BlockVectors
@@ -115,23 +115,35 @@ class LobbyListener private constructor(private val mapConfig: MapConfig) {
     }
 
     @Listener
+    fun au(event: ClientConnectionEvent.Auth) {
+        println("auth")
+    }
+
+    @Listener
+    fun l(event: ClientConnectionEvent.Login) {
+        println("login")
+    }
+
+    @Listener
+    fun dis(event: ClientConnectionEvent.Disconnect) {
+        println("dis ${event.cause}, ${event.context}, ${event.message}")
+    }
+
+    @Listener
     fun onPlayerJoin(event: ClientConnectionEvent.Join) {
+
         val player = event.targetEntity
-        Sponge.getServiceManager().require<StateDatabase>()
-                .getPlayer(player.uniqueId).thenAcceptAsync {
-                    it.ifPresent { info ->
-                        if (info.joinFlags.contains(JoinFlags.PROXY_JOIN)) {
-                            player.sendTitle(Title.builder()
-                                    .title(Text.of(TextColors.WHITE, TextStyles.BOLD, "Natchuz ",
-                                            TextStyles.RESET, TextColors.YELLOW, TextStyles.BOLD, "HUB"))
-                                    .subtitle(Text.of(versionInfo.display))
-                                    .fadeIn(10)
-                                    .fadeOut(70)
-                                    .stay(20)
-                                    .build())
-                        }
-                    }
-                }
+
+        if (PlayerFlags.PROXY_JOIN in Sponge.getServiceManager().require<PlayerService>()[player.uniqueId].flags) {
+            player.sendTitle(Title.builder()
+                    .title(Text.of(TextColors.WHITE, TextStyles.BOLD, "Natchuz ",
+                            TextStyles.RESET, TextColors.YELLOW, TextStyles.BOLD, "HUB"))
+                    .subtitle(Text.of(versionInfo.display))
+                    .fadeIn(10)
+                    .fadeOut(70)
+                    .stay(20)
+                    .build())
+        }
 
         player.sendMessage(Text.of("""
             |So there is an issue where entities just don't spawn. I've been stuck for a week there, 

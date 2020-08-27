@@ -13,7 +13,6 @@ docker {
 }
 
 dependencies {
-    implementation(project(":protocol")) // legacy, to be hidden under core
     implementation(project(":utils"))
     implementation(project(":sponge"))
 }

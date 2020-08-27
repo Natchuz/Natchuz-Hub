@@ -68,19 +68,22 @@ class BungeeMain : Plugin(), Listener {
     override fun onEnable() {
         proxy.pluginManager.registerListener(this, this)
         proxy.pluginManager.registerListener(this, serverConnectHandler)
-        proxy.pluginManager.registerListener(this, FriendsNotifierSource(protocol))
+        //proxy.pluginManager.registerListener(this, FriendsNotifierSource(protocol))
 
         protocol.handle("connect") {
             proxy.servers[it[0]] = proxy.constructServerInfo(it[0],
                     InetSocketAddress(InetAddress.getByName(it[0]), 25565), "Hello world!", false)
         }
 
+        proxy.servers["lobby"] = proxy.constructServerInfo("lobby",
+                InetSocketAddress(InetAddress.getByName("lobby"), 25565), "Hello world!", false)
+
         protocol.handle("disconnect") {
             proxy.servers.remove(it[0])
         }
 
         protocol.handle("send") {
-            val player = proxy.getPlayer(it[0]) ?: return@handle
+            val player = proxy.getPlayer(UUID.fromString(it[0])) ?: return@handle
             val server = proxy.getServerInfo(it[1])
 
             player.sendMessage(*ComponentBuilder("Sending you to ${server.name}")
@@ -107,8 +110,8 @@ class BungeeMain : Plugin(), Listener {
         backendClient.post("http://state/player/${event.player.uniqueId}/logout")
     }
 
-    @EventHandler
-    fun onChange(event: ServerConnectedEvent): Unit = TODO("inform backend about change")
+    //@EventHandler
+    //fun onChange(event: ServerConnectedEvent): Unit = TODO("inform backend about change")
 
     @EventHandler
     fun onPing(event: ProxyPingEvent) = with(event.response) {

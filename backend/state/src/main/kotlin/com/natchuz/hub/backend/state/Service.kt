@@ -1,5 +1,10 @@
 package com.natchuz.hub.backend.state
 
+import com.natchuz.hub.protocol.arch.Services
+import com.natchuz.hub.protocol.messaging.Client
+import com.natchuz.hub.protocol.messaging.Protocol
+import com.natchuz.hub.protocol.messaging.SimpleClient
+import com.natchuz.hub.utils.mojang.ElectroidMojangAPI
 import redis.clients.jedis.Jedis
 import java.time.Instant
 import java.util.*
@@ -23,6 +28,11 @@ interface Service {
      * Get player flags
      */
     fun getPlayerFlags(player: UUID) : List<PlayerFlags>
+
+    /**
+     * Send player to server
+     */
+    fun sendPlayer(player: UUID, sendRequest: SendRequest)
 }
 
 enum class PlayerFlags {
@@ -32,10 +42,16 @@ enum class PlayerFlags {
 /** Default Service that uses Redis as database */
 class DefaultService private constructor(private val jedis: Jedis) : Service {
 
+    val protocol: Protocol
+
+    init {
+        protocol = Protocol(SimpleClient("testLol"))
+    }
+
     override fun loginPlayer(player: UUID): PlayerLoginStatus {
         jedis["player.$player.login"] = Instant.now().toString()
         setPlayerFlags(player, PlayerFlags.PROXY_JOIN)
-        return PlayerLoginStatus.Ok("lb")
+        return PlayerLoginStatus.Ok("lobby")
     }
 
     override fun logoutPlayer(player: UUID) : Boolean {
@@ -48,6 +64,11 @@ class DefaultService private constructor(private val jedis: Jedis) : Service {
 
     override fun getPlayerFlags(player: UUID) : List<PlayerFlags> {
         return jedis["player.$player.flags"]?.split(" | ")?.map(PlayerFlags::valueOf) ?: emptyList()
+    }
+
+    override fun sendPlayer(player: UUID, sendRequest: SendRequest) {
+        protocol.send(Services.BUNGEECORD.messageEndpoint(), "send", player.toString(), "lb")
+        setPlayerFlags(player, *sendRequest.flags.toTypedArray())
     }
 
     private fun setPlayerFlags(player: UUID, vararg flags: PlayerFlags) {

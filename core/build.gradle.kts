@@ -69,7 +69,7 @@ tasks {
         doFirst {
             copy {
                 from("${project(":sponge").buildDir}/libs/sponge-all.jar")
-                into("$buildDir/libs/sponge-all.jar")
+                into("$buildDir/libs/")
             }
         }
         dependsOn(":sponge:build")
@@ -79,6 +79,10 @@ tasks {
         dependencies {
             exclude(project(":sponge"))
         }
+
+        minimize {
+            exclude(dependency(Deps.Ktor.Client.ENGINE_CIO))
+        }
     }
 }
 
@@ -86,9 +90,14 @@ dependencies {
     implementation(project(":sponge"))
     implementation(project(":protocol"))
     implementation(project(":utils"))
+    api(project(":backend:state"))
 
     implementation(Deps.MONGO_SYNC)
     implementation(Deps.COMMONS_IO)
+
+    implementation(Deps.Ktor.Client.ENGINE_CIO)
+    implementation(Deps.Ktor.Client.JSON_SUPPORT)
+    implementation(Deps.Ktor.Client.KOTLINX_SERIALIZATION)
 
     "localServer"(files(localServerDir) {
         builtBy("prepareLocalServer")

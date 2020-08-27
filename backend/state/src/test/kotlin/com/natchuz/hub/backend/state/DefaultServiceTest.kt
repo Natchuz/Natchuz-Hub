@@ -9,7 +9,7 @@ import kotlin.test.assertEquals
 
 class DefaultServiceTest {
 
-    @Test
+    /*@Test
     fun `test login player`() {
         val jedis = mock<Jedis>()
         val service = DefaultService.construct(jedis)
@@ -18,7 +18,7 @@ class DefaultServiceTest {
             assertEquals(PlayerLoginStatus.Ok("lb"), this)
             verify(jedis)["player.$player1.flags"] = "PROXY_JOIN"
         }
-    }
+    }*/
 
     private fun String.asUUID(): UUID = UUID.fromString(this)
 

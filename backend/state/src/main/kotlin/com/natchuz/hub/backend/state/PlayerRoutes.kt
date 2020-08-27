@@ -1,6 +1,7 @@
 package com.natchuz.hub.backend.state
 
 import io.ktor.application.*
+import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.util.pipeline.*
@@ -17,6 +18,7 @@ fun Routing.playerRoutes(service: Service) = route("/player/{playerUUID}") {
     }
 
     post("/send") {
+        service.sendPlayer(player, call.receive())
         call.respond(Unit)
     }
 
@@ -25,7 +27,7 @@ fun Routing.playerRoutes(service: Service) = route("/player/{playerUUID}") {
     }
 }
 
-private val PipelineContext<Unit, ApplicationCall>.player : UUID
+private val PipelineContext<Unit, ApplicationCall>.player: UUID
     get() {
         return UUID.fromString(call.parameters["playerUUID"])
     }

@@ -38,20 +38,22 @@ class PlayerRoutesTest {
 
     @Test
     fun `test send route`() = withTestApplication({
-        val service = mock<Service>()
-        mainWithService(service)
+        mainWithService(mock<Service>())
     }) {
-        fun request(uuid: String): TestApplicationCall = handleRequest {
+        fun request(uuid: String, targetServer: String): TestApplicationCall = handleRequest {
             method = HttpMethod.Post
             uri = "/player/$uuid/send"
+            addHeader("Content-Type", "application/json")
+            setBody(""" { "targetServer" : "$targetServer", "flags" : [] } """)
         }
 
-        assertEqualsJson("""{}""", request(player1).response.content!!)
-        assertEqualsJson("""{ }""", request(player2).response.content!!)
-        assertEqualsJson("""{  }""", request(player3).response.content!!)
-        assertEqualsJson("""{}""", request(player4).response.content!!)
-        assertEqualsJson("""{ }""", request(player5).response.content!!)
+        assertEqualsJson("""{}""", request(player1, "lb").response.content!!)
+        assertEqualsJson("""{ }""", request(player2, "lb").response.content!!)
+        assertEqualsJson("""{  }""", request(player3, "lb").response.content!!)
+        assertEqualsJson("""{}""", request(player4, "lb").response.content!!)
+        assertEqualsJson("""{ }""", request(player5, "lb").response.content!!)
     }
+
 
     @Test
     fun `test logout route`() = withTestApplication({
