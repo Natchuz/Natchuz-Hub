@@ -1,4 +1,4 @@
 name: NatchuzHub
-main: com.natchuz.hub.bungeecord.BungeeMain
+main: com.natchuz.hub.proxy.ProxyPlugin
 version: "1.0"
 author: Natchuz

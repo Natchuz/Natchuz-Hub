@@ -1,13 +1,11 @@
-package com.natchuz.hub.bungeecord
+package com.natchuz.hub.proxy
 
 import com.natchuz.hub.backend.state.PlayerLoginStatus
-import com.natchuz.hub.bungeecord.handlers.ServerConnectHandler
-import com.natchuz.hub.bungeecord.legacy.FriendsNotifierSource
+import com.natchuz.hub.proxy.handlers.ServerConnectHandler
 import com.natchuz.hub.protocol.arch.Services
 import com.natchuz.hub.protocol.messaging.Protocol
 import com.natchuz.hub.utils.VersionInfo
 import io.ktor.client.*
-import io.ktor.client.engine.cio.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
@@ -22,7 +20,6 @@ import net.md_5.bungee.api.chat.TextComponent
 import net.md_5.bungee.api.event.PlayerDisconnectEvent
 import net.md_5.bungee.api.event.ProxyPingEvent
 import net.md_5.bungee.api.event.ServerConnectEvent
-import net.md_5.bungee.api.event.ServerConnectedEvent
 import net.md_5.bungee.api.plugin.Listener
 import net.md_5.bungee.api.plugin.Plugin
 import net.md_5.bungee.event.EventHandler
@@ -35,7 +32,7 @@ import kotlinx.serialization.json.Json as JsonBuilder
 /**
  * Entry class for Bungeecord Plugin
  */
-class BungeeMain : Plugin(), Listener {
+class ProxyPlugin : Plugin(), Listener {
 
     private lateinit var protocol: Protocol
     private lateinit var favicon: Favicon
@@ -68,7 +65,6 @@ class BungeeMain : Plugin(), Listener {
     override fun onEnable() {
         proxy.pluginManager.registerListener(this, this)
         proxy.pluginManager.registerListener(this, serverConnectHandler)
-        //proxy.pluginManager.registerListener(this, FriendsNotifierSource(protocol))
 
         protocol.handle("connect") {
             proxy.servers[it[0]] = proxy.constructServerInfo(it[0],

@@ -3,7 +3,7 @@ services:
 
   # bungeecord
   bungeecord:
-    image: bungeecord
+    image: server-proxy
     ports:
       - "25565:25565/tcp"
     networks:

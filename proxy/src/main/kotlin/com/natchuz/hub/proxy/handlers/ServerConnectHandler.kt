@@ -1,4 +1,4 @@
-package com.natchuz.hub.bungeecord.handlers
+package com.natchuz.hub.proxy.handlers
 
 import com.natchuz.hub.backend.state.PlayerLoginStatus
 import io.ktor.client.*

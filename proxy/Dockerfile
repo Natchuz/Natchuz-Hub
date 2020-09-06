@@ -11,6 +11,6 @@ RUN curl "https://ci.md-5.net/job/BungeeCord/lastSuccessfulBuild/artifact/bootst
 COPY config.yml modules.yml locations.yml ./
 
 # copy compiled plugin
-COPY build/libs/bungeecord-all.jar plugins/
+COPY build/libs/proxy-all.jar plugins/proxy-plugin.jar
 
 ENTRYPOINT ["java", "-jar", "bungeecord.jar"]

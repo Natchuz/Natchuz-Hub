@@ -10,7 +10,7 @@ rootProject.name = "natchuz-hub"
 
 include("utils")
 include("protocol")
-include("bungeecord")
+include("proxy")
 include("sponge")
 include("core")
 

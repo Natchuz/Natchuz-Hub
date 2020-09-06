@@ -14,7 +14,7 @@ dependencies {
 }
 
 docker {
-    name = "bungeecord"
+    name = "server-proxy"
 }
 
 tasks.withType<ShadowJar> {

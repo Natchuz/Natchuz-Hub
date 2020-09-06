@@ -1,11 +1,10 @@
-package com.natchuz.hub.bungeecord.handlers
+package com.natchuz.hub.proxy.handlers
 
-import com.natchuz.hub.bungeecord.installSerializers
+import com.natchuz.hub.proxy.installSerializers
 import com.nhaarman.mockitokotlin2.*
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.features.*
-import io.ktor.client.utils.*
 import io.ktor.http.*
 import net.md_5.bungee.api.ProxyServer
 import net.md_5.bungee.api.config.ServerInfo
@@ -13,7 +12,6 @@ import net.md_5.bungee.api.connection.ProxiedPlayer
 import net.md_5.bungee.api.event.ServerConnectEvent
 import org.junit.jupiter.api.Test
 import java.util.*
-import kotlin.check
 
 class ServerConnectHandlerTest {
 
