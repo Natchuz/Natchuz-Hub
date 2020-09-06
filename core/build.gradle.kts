@@ -1,3 +1,4 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import de.undercouch.gradle.tasks.download.Download
 
 /*
@@ -68,22 +69,35 @@ tasks {
         doFirst {
             copy {
                 from("${project(":sponge").buildDir}/libs/sponge-all.jar")
-                into("$buildDir/libs/sponge-all.jar")
+                into("$buildDir/libs/")
             }
         }
         dependsOn(":sponge:build")
     }
+
+    withType<ShadowJar> {
+        dependencies {
+            exclude(project(":sponge"))
+        }
+
+        minimize {
+            exclude(dependency(Deps.Ktor.Client.ENGINE_CIO))
+        }
+    }
 }
 
 dependencies {
-    api(project(":sponge"))
-    api(project(":protocol"))
-    api(project(":utils"))
+    implementation(project(":sponge"))
+    implementation(project(":protocol"))
+    implementation(project(":utils"))
+    api(project(":backend:state"))
 
-    implementation(Deps.SPONGE_API)
-
+    implementation(Deps.MONGO_SYNC)
     implementation(Deps.COMMONS_IO)
-    implementation(Deps.JAVA_MOJANG_API)
+
+    implementation(Deps.Ktor.Client.ENGINE_CIO)
+    implementation(Deps.Ktor.Client.JSON_SUPPORT)
+    implementation(Deps.Ktor.Client.KOTLINX_SERIALIZATION)
 
     "localServer"(files(localServerDir) {
         builtBy("prepareLocalServer")

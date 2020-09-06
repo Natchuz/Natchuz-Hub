@@ -4,17 +4,14 @@ import com.google.inject.Inject;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
-import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.*;
+import org.spongepowered.api.plugin.Dependency;
 import org.spongepowered.api.plugin.Plugin;
 
 import java.util.List;
 import java.util.UUID;
 
-import com.natchuz.hub.protocol.state.JoinFlags;
-import com.natchuz.hub.protocol.state.ServerID;
-import com.natchuz.hub.protocol.state.StateDatabase;
 import com.natchuz.hub.core.api.MainFacade;
 import com.natchuz.hub.core.content.commands.NetworkCommands;
 import com.natchuz.hub.core.content.cosmetics.CosmeticsListener;
@@ -32,7 +29,8 @@ import com.natchuz.hub.core.user.User;
 /**
  * This is entry class of Core plugin for Sponge
  */
-@Plugin(id = CorePlugin.ID, name = "Core Plugin", version = "1.0")
+@Plugin(id = CorePlugin.ID, name = "Core Plugin", version = "1.0",
+        dependencies = @Dependency(id = "natchuz-hub-sponge-utils"))
 public class CorePlugin implements MainFacade {
 
     public static final String ID = "natchuz-hub-core";
@@ -42,7 +40,6 @@ public class CorePlugin implements MainFacade {
 
     private ProxyBackend networkUtils;
     private ProfileRepo<User> userProfileProvider;
-    private StateDatabase stateDatabase;
 
     private LoadedMap loadedMap;
     private ServerContext context;
@@ -57,7 +54,7 @@ public class CorePlugin implements MainFacade {
     public void onServerLoad(GamePreInitializationEvent event) {
 
         // load context
-        ContextLoader loader = new PropertiesContextLoader(this);
+        ContextLoader loader = new PropertiesContextLoader();
         context = loader.loadContext();
         logger.info("Using context: " + context.getClass().getCanonicalName());
 
@@ -71,7 +68,6 @@ public class CorePlugin implements MainFacade {
 
         // construct basic services
         userProfileProvider = context.createProfileRepo(User.class);
-        stateDatabase = context.createStateDatabase();
         networkUtils = context.createProxyBackend();
 
         // construct fixed listeners
@@ -88,8 +84,9 @@ public class CorePlugin implements MainFacade {
         List<Module> modules = context.createModules();
         modules.forEach(module -> game.getEventManager().registerListeners(this, module));
 
+        // TODO: register
         // register server in state database
-        stateDatabase.registerServer(ServerID.fromString(System.getenv("SERVERTYPE") + "/" + getServerId())).get();
+        //stateDatabase.registerServer(ServerID.fromString(System.getenv("SERVERTYPE") + "/" + getServerId())).get();
     }
 
     @SneakyThrows
@@ -104,20 +101,18 @@ public class CorePlugin implements MainFacade {
     @Listener
     public void onPost(GamePostInitializationEvent event) {
         // register all services
-        game.getServiceManager().setProvider(this, StateDatabase.class, stateDatabase);
         game.getServiceManager().setProvider(this, ProxyBackend.class, networkUtils);
         game.getServiceManager().setProvider(this, FriendUtils.class, friendUtils);
     }
 
-    @SneakyThrows
     @Listener
     public void onStop(GameStoppedEvent event) {
+        // TODO
         // unregister server from state database
-        stateDatabase.unregisterServer(ServerID.fromString(System.getenv("SERVERTYPE") + "/" + serverID)).get();
+        //stateDatabase.unregisterServer(ServerID.fromString(System.getenv("SERVERTYPE") + "/" + serverID)).get();
     }
 
     //region facade implementation
-
 
     @Override
     public MapManifest getMapManifest() {
@@ -132,11 +127,6 @@ public class CorePlugin implements MainFacade {
     @Override
     public UUID getMapWorld() {
         return loadedMap.getWorld();
-    }
-
-    @Override
-    public void sendToLobby(Player player) {
-        networkUtils.send(player, "lb", JoinFlags.LOBBY_RETURN);
     }
 
     @Override

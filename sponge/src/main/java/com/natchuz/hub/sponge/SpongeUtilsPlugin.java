@@ -6,6 +6,7 @@ import org.spongepowered.api.Game;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePostInitializationEvent;
+import org.spongepowered.api.plugin.Dependency;
 import org.spongepowered.api.plugin.Plugin;
 
 import com.natchuz.hub.sponge.holograms.HologramsService;
@@ -13,7 +14,8 @@ import com.natchuz.hub.sponge.holograms.HologramsServiceImpl;
 import com.natchuz.hub.sponge.managers.DialogManager;
 import com.natchuz.hub.sponge.managers.SidebarManager;
 
-@Plugin(id = "natchuz-hub-sponge-utils", name = "Sponge Utils", version = "1.0")
+@Plugin(id = "natchuz-hub-sponge-utils", name = "Sponge Utils", version = "1.0",
+        dependencies = @Dependency(id = "packetgate"))
 public class SpongeUtilsPlugin {
 
     @Inject

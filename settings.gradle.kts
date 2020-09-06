@@ -5,15 +5,18 @@ pluginManagement {
         maven { setUrl("https://plugins.gradle.org/m2/") }
     }
 }
+
 rootProject.name = "natchuz-hub"
 
 include("utils")
 include("protocol")
-include("service")
 include("bungeecord")
 include("sponge")
 include("core")
 
-// servers
+/* Gamemodes */
 include("lobby")
-//include("kitpvp") currently not in use
+// include("kitpvp") currently not in use
+
+/* Backend */
+include("backend:state")

@@ -1,21 +1,9 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import com.palantir.gradle.docker.DockerExtension
-import net.minecraftforge.gradle.user.UserBaseExtension
 import net.nemerosa.versioning.VersioningExtension
 import net.nemerosa.versioning.tasks.VersionFileTask
+import org.jetbrains.kotlin.allopen.gradle.AllOpenExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-/**
- * Libraries required by MCP plugin
- */
-buildscript {
-    repositories {
-        maven("https://files.minecraftforge.net/maven")
-        maven("https://repo.spongepowered.org/maven")
-    }
-    dependencies {
-        classpath("net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT")
-    }
-}
 
 plugins {
     // plugin to create file with current git status
@@ -25,15 +13,15 @@ plugins {
     id(Plugins.DOCKER) version "0.22.1" apply false
 
     // plugin used to create fat jars
-    id(Plugins.SHADOW) version "5.2.0" apply false
+    id(Plugins.SHADOW) version "6.0.0" apply false
 
     // plugin used for developing Sponge plugins
     id(Plugins.SPONGE) version "0.9.0" apply false
 
-    // plugin used to decompile NMS
-    id(Plugins.NMS) version "2.2-6" apply false
+    kotlin("jvm") version "1.4.0" apply false
+    kotlin("plugin.serialization") version "1.4.0" apply false
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.4.0" apply false
 
-    kotlin("jvm") version "1.3.72" apply false
     idea
     `java-library`
 }
@@ -51,11 +39,9 @@ subprojects {
     repositories {
         mavenCentral()
         jcenter()
-        maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots")
         maven("https://oss.sonatype.org/content/repositories/snapshots")
         maven("https://repo.dmulloy2.net/nexus/repository/public/")
         maven("https://jitpack.io")
-        maven("https://papermc.io/repo/repository/maven-public/")
         maven("https://dl.bintray.com/kotlin/kotlin-eap")
     }
 
@@ -104,18 +90,30 @@ subprojects {
 /**
  * Kotlin projects
  */
-projects("bungeecord", "utils", "sponge", "lobby") {
+subprojects {
     apply(plugin = "kotlin")
+    apply(plugin = "kotlinx-serialization")
+    apply(plugin = "kotlin-allopen")
+
+    configure<AllOpenExtension> {
+        annotation("com.natchuz.hub.utils.Mockable")
+    }
 
     dependencies {
-        implementation(kotlin("stdlib-jdk8"))
         testImplementation(Deps.MOCKITO_KOTLIN)
     }
 
     tasks {
-        withType<KotlinCompile>().configureEach {
+        withType<KotlinCompile> {
             kotlinOptions.suppressWarnings = true
             kotlinOptions.jvmTarget = "1.8"
+        }
+
+        withType<ShadowJar> {
+            minimize()
+
+            /* this excludes module-info.class present in Kotlin standard libraries, that causes Sponge to crash */
+            exclude("META-INF/versions/**/*")
         }
     }
 }
@@ -130,25 +128,18 @@ projects("sponge", "core", "lobby") {
     dependencies {
         implementation(Deps.SPONGE_API)
     }
-}
 
-/**
- * NMS Projects
- */
-projects("sponge") {
-    apply(plugin = Plugins.NMS)
-
-    configure<UserBaseExtension> {
-        version = "1.12.2"
-        mappings = "snapshot_20180131"
-        makeObfSourceJar = false
+    tasks.withType<ShadowJar> {
+        dependencies {
+            exclude(dependency(Deps.SPONGE_API))
+        }
     }
 }
 
 /**
  * Docker configuration
  */
-projects("bungeecord", "service", "core", "lobby") {
+projects("bungeecord", "core", "lobby", "backend:state") {
     apply(plugin = Plugins.DOCKER)
 
     configure<DockerExtension> {

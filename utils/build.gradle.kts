@@ -1,6 +1,7 @@
 dependencies {
-    api(Deps.GUAVA)
-    api(Deps.COMMONS_LANG)
-    api(Deps.JAVA_TUPLES)
-    api(Deps.UNIREST)
+    implementation(Deps.Ktor.Client.ENGINE_CIO)
+    implementation(Deps.Ktor.Client.JSON_SUPPORT)
+    implementation(Deps.Ktor.Client.KOTLINX_SERIALIZATION)
+
+    testImplementation(Deps.Ktor.Client.ENGINE_TEST)
 }

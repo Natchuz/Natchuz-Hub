@@ -1,7 +1,7 @@
 package com.natchuz.hub.sponge.regions;
 
 import com.flowpowered.math.vector.Vector3d;
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 
 import java.util.Arrays;
 import java.util.Iterator;

@@ -29,11 +29,6 @@ public interface MainFacade {
     UUID getMapWorld();
 
     /**
-     * Sends player to lobby
-     */
-    void sendToLobby(Player player);
-
-    /**
      * @deprecated until new api will be developed
      */
     <T extends UserProfile> ProfileRepo<T> createProfileRepo(Class<T> clazz);

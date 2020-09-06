@@ -14,9 +14,7 @@ import java.util.List;
 
 import com.natchuz.hub.protocol.arch.Services;
 import com.natchuz.hub.protocol.messaging.Protocol;
-import com.natchuz.hub.protocol.state.RedisStateDatabase;
-import com.natchuz.hub.protocol.state.StateDatabase;
-import com.natchuz.hub.core.api.MainFacade;
+import com.natchuz.hub.core.proxy.NetworkProxyBackend;
 import com.natchuz.hub.core.map.LocalMapRepository;
 import com.natchuz.hub.core.map.MapRepository;
 import com.natchuz.hub.core.modules.*;
@@ -24,7 +22,6 @@ import com.natchuz.hub.core.profile.CachedProfileRepo;
 import com.natchuz.hub.core.profile.MongoProfileRepo;
 import com.natchuz.hub.core.profile.ProfileRepo;
 import com.natchuz.hub.core.profile.UserProfile;
-import com.natchuz.hub.core.proxy.NetworkProxyBackend;
 import com.natchuz.hub.core.proxy.ProxyBackend;
 
 /**
@@ -32,16 +29,13 @@ import com.natchuz.hub.core.proxy.ProxyBackend;
  */
 public class NetworkContext implements ServerContext {
 
-    private final MainFacade facade;
     private final MongoDatabase database;
     private final Protocol protocol;
 
     private final String DB_NAME = "natchuz-hub";
 
     @SneakyThrows
-    public NetworkContext(MainFacade facade) {
-        this.facade = facade;
-
+    public NetworkContext() {
         MongoClientSettings settings = MongoClientSettings.builder().uuidRepresentation(UuidRepresentation.STANDARD)
                 .applyToClusterSettings(builder ->
                         builder.hosts(Arrays.asList(new ServerAddress("mongo", 27017)))).build();
@@ -59,12 +53,7 @@ public class NetworkContext implements ServerContext {
 
     @Override
     public ProxyBackend createProxyBackend() {
-        return new NetworkProxyBackend(protocol);
-    }
-
-    @Override
-    public StateDatabase createStateDatabase() {
-        return new RedisStateDatabase("redis");
+        return new NetworkProxyBackend();
     }
 
     @Override

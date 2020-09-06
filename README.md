@@ -5,8 +5,6 @@
 ![](https://img.shields.io/badge/minecraft%20version-1.12.2-brightgreen)
 ![](https://img.shields.io/github/stars/Natchuz-Hub/Natchuz-Hub?style=social)
 
-**NOTE: currently in migration to Sponge, many things may not work**
-
 **Currently work is still in progress!**
 
 Open source Minecraft minigames server targeting the latest versions of game.
@@ -18,11 +16,9 @@ Our goal is to build both fun and competitive minigames.
 We decided to utilize all new Minecraft features added since the 1.8 release of the game, 
 that would be used to create new and uniques games.
 
-Project currently runs on PaperMC, uses MongoDB as the database, Redis as temporary storage and RabbitMQ as a message broker.
+Project is currently under bigger architecture redesign. See below
 
-This will, very likely, change in the near future.
-
-Currently implemented features:
+Existing features, but not yet migrated, features:
 - Friends
 - Basic KitPvP gamemode
 - Multi server system
@@ -66,6 +62,10 @@ For more information about a specific part of the project, search for a README i
 **Note:** Running full network may not work now  
 
 ### Coding conventions and Future
+
+Currently goal is to rewrite everything to Kotlin, migrate entire business logic to microservices.
+As for now microservices are called directly using simple REST, but implementation will be hidden under GraphQL API Gateway,
+and maybe ditched in favor of rpc because speeeeed
 
 Longer term plan is to fully replace NMS with an alternative server engine like [Cuberite], 
 or even better - [Feather], once it becomes fully functional and stable.
