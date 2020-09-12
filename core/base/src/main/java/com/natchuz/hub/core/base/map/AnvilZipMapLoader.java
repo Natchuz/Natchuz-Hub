@@ -1,4 +1,4 @@
-package com.natchuz.hub.core.api.map;
+package com.natchuz.hub.core.base.map;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -16,6 +16,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import com.natchuz.hub.utils.UUIDConverter;
+import com.natchuz.hub.core.api.map.LoadedMap;
+import com.natchuz.hub.core.api.map.MapManifest;
 
 /**
  * Loads map from zipped world in Anvil format

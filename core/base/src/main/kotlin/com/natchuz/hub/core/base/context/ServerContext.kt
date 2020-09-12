@@ -1,6 +1,6 @@
-package com.natchuz.hub.core.network
+package com.natchuz.hub.core.base.context
 
-import com.natchuz.hub.core.api.map.MapRepository
+import com.natchuz.hub.core.base.map.MapRepository
 import com.natchuz.hub.core.api.proxy.ProxyBackend
 import com.natchuz.hub.core.api.user.UserService
 

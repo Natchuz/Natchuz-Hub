@@ -92,8 +92,7 @@ dependencies {
     implementation(project(":utils"))
     implementation(project(":core:network"))
     implementation(project(":core:standalone"))
-    implementation(project(":core:api"))
-    api(project(":backend:state"))
+    api(project(":core:api"))
 
     implementation(Deps.MONGO_SYNC)
     implementation(Deps.COMMONS_IO)

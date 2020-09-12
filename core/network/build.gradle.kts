@@ -1,7 +1,5 @@
 dependencies {
-    implementation(project(":core:api"))
     implementation(project(":core:base"))
-    implementation(project(":protocol"))
     implementation(project(":utils"))
 
     implementation(Deps.Ktor.Client.ENGINE_CIO)

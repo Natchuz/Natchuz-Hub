@@ -1,11 +1,11 @@
-package com.natchuz.hub.core
+package com.natchuz.hub.core.standalone
 
-import com.natchuz.hub.core.api.map.LocalMapRepository
-import com.natchuz.hub.core.api.map.MapRepository
+import com.natchuz.hub.core.base.map.LocalMapRepository
+import com.natchuz.hub.core.base.map.MapRepository
 import com.natchuz.hub.core.api.proxy.ProxyBackend
 import com.natchuz.hub.core.api.user.UserService
-import com.natchuz.hub.core.network.Module
-import com.natchuz.hub.core.network.ServerContext
+import com.natchuz.hub.core.base.context.Module
+import com.natchuz.hub.core.base.context.ServerContext
 import org.spongepowered.api.Game
 import java.io.File
 

@@ -1,6 +1,8 @@
-package com.natchuz.hub.core.api.map;
+package com.natchuz.hub.core.base.map;
 
 import java.io.IOException;
+
+import com.natchuz.hub.core.api.map.LoadedMap;
 
 public interface MapLoader {
 

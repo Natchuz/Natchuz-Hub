@@ -1,4 +1,4 @@
-package com.natchuz.hub.core
+package com.natchuz.hub.core.standalone
 
 import com.natchuz.hub.backend.state.PlayerFlags
 import com.natchuz.hub.core.api.user.NetworkPlayer

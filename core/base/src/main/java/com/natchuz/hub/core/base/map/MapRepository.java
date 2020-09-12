@@ -1,4 +1,4 @@
-package com.natchuz.hub.core.api.map;
+package com.natchuz.hub.core.base.map;
 
 import java.io.InputStream;
 import java.util.Optional;

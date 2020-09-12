@@ -1,4 +1,4 @@
-package com.natchuz.hub.core;
+package com.natchuz.hub.core.standalone;
 
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;

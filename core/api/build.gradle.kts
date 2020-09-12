@@ -1,5 +1,6 @@
 dependencies {
-    implementation(project(":backend:state"))
+    api(project(":backend:state"))
+
     implementation(project(":utils"))
     implementation(Deps.Kotlin.SERIALIZATION)
 }

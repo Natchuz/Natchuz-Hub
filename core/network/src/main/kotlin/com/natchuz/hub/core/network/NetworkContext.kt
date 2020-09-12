@@ -1,9 +1,11 @@
 package com.natchuz.hub.core.network
 
-import com.natchuz.hub.core.api.map.LocalMapRepository
-import com.natchuz.hub.core.api.map.MapRepository
+import com.natchuz.hub.core.base.map.LocalMapRepository
+import com.natchuz.hub.core.base.map.MapRepository
 import com.natchuz.hub.core.api.proxy.ProxyBackend
 import com.natchuz.hub.core.api.user.UserService
+import com.natchuz.hub.core.base.context.Module
+import com.natchuz.hub.core.base.context.ServerContext
 import com.natchuz.hub.protocol.arch.Services
 import com.natchuz.hub.protocol.messaging.Protocol
 import io.ktor.client.*
@@ -16,7 +18,6 @@ import java.io.File
  * Represents context of running in full network
  */
 class NetworkContext(
-        private val protocol: Protocol = Protocol(Services.PAPER.createClient()),
         private val httpClient: HttpClient = HttpClient {
             installJson()
         },
