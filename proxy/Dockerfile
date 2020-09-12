@@ -1,10 +1,13 @@
 FROM openjdk:8-jre-alpine
 
-WORKDIR /data
-
 RUN apk add --no-cache curl coreutils
 
-# download latest bungeecord
+# some tools to help debugging
+WORKDIR /tools
+RUN curl -L "https://github.com/itzg/mc-monitor/releases/download/0.6.0/mc-monitor_0.6.0_linux_amd64.tar.gz" | tar -xz
+
+# actually bungeecord
+WORKDIR /app
 RUN curl "https://ci.md-5.net/job/BungeeCord/lastSuccessfulBuild/artifact/bootstrap/target/BungeeCord.jar" -o bungeecord.jar
 
 # copy config files
