@@ -20,3 +20,4 @@ include("lobby")
 
 /* Backend */
 include("backend:state")
+include("backend:users")

@@ -139,7 +139,7 @@ projects("sponge", "core", "lobby") {
 /**
  * Docker configuration
  */
-projects("proxy", "core", "lobby", "backend:state") {
+projects("proxy", "core", "lobby", "backend:state", "backend:users") {
     apply(plugin = Plugins.DOCKER)
 
     configure<DockerExtension> {

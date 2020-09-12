@@ -49,6 +49,11 @@ services:
     networks:
       - main
 
+  users:
+    image: backend-users
+    networks:
+      - main
+
 networks:
   main:
     driver: bridge

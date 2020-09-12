@@ -23,7 +23,7 @@ object Deps {
     const val MONGO_SYNC = "org.mongodb:mongodb-driver-sync:4.0.2"
     const val RABBITMQ = "com.rabbitmq:amqp-client:5.8.0"
 
-    const val BUNGEECORD = "net.md-5:bungeecord-api:1.16-R0.2-SNAPSHOT"
+    const val BUNGEECORD = "net.md-5:bungeecord-api:1.14-SNAPSHOT"
     const val SPONGE_API = "org.spongepowered:spongeapi:7.2.0"
     const val PACKET_GATE = "com.github.CrushedPixel:PacketGate:0.1.1"
 
