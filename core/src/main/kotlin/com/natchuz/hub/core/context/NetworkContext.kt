@@ -7,8 +7,6 @@ import com.natchuz.hub.core.modules.Module
 import com.natchuz.hub.core.modules.PlayerSubscriber
 import com.natchuz.hub.core.proxy.NetworkProxyBackend
 import com.natchuz.hub.core.proxy.ProxyBackend
-import com.natchuz.hub.core.service.NetworkPlayerService
-import com.natchuz.hub.core.service.PlayerService
 import com.natchuz.hub.core.user.NetworkUserService
 import com.natchuz.hub.core.user.UserService
 import com.natchuz.hub.protocol.arch.Services
@@ -37,8 +35,6 @@ class NetworkContext(
     }
 
     override fun createProxyBackend(): ProxyBackend = NetworkProxyBackend(httpClient)
-
-    override fun createPlayerService(): PlayerService = NetworkPlayerService(httpClient)
 
     override fun createUserService(): UserService = NetworkUserService(httpClient)
 

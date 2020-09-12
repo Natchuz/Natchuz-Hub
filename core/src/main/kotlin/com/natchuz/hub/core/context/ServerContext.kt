@@ -3,7 +3,6 @@ package com.natchuz.hub.core.context
 import com.natchuz.hub.core.map.MapRepository
 import com.natchuz.hub.core.modules.Module
 import com.natchuz.hub.core.proxy.ProxyBackend
-import com.natchuz.hub.core.service.PlayerService
 import com.natchuz.hub.core.user.UserService
 
 /**
@@ -20,11 +19,6 @@ interface ServerContext {
      * Creates a [proxy backaend][ProxyBackend]
      */
     fun createProxyBackend(): ProxyBackend
-
-    /**
-     * To be documented
-     */
-    fun createPlayerService(): PlayerService
 
     /**
      * Create user service

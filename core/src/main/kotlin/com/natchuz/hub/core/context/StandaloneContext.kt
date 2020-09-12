@@ -5,8 +5,6 @@ import com.natchuz.hub.core.map.MapRepository
 import com.natchuz.hub.core.modules.Module
 import com.natchuz.hub.core.proxy.ProxyBackend
 import com.natchuz.hub.core.proxy.StandaloneProxyBackend
-import com.natchuz.hub.core.service.PlayerService
-import com.natchuz.hub.core.service.StandalonePlayerService
 import com.natchuz.hub.core.user.StandaloneUserService
 import com.natchuz.hub.core.user.UserService
 import org.spongepowered.api.Game
@@ -26,8 +24,6 @@ class StandaloneContext(
     }
 
     override fun createProxyBackend(): ProxyBackend = StandaloneProxyBackend()
-
-    override fun createPlayerService(): PlayerService = StandalonePlayerService()
 
     override fun createUserService(): UserService = StandaloneUserService()
 

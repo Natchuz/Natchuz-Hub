@@ -2,7 +2,7 @@ package com.natchuz.hub.lobby
 
 import com.natchuz.hub.backend.state.PlayerFlags
 import com.natchuz.hub.core.proxy.ProxyBackend
-import com.natchuz.hub.core.service.PlayerService
+import com.natchuz.hub.core.user.UserService
 import com.natchuz.hub.sponge.kotlin.EntityUUID
 import com.natchuz.hub.sponge.kotlin.require
 import com.natchuz.hub.sponge.regions.BlockVectors
@@ -134,7 +134,7 @@ class LobbyListener private constructor(private val mapConfig: MapConfig) {
 
         val player = event.targetEntity
 
-        if (PlayerFlags.PROXY_JOIN in Sponge.getServiceManager().require<PlayerService>()[player.uniqueId].flags) {
+        if (PlayerFlags.PROXY_JOIN in Sponge.getServiceManager().require<UserService>().getState(player.uniqueId).flags) {
             player.sendTitle(Title.builder()
                     .title(Text.of(TextColors.WHITE, TextStyles.BOLD, "Natchuz ",
                             TextStyles.RESET, TextColors.YELLOW, TextStyles.BOLD, "HUB"))

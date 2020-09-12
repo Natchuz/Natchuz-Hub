@@ -61,6 +61,7 @@ class CorePlugin @Inject constructor(
 
         /* Construct basic services */
         proxyBackend = context.createProxyBackend()
+        userService = context.createUserService()
 
         /* Load all context-depended listeners */
         context.createModules()

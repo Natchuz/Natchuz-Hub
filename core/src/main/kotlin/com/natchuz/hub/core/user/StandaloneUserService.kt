@@ -1,9 +1,6 @@
 package com.natchuz.hub.core.user
 
-import io.ktor.client.*
-import io.ktor.client.request.*
-import io.ktor.http.*
-import kotlinx.coroutines.runBlocking
+import com.natchuz.hub.backend.state.PlayerFlags
 import java.util.*
 
 class StandaloneUserService : UserService {
@@ -17,4 +14,10 @@ class StandaloneUserService : UserService {
             invitedFriends = mutableListOf(),
             pendingFriends = mutableListOf(),
     )
+
+    override fun getState(uuid: UUID): NetworkPlayer = DefaultStandalonePlayer()
+}
+
+class DefaultStandalonePlayer : NetworkPlayer {
+    override val flags: List<PlayerFlags> = listOf(PlayerFlags.PROXY_JOIN)
 }
