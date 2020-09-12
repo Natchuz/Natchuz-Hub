@@ -12,7 +12,8 @@ include("utils")
 include("protocol")
 include("proxy")
 include("sponge")
-include("core")
+
+include("core:api", "core:base", "core:network", "core:standalone")
 
 /* Gamemodes */
 include("lobby")

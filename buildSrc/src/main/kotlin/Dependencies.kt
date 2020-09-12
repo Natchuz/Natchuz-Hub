@@ -27,6 +27,10 @@ object Deps {
     const val SPONGE_API = "org.spongepowered:spongeapi:7.2.0"
     const val PACKET_GATE = "com.github.CrushedPixel:PacketGate:0.1.1"
 
+    object Kotlin {
+        const val SERIALIZATION = "org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0-RC"
+    }
+
     object Ktor {
         private const val KTOR_VERSION = "1.4.0"
 

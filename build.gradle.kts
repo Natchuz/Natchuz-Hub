@@ -122,7 +122,7 @@ subprojects {
 /**
  * Sponge projects
  */
-projects("sponge", "core", "lobby") {
+projects("sponge", "lobby", "core:api", "core:base", "core:network", "core:standalone") {
     apply(plugin = Plugins.SPONGE)
 
     dependencies {
@@ -139,7 +139,7 @@ projects("sponge", "core", "lobby") {
 /**
  * Docker configuration
  */
-projects("proxy", "core", "lobby", "backend:state", "backend:users") {
+projects("proxy", "core:base", "lobby", "backend:state", "backend:users") {
     apply(plugin = Plugins.DOCKER)
 
     configure<DockerExtension> {
