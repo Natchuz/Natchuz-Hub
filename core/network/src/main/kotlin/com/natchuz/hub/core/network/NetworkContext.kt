@@ -6,8 +6,6 @@ import com.natchuz.hub.core.api.proxy.ProxyBackend
 import com.natchuz.hub.core.api.user.UserService
 import com.natchuz.hub.core.base.context.Module
 import com.natchuz.hub.core.base.context.ServerContext
-import com.natchuz.hub.protocol.arch.Services
-import com.natchuz.hub.protocol.messaging.Protocol
 import io.ktor.client.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
@@ -17,11 +15,11 @@ import java.io.File
 /**
  * Represents context of running in full network
  */
-class NetworkContext(
+class NetworkContext @JvmOverloads constructor(
         private val httpClient: HttpClient = HttpClient {
             installJson()
         },
-        private val game: Game
+        private val game: Game,
 ) : ServerContext {
 
     override fun createMapRepository(): MapRepository {

@@ -2,7 +2,6 @@ package com.natchuz.hub.lobby
 
 import com.google.gson.GsonBuilder
 import com.google.inject.Inject
-import com.natchuz.hub.core.CorePlugin
 import com.natchuz.hub.core.api.MainFacade
 import com.natchuz.hub.sponge.kotlin.getPluginInstance
 import com.natchuz.hub.sponge.kotlin.typeToken
@@ -10,7 +9,6 @@ import com.natchuz.hub.sponge.serialization.LocationDeserializer
 import org.slf4j.Logger
 import org.spongepowered.api.Game
 import org.spongepowered.api.Sponge
-import org.spongepowered.api.entity.EntityTypes
 import org.spongepowered.api.event.Listener
 import org.spongepowered.api.event.game.state.GameStartedServerEvent
 import org.spongepowered.api.plugin.Dependency
@@ -20,19 +18,24 @@ import org.spongepowered.api.plugin.PluginManager
 import org.spongepowered.api.world.Location
 import org.spongepowered.api.world.World
 
-@Suppress("ThrowableNotThrown")
-@Plugin(id = HubPlugin.ID, name = "Lobby plugin",
-        dependencies = [Dependency(id = CorePlugin.ID), Dependency(id = "natchuz-hub-sponge-utils")])
-class HubPlugin {
-
-    @Inject private lateinit var game: Game
-    @Inject private lateinit var logger: Logger
+@Plugin(
+        id = HubPlugin.ID,
+        name = "Lobby plugin",
+        dependencies = [
+            Dependency(id = "natchuz-hub-core"),
+            Dependency(id = "natchuz-hub-sponge-utils")
+        ]
+)
+class HubPlugin @Inject constructor(
+        private var game: Game,
+        private var logger: Logger,
+) {
 
     @Listener
     fun onReady(event: GameStartedServerEvent) {
         logger.info("Loading lobby plugin")
 
-        val core = Sponge.getPluginManager().getPluginInstance<MainFacade>(CorePlugin.ID)
+        val core = game.pluginManager.getPluginInstance<MainFacade>("natchuz-hub-core")
                 .orElseThrow { AssertionError("Not found core plugin") }
         val mapWorld = game.server.getWorld(core.mapWorld)
                 .orElseThrow { AssertionError("Not found expected world") }
@@ -40,7 +43,7 @@ class HubPlugin {
                 .create()
         val mapConfig = gson.fromJson(core.mapConfiguration, MapConfig::class.java)
 
-        game.eventManager.registerListeners(this, LobbyListener.initLobby(mapConfig))
+        game.eventManager.registerListeners(this, LobbyListener.initLobby(mapConfig, game))
         logger.info("Successfully loaded lobby plugin")
     }
 

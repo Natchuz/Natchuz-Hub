@@ -12,8 +12,8 @@ import java.io.File
 /**
  * Standalone context is used for testing
  */
-class StandaloneContext(
-        val game: Game
+class StandaloneContext @JvmOverloads constructor(
+        private val game: Game,
 ) : ServerContext {
 
     override fun createMapRepository(): MapRepository {

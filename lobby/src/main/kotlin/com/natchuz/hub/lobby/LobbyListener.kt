@@ -7,6 +7,7 @@ import com.natchuz.hub.sponge.kotlin.EntityUUID
 import com.natchuz.hub.sponge.kotlin.require
 import com.natchuz.hub.sponge.regions.BlockVectors
 import com.natchuz.hub.utils.VersionInfo
+import org.spongepowered.api.Game
 import org.spongepowered.api.Sponge
 import org.spongepowered.api.boss.BossBarColors
 import org.spongepowered.api.boss.BossBarOverlays
@@ -39,7 +40,10 @@ import org.spongepowered.api.text.format.TextStyles
 import org.spongepowered.api.text.title.Title
 import java.util.concurrent.TimeUnit
 
-class LobbyListener private constructor(private val mapConfig: MapConfig) {
+class LobbyListener private constructor(
+        private val mapConfig: MapConfig,
+        private val game: Game,
+) {
 
     private val versionInfo: VersionInfo = VersionInfo(this::class)
 
@@ -54,7 +58,8 @@ class LobbyListener private constructor(private val mapConfig: MapConfig) {
 
     companion object Factory {
 
-        fun initLobby(mapConfig: MapConfig) : LobbyListener = LobbyListener(mapConfig).apply {
+        @JvmStatic
+        fun initLobby(mapConfig: MapConfig, game: Game) : LobbyListener = LobbyListener(mapConfig, game).apply {
             //FIXME: these entities just cannot be created, because yes
 
             /*
@@ -98,10 +103,10 @@ class LobbyListener private constructor(private val mapConfig: MapConfig) {
 
             /* Set map daytime */
             Task.builder().interval(3, TimeUnit.SECONDS).execute { ->
-                Sponge.getServer().worlds.forEach { // To be replaced with Map Service in core
+                game.server.worlds.forEach { // To be replaced with Map Service in core
                     it.properties.worldTime = 5000
                 }
-            }.submit(Sponge.getPluginManager().getHubPluginInstance())
+            }.submit(game.pluginManager.getHubPluginInstance())
 
             /* Info boss bar that will be displayed to every player */
             infoBossBar = ServerBossBar.builder()
@@ -132,7 +137,7 @@ class LobbyListener private constructor(private val mapConfig: MapConfig) {
 
         val player = event.targetEntity
 
-        if (PlayerFlags.PROXY_JOIN in Sponge.getServiceManager().require<UserService>().getState(player.uniqueId).flags) {
+        if (PlayerFlags.PROXY_JOIN in game.serviceManager.require<UserService>().getState(player.uniqueId).flags) {
             player.sendTitle(Title.builder()
                     .title(Text.of(TextColors.WHITE, TextStyles.BOLD, "Natchuz ",
                             TextStyles.RESET, TextColors.YELLOW, TextStyles.BOLD, "HUB"))
@@ -157,7 +162,7 @@ class LobbyListener private constructor(private val mapConfig: MapConfig) {
     fun onEntityInteract(event: InteractEntityEvent, @First player: Player) = when (event.targetEntity.uniqueId) {
         kitpvpNPC -> {
             event.isCancelled = true
-            Sponge.getServiceManager().require<ProxyBackend>().send(player.name, "kp")
+            game.serviceManager.require<ProxyBackend>().send(player.name, "kp")
         }
         else -> Unit
     }

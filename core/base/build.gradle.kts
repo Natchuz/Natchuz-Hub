@@ -41,7 +41,7 @@ tasks {
     }
 
     register("prepareLocalServer", Copy::class.java) {
-        from("$buildDir/libs/core-all.jar") {
+        from("$buildDir/libs/base-all.jar") {
             into("mods")
         }
         from("${project(":sponge").buildDir}/libs/sponge-all.jar") {
@@ -78,28 +78,21 @@ tasks {
     withType<ShadowJar> {
         dependencies {
             exclude(project(":sponge"))
+            include(project(":core:network"))
         }
 
         minimize {
             exclude(dependency(Deps.Ktor.Client.ENGINE_CIO))
+            exclude(project(":core:api"))
         }
     }
 }
 
 dependencies {
-    implementation(project(":sponge"))
-    implementation(project(":protocol"))
-    implementation(project(":utils"))
-    implementation(project(":core:network"))
-    implementation(project(":core:standalone"))
     api(project(":core:api"))
 
-    implementation(Deps.MONGO_SYNC)
+    implementation(project(":utils"))
     implementation(Deps.COMMONS_IO)
-
-    implementation(Deps.Ktor.Client.ENGINE_CIO)
-    implementation(Deps.Ktor.Client.JSON_SUPPORT)
-    implementation(Deps.Ktor.Client.KOTLINX_SERIALIZATION)
 
     "localServer"(files(localServerDir) {
         builtBy("prepareLocalServer")

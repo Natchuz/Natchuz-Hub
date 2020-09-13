@@ -2,7 +2,6 @@ package com.natchuz.hub.core.base
 
 import com.google.inject.Inject
 import com.natchuz.hub.core.api.MainFacade
-import com.natchuz.hub.core.network.NetworkContext
 import com.natchuz.hub.core.base.context.ServerContext
 import com.natchuz.hub.core.base.map.AnvilZipMapLoader
 import com.natchuz.hub.core.api.map.LoadedMap
@@ -10,7 +9,6 @@ import com.natchuz.hub.core.base.map.MapLoader
 import com.natchuz.hub.core.api.map.MapManifest
 import com.natchuz.hub.core.api.proxy.ProxyBackend
 import com.natchuz.hub.core.api.user.UserService
-import com.natchuz.hub.core.standalone.StandaloneContext
 import org.slf4j.Logger
 import org.spongepowered.api.Game
 import org.spongepowered.api.event.Listener
@@ -45,12 +43,16 @@ class CorePlugin @Inject constructor(
     private lateinit var loadedMap: LoadedMap
 
     init {
-        /* Load context */
-        context = when (val contextName = System.getProperty("server.context")) {
-            "network" -> NetworkContext(game = game)
-            "standalone" -> StandaloneContext(game = game)
+        /* Load context.
+        * We are required to to this by reflection, to avoid circular dependency in gradle.
+        * Every context class should have one constructor with Game parameter,
+        * so @JvmOverloads annotation with default parameters is the best for Kotlin.
+        * We also need to shadow context implementation via Shadow Plugin in gradle */
+        context = Class.forName(when (val contextName = System.getProperty("server.context")) {
+            "network" -> "com.natchuz.hub.core.network.NetworkContext"
+            "standalone" -> "com.natchuz.hub.core.standalone.StandaloneContext"
             else -> throw IllegalStateException("Unknown context : $contextName")
-        }
+        }).getConstructor(Game::class.java).newInstance(game) as ServerContext
         logger.info("Using context: " + context::class.qualifiedName)
     }
 
