@@ -1,6 +1,4 @@
-package com.natchuz.hub.core.map;
-
-import org.spongepowered.api.world.World;
+package com.natchuz.hub.core.api.map;
 
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package com.natchuz.hub.core.proxy;
+package com.natchuz.hub.core.standalone;
 
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;
@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import com.natchuz.hub.backend.state.PlayerFlags;
+import com.natchuz.hub.core.api.proxy.ProxyBackend;
 
 public class StandaloneProxyBackend implements ProxyBackend {
 

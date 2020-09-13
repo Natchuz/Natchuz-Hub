@@ -16,6 +16,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import com.natchuz.hub.utils.UUIDConverter;
+import com.natchuz.hub.core.api.map.LoadedMap;
+import com.natchuz.hub.core.api.map.MapManifest;
 
 /**
  * Loads map from zipped world in Anvil format

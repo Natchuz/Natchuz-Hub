@@ -2,7 +2,7 @@ package com.natchuz.hub.core.api;
 
 import java.util.UUID;
 
-import com.natchuz.hub.core.map.MapManifest;
+import com.natchuz.hub.core.api.map.MapManifest;
 
 /**
  * Ships all utils for all gamemodes

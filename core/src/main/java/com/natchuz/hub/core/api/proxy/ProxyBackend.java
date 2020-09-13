@@ -1,4 +1,4 @@
-package com.natchuz.hub.core.proxy;
+package com.natchuz.hub.core.api.proxy;
 
 import org.spongepowered.api.entity.living.player.Player;
 

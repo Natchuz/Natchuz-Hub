@@ -1,4 +1,4 @@
-package com.natchuz.hub.core.user
+package com.natchuz.hub.core.api.user
 
 import com.natchuz.hub.backend.state.PlayerFlags
 import java.util.*

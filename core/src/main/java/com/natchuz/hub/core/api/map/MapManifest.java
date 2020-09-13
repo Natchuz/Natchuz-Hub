@@ -1,4 +1,4 @@
-package com.natchuz.hub.core.map;
+package com.natchuz.hub.core.api.map;
 
 import lombok.SneakyThrows;
 

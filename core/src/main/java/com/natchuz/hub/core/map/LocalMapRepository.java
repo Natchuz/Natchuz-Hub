@@ -13,6 +13,8 @@ import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import com.natchuz.hub.core.api.map.MapManifest;
+
 /**
  * {@link MapRepository Map repositry} on disk that contains map files
  */

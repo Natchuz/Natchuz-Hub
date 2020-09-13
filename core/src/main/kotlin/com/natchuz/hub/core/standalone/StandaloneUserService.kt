@@ -1,6 +1,10 @@
-package com.natchuz.hub.core.user
+package com.natchuz.hub.core.standalone
 
 import com.natchuz.hub.backend.state.PlayerFlags
+import com.natchuz.hub.core.api.user.NetworkPlayer
+import com.natchuz.hub.core.api.user.User
+import com.natchuz.hub.core.api.user.UserRank
+import com.natchuz.hub.core.api.user.UserService
 import java.util.*
 
 class StandaloneUserService : UserService {

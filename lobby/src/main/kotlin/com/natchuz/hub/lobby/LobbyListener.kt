@@ -1,8 +1,8 @@
 package com.natchuz.hub.lobby
 
 import com.natchuz.hub.backend.state.PlayerFlags
-import com.natchuz.hub.core.proxy.ProxyBackend
-import com.natchuz.hub.core.user.UserService
+import com.natchuz.hub.core.api.proxy.ProxyBackend
+import com.natchuz.hub.core.api.user.UserService
 import com.natchuz.hub.sponge.kotlin.EntityUUID
 import com.natchuz.hub.sponge.kotlin.require
 import com.natchuz.hub.sponge.regions.BlockVectors
@@ -15,8 +15,6 @@ import org.spongepowered.api.data.key.Keys
 import org.spongepowered.api.data.manipulator.mutable.entity.FoodData
 import org.spongepowered.api.effect.sound.SoundTypes
 import org.spongepowered.api.entity.Entity
-import org.spongepowered.api.entity.EntityArchetype
-import org.spongepowered.api.entity.EntityTypes
 import org.spongepowered.api.entity.Transform
 import org.spongepowered.api.entity.living.player.Player
 import org.spongepowered.api.entity.living.player.gamemode.GameModes

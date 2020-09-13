@@ -2,15 +2,15 @@ package com.natchuz.hub.core
 
 import com.google.inject.Inject
 import com.natchuz.hub.core.api.MainFacade
-import com.natchuz.hub.core.context.NetworkContext
+import com.natchuz.hub.core.network.NetworkContext
 import com.natchuz.hub.core.context.ServerContext
-import com.natchuz.hub.core.context.StandaloneContext
+import com.natchuz.hub.core.standalone.StandaloneContext
 import com.natchuz.hub.core.map.AnvilZipMapLoader
-import com.natchuz.hub.core.map.LoadedMap
+import com.natchuz.hub.core.api.map.LoadedMap
 import com.natchuz.hub.core.map.MapLoader
-import com.natchuz.hub.core.map.MapManifest
-import com.natchuz.hub.core.proxy.ProxyBackend
-import com.natchuz.hub.core.user.UserService
+import com.natchuz.hub.core.api.map.MapManifest
+import com.natchuz.hub.core.api.proxy.ProxyBackend
+import com.natchuz.hub.core.api.user.UserService
 import org.slf4j.Logger
 import org.spongepowered.api.Game
 import org.spongepowered.api.event.Listener

@@ -1,9 +1,8 @@
 package com.natchuz.hub.core.context
 
 import com.natchuz.hub.core.map.MapRepository
-import com.natchuz.hub.core.modules.Module
-import com.natchuz.hub.core.proxy.ProxyBackend
-import com.natchuz.hub.core.user.UserService
+import com.natchuz.hub.core.api.proxy.ProxyBackend
+import com.natchuz.hub.core.api.user.UserService
 
 /**
  * ServerContext is an abstract factory for a different backends, starting from simple Bungeecord client to map loading etc.

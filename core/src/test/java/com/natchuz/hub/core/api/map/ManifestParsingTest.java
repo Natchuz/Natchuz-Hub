@@ -1,8 +1,10 @@
-package com.natchuz.hub.core.map;
+package com.natchuz.hub.core.api.map;
 
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+
+import com.natchuz.hub.core.api.map.MapManifest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -1,14 +1,11 @@
-package com.natchuz.hub.core.context
+package com.natchuz.hub.core.network
 
 import com.natchuz.hub.core.map.LocalMapRepository
 import com.natchuz.hub.core.map.MapRepository
-import com.natchuz.hub.core.modules.FriendsNotifier
-import com.natchuz.hub.core.modules.Module
-import com.natchuz.hub.core.modules.PlayerSubscriber
-import com.natchuz.hub.core.proxy.NetworkProxyBackend
-import com.natchuz.hub.core.proxy.ProxyBackend
-import com.natchuz.hub.core.user.NetworkUserService
-import com.natchuz.hub.core.user.UserService
+import com.natchuz.hub.core.api.proxy.ProxyBackend
+import com.natchuz.hub.core.api.user.UserService
+import com.natchuz.hub.core.context.Module
+import com.natchuz.hub.core.context.ServerContext
 import com.natchuz.hub.protocol.arch.Services
 import com.natchuz.hub.protocol.messaging.Protocol
 import io.ktor.client.*
@@ -38,10 +35,7 @@ class NetworkContext(
 
     override fun createUserService(): UserService = NetworkUserService(httpClient)
 
-    override fun createModules(): List<Module> = listOf(
-            FriendsNotifier(protocol),
-            PlayerSubscriber(protocol),
-    )
+    override fun createModules(): List<Module> = emptyList()
 }
 
 internal fun HttpClientConfig<*>.installJson() {

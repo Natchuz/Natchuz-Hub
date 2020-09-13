@@ -1,6 +1,9 @@
-package com.natchuz.hub.core.user
+package com.natchuz.hub.core.network
 
 import com.natchuz.hub.backend.state.PlayerFlags
+import com.natchuz.hub.core.api.user.NetworkPlayer
+import com.natchuz.hub.core.api.user.User
+import com.natchuz.hub.core.api.user.UserService
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
