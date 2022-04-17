@@ -1,11 +1,9 @@
+**Disclamer: No longer in development. Might reboot in the future.**
+
 # Natchuz Hub
 
-[![](https://img.shields.io/discord/729693761235451914?color=blue&label=discord&logo=discord)](https://discord.gg/tyzbDfM)
 ![](https://github.com/Natchuz-Hub/Natchuz-Hub/workflows/Build%20CI/badge.svg)
 ![](https://img.shields.io/badge/minecraft%20version-1.12.2-brightgreen)
-![](https://img.shields.io/github/stars/Natchuz-Hub/Natchuz-Hub?style=social)
-
-**Currently work is still in progress!**
 
 Open source Minecraft minigames server targeting the latest versions of game.
 Project is licensed under [AGPL v3 License](https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0))
